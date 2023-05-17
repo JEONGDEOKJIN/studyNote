@@ -156,9 +156,12 @@ app.use(express.urlencoded({extended : false}))
                 if(result[0]?.salt) {
                     const salt = result[0].salt;
                     const hash = await createHash(salt, user_pw);   
-                        // 로그인 시도자의 pw 와 sql 에 저장된 salt 로 만든 검증를 기다리고 있는 hash⭐⭐⭐⭐⭐ 
+                        // 로그인 시도자의 pw 와 sql 에 저장된 salt 로 만든 '검증를 기다리고 있는' hash⭐⭐⭐⭐⭐ 
+                    
+                    console.log(`로그인 시도자의 해시화된 pw : ${hash}`)   // 
+                    console.log(`sql 에서 꺼내온 hash : ${result[0].user_pw}`)      // sql 에서 예전에 저장되었다가, 꺼내온 hash
 
-                    if(hash == result[0].user_pw) {
+                    if(hash === result[0].user_pw) {
                         // result[0].user_pw | sql 에서 가져온 해당 id 의 pw임. 
                         res.send("로그인 됨~")
                     } else {

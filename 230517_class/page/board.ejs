@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <h1> 게시판 </h1>
+
+    <!-- id | 제목 | 설명 -->
+
+    <a href="/board/create">글쓰기</a>
+
+    <table> 
+            <tr> 
+                <th> id </th>
+                <th> 제목 </th>
+                <th> 설명 </th>
+                <th> 삭제 </th>
+                <th> 수정 </th>
+            </tr>
+
+            <% result.forEach( (data, index) => { %>
+                <tr>
+                    <td> <%= data.id %> </td>
+                    <td> <%= data.title %></td>
+                    <td> <%= data.content %></td>
+                    <td> <a href="/board/<%= data.id %>"> 삭제 </a> </td>
+                    <td> <a href="/board/content/<%= data.id %>"> 수정 </a> </td>
+
+                </tr>
+            <% }); %>
+
+
+
+    </table>
+
+
+
+
+</body>
+
+
+<script>
+
+
+
+
+</script>
+
+
+
+
+
+</html>
