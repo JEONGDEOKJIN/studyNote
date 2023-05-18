@@ -270,7 +270,7 @@
         -- INSERT INTO [테이블 이름] (필드1, 필드2) VALUES (필드1의 값, 필드 2의 값), 
         -- INSERT INTO [테이블 이름] (필드1, 필드2) VALUES (필드1의 값, 필드 2의 값),(필드1의 값, 필드 2의 값),(필드1의 값, 필드 2의 값),(필드1의 값, 필드 2의 값) 
             -- 이렇게 하면, INSERT 문을 3개 쓰는게 아니라, 콤마 찍고 여러개가 추가 됨 ⭐⭐⭐⭐⭐⭐⭐⭐ 
-            -- INSERT INTO border2 (content, writer, likes) VALUES ("첫번째 글", "haha", 100), ("두번째 글", "haha", 100), ("세번째 글", "haha", 100) ;
+            INSERT INTO border2 (content, writer, likes) VALUES ("첫번째 글", "haha", 100), ("두번째 글", "haha", 100), ("세번째 글", "haha", 100) ;
 
 
     -- 추가한 값 수정하기

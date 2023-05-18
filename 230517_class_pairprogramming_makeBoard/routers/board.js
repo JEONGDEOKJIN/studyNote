@@ -1,7 +1,7 @@
 
 const router = require("express").Router();
 
-const {Show, Write, IdShow, IdUpdate, IdDelete } = require("../controllers/controllers");
+const {Show, Write, IdShow, IdUpdate, IdDelete, RefGetData } = require("../controllers/controllers");
 
 
 router.get('/' , Show );
@@ -26,6 +26,8 @@ router.post('/content/:id', IdUpdate);
 
 router.get('/:id' , IdDelete);
 
+
+router.post('/search' , RefGetData )
 
 
 module.exports = router;

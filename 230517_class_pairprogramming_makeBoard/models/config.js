@@ -6,7 +6,7 @@ const mysql2 = require("mysql2/promise");
 const mysql = mysql2.createPool({
     user : "root", 
     password : "mysqlpwdj",
-    database : "test15",
+    database : "test17",
     multipleStatements : true, 
 });
 

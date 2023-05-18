@@ -19,27 +19,36 @@
                 <th> id </th>
                 <th> 제목 </th>
                 <th> 설명 </th>
+                <th> 사용자 ID</th>
                 <th> 삭제 </th>
                 <th> 수정 </th>
             </tr>
+
+            result = [{ }]
+
 
             <% result.forEach( (data, index) => { %>
                 <tr>
                     <td> <%= data.id %> </td>
                     <td> <%= data.title %></td>
                     <td> <%= data.content %></td>
+                    <td> <%= data.userID %></td>
+
                     <td> <a href="/board/<%= data.id %>"> 삭제 </a> </td>
                     <td> <a href="/board/content/<%= data.id %>"> 수정 </a> </td>
 
                 </tr>
             <% }); %>
 
-
-
     </table>
 
+    
+    <form action="/board/search" method="post">
 
+        <td> <input type="text" name="userID"> </td>
+        <td> <button> 검색 </button> </td>
 
+    </form>
 
 </body>
 

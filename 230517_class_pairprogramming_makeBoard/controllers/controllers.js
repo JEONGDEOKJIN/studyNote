@@ -1,4 +1,4 @@
-const { show , write, idShow, idUpdate, idDelete} = require("../models");
+const { show , write, idShow, idUpdate, idDelete , refGetData } = require("../models");
 const mysql = require("../models/config");
 
 
@@ -10,7 +10,7 @@ exports.Show = async (req,res) => {
     try {
         const result = await show();
         res.render("board" , {result} );
-        console.log(result)
+        // console.log(result)
         
     } catch (error) {
         
@@ -73,3 +73,32 @@ exports.IdDelete = async(req,res) => {
 }
 
 
+// 가져온 결과물 보여주기 
+    exports.RefGetData = async (req, res) => {
+        const {userID} = req.body;
+        // console.log(userID);
+        // console.log("✍✍✍✍✍✍ ")
+            // [userID], {userID} ❓❓❓❓❓ 
+
+        try {
+            const result = await refGetData(userID);
+            console.log("🙇‍♂️🙇‍♂️🙇‍♂️");
+            // for each 를 돌 수 있게 result 를 만들어서 넣어주면 되잖아 
+            
+            
+            console.log(result);
+
+            
+            res.render( "board" , {result} )
+            
+
+            {result : result} 
+
+
+
+
+        } catch (error) {
+            
+        }
+
+    }
