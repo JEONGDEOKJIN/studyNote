@@ -1,0 +1,4 @@
+
+[폴더명]
+- 수업 필기 : 날짜_class_주제
+- 자습 : 날짜_practice or study_주제

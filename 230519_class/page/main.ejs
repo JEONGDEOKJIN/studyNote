@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- ⭐⭐⭐ jquery -->
+    <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+
+</head>
+<body>
+    
+
+    <h1> 유저 페이지 </h1>
+
+    <ul>
+        <% data.forEach( (el) => { %>
+            <li>
+                <span class="name"> <%= el.name %> </span> 님 <%= el.age %>살 코멘트 <%= el.msg %>
+                <input type="text" class="item-input"> <button class="item-btn">글 등록</button>
+
+            </li>
+        <% }); %>
+    </ul>
+
+</body>
+
+
+<script>
+
+    // ajax 를 사용할 것 임 
+
+    // ajax 
+        // 요청, 응답에 대한 처리를 할 수 있게 도와 주는 메소드 
+        // react 에서 엑시오스 쓸 것 임. 
+
+    // load 가 다 되었을 때, input 을 가져온다. 
+    window.onload = function() {
+        // document.querySelectorAll('.item-input');
+        let btns = document.querySelectorAll('.item-btn');
+        btns.forEach( (el, index) => {
+            el.onclick = () => {
+                let value = document.querySelectorAll('.item-input')[index].value;
+                let name = document.querySelectorAll('.name')[index].innerText;
+                console.log("value" , value);
+                console.log("names" , name);
+                // 요청에서 값을 넣자. form 태그 사용 안 함 ⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐  
+                // ajax 사용 해서, JQUERY 구문
+                $.ajax ( {
+                    // 요청할 url 
+                    url : "/create_post", 
+                    // 요청방식
+                    type : "post",
+                    // 전달할 데이터 
+                    data : {name, value} 
+                }) 
+            }
+            
+        });
+    }
+        // querySelectorAll : 여러 사람 일 수 있어서 
+
+
+</script>
+
+
+
+
+</html>

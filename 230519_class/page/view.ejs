@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+    <!-- 작성자가 쓴 글 | 어떤 유저가 글을 썼는지 확인하는 페이지 -->
+    작성자 : <%= data.name %>
+    <ul>
+        <li>
+
+            <% data.Posts.forEach( (el) => { %>
+
+                <li>
+                    <span> <%= el.id %> </span>
+                    <span> <%= el.msg %> </span>
+
+                </li>
+
+            <% }); %>
+
+        </li>
+    </ul>
+
+
+    
+</body>
+<script>
+
+
+</script>
+
+
+
+
+</html>

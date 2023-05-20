@@ -89,12 +89,12 @@ exports.IdDelete = async(req,res) => {
             console.log(result);
 
             
+
+
             res.render( "board" , {result} )
             
 
             {result : result} 
-
-
 
 
         } catch (error) {
