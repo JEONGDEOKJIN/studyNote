@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+
+<script>
+    
+
+    const memeberObj = {
+    name : 'egoing', 
+    developer : 'graphittie', 
+    designer : 'leezche'
+};
+
+memeberObj.designer = 'DJ'
+
+delete memeberObj.designer
+
+console.log(memeberObj['designer'])
+
+
+    const dj = {
+        userid : "dj", 
+        firstScore : 10, 
+        secondScore : 20, 
+        sum : function() {
+            return this.firstScore + this.secondScore
+        }
+    };   
+
+    console.log("sum" , dj.sum());
+
+
+    const d1 = new Date('2023-05-21')
+    console.log(d1.getFullYear());
+
+
+    function Person(name, first, second, third) {
+        this.name = name, 
+        this.first = first, 
+        this.second = second, 
+        this.third = third, 
+        this.fourth = 30, 
+        this.sum = function() {
+            return this.first + this.second + this.third;
+        }
+    }
+
+    console.log(Person())
+    console.log(new Person('dj' , 10, 20, 30))
+
+
+    class a {
+    constructor(){
+
+    }
+    b = function(){
+        console.log(this)
+    }
+    static c(){
+        console.log(this)
+    }
+}
+
+// a.b(); 실행 안됌
+let d = new a();
+let d2 = new a();
+let d3 = new a();
+let d4 = new a();
+let d5 = new a();   // 이렇게 복제된 d1, d2, d3 안에는 b 가 들어 있음 | 그런데, c 는 없음. | d2.c 이렇게 실행해도, 실행이 안 됨. 
+d.b();
+    // 복제 한거에서 실행이 됨
+
+a.c();
+    // 클래스 자체에서 실행해야 실행이 됨 ⭐⭐⭐⭐⭐⭐⭐⭐
+
+</script>
+</html>
