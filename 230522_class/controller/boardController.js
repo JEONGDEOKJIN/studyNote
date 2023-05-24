@@ -56,6 +56,7 @@ exports.boardView = (req, res) => {
             {model : Post} 
         ] 
     }).then((e) => {
+        console.log( "e👉👉👉" , e )
         e.dataValues.Posts = e.dataValues.Posts.map( (i) => i.dataValues )
             // 화살표 함수에서 { } 빠지면, 바로 반환 시킨다. 
             // RETURN 값을 내보내는 것! ⭐⭐⭐⭐⭐⭐⭐⭐ 

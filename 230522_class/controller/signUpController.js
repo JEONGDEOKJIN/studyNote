@@ -9,6 +9,7 @@ const bcrypt = require("bcrypt");
 exports.signUp = async (req, res) => {
     try {
         const { name, age, user_id, user_pw } = req.body;
+
         const user = await User.findOne( { where : {user_id} } )
             // 이게 되려면 ⭐⭐⭐⭐⭐⭐⭐⭐  
                 // 1) 로그인 할 때, signup form 태그에서 user_id 라는 name 이 있어야 하고 

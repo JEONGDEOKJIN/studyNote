@@ -24,6 +24,7 @@ const BorderRouters = require('./routers/border');
 app.set('views', path.join(__dirname,"page"));
 app.set('view engine', "ejs");
 app.use(express.urlencoded({extended : false}));
+
 app.use(session({
     secret : process.env.SESSION_KEY, // 세션키 넣을것.
     resave : false, // 다시 저장할지 여부

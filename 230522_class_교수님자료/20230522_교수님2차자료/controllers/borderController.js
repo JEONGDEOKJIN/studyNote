@@ -9,6 +9,7 @@ exports.borderMain = async (req,res) =>{
     res.render("main", {data : user});
 }
 
+
 exports.createBorder = async (req,res) =>{
     const { acc_decoded } = req;
     const { user_post } = req.body;

@@ -39,7 +39,7 @@
         app.set("view engine" , "ejs");
 
 
-// 미들웨어 
+// 미들웨어 //
     // body 객체 사용 | 깊은 객체 사용 하지 않음 
         app.use(express.urlencoded({extended : false}));
 
