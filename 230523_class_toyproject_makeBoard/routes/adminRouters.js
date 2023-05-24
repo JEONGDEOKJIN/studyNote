@@ -10,7 +10,7 @@
     router.get('/' , adminMain);
 
 // 승인합니다. 버튼 누르면 > 등급올려서, 로그인 될 수 있게 하기
-    router.post('/approve' , adminUserApprove)
+    router.post('/approve/:id' , adminUserApprove)
 
 
 // exports 

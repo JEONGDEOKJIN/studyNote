@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    
+    <style>
+        .line {
+            overflow: hidden;
+        }
+        .seat {
+            margin: 2px;
+            float:  left;
+            width: 30px;
+            height: 30px;
+            border-radius: 30px;
+        }
+        .enable {
+            background-color: green;
+        }
+
+        /* 예약이 된건 color */
+        .disable {
+            background-color: blue
+        }
+
+
+    </style>
+
+
+<script src="/socket.io/socket.io.js"></script>
+
+    <!-- AXIOS 를 쓸 수 있게 스크립트 -->
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+
+
+</head>
+<body>
+
+    <div> 비행기 </div>
+
+
+    <!-- select : 선택 박스 태그 -->
+    <select name="" id="selectBtn">
+        <option value="0">1번</option>
+        <option value="1">2번</option>
+        <option value="2">3번</option>
+    </select>
+        <!-- 누르면 > 쭈우욱 나와서 선택할 수 있음 -->
+        <!-- 선택하면 > value 가 값으로 나옴 ⭐⭐⭐ -->
+
+
+    <div id="content"></div>
+
+</body>
+
+<script>
+    window.onload = () => {
+        const socket = io.connect(); // 연결을 시켜준다. 
+        
+        socket.on('reserve' , (data) => {
+            if(data.selectCount == selectBtn.selectedIndex) {
+                let target = document.querySelector(`div[data-x="${data.x}"][data-y="${data.y}"]`)
+                target.classList.remove("enable");
+                target.classList.add("disable");
+            }
+        })
+
+        let selectCount = 0;
+
+        selectBtn.onchange = function() {
+            content.innerHTML = "";
+                // SEAT 에 뭐가 있으면 다 비워버리고 
+
+            // select 태그의 선택한 옵션의 value 를 호출한다. 
+            selectCount = this.selectedIndex;
+
+                // this 가 arrow 함수랑, 일반 함수랑 달라 
+                // 여기에서 위에걸 잡고 싶어서 arrow 에서 일반 함수로 변화하심 ⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐
+            console.log(selectCount);
+            getseats(selectCount);
+            
+            
+        }
+            // 시트를 클릭해서 예약하는 함수
+            const onClickSeat = function() {
+                // seat 에 addeventlister 를 붙일거야 
+                // diable class 가 있는지 확인하는 메서드 contains
+                if (this.classList.contains("disable")){
+                    // 이미 예약이 되어 있으면, 여기서 끝
+                    return
+                }
+
+                // attribute 데이터 속성을 호출 getAttribute 메서드로 매개변수로 가져올 속성 이름
+                let x = this.getAttribute("data-x");
+                let y = this.getAttribute("data-y");
+
+                if(confirm("이 좌석을 예약할거임??")){
+                    // socket 이벤트를 push 할 예정 
+                    socket.emit("reserve" , {
+                        x, 
+                        y,
+                        selectCount
+                    })
+                }else {
+                    alert("ㅇㅇ 하지마셈");
+                }
+            }
+
+
+            // 시트 생성 함수를 여기에
+            // 시트 생성 함수 
+            function getseats(selectIndex) {
+                // 요청, 응답, 으로 시트를 가져올 예정 
+                    // app.js 에서 seat 의 배열을 보내줬는데 
+                    // 변수로 받을 예정 
+                        // 저번엔 ajax 를 썼는데, 이제 무조건 axios 만 쓸 것 임 ⭐⭐⭐⭐⭐ 
+                        // CDN 으로 쓸 것 임 
+                        // CDN == SCRIPT 형태로 가져와서 쓰는 것 
+                    
+                    // 요청은 get 방식이고, 매개변수는 아이디 값으로 요청
+                    axios.get("/seat/" + selectIndex).then((e) => {
+                        // 요청이후, 응답받은 값이 e 에 들어옴 
+                        // 시트 배열이 넘어온다. 
+                        console.log(e)
+                    
+                        // seat 를 콘텐츠에 깔아줌
+                            console.log(e)
+                            let {data} = e;
+                            data.forEach( (line, indexY) => {
+                                let lineElem = document.createElement("div");
+                                lineElem.classList.add("line");
+                                    // 하나의 열 
+                                    // 시트들의 열
+
+                                line.forEach((seat, indexX) => {
+                                    let seatElem = document.createElement("div");   // 시트가 될 태그 
+                                    // 시트들
+                                     seatElem.classList.add("seat")      // seat 에 클래스 추가
+                                    // 데이터 속성 이라는 어트리뷰트 속성을 사용
+                                        // 데이터를 편하게 쓸 수 있게 해줌 
+                                    
+                                        seatElem.setAttribute("data-x" , indexX);
+                                        seatElem.setAttribute("data-y" , indexY);
+                                        // setAttribute : attribute 속성을 추가 한다 
+                                            // 첫 번째 매개변수 | 속성의 이름 
+                                            // 두 번째 매개변수 | 속성의 값 
+                                        
+                                    // 빈공간, 예약 가능한 시트, 이미 예약된 시트 
+                                    if(seat == 1) {
+                                        seatElem.classList.add("enable");
+
+                                        // 시트를 클릭하면 예약
+                                        seatElem.addEventListener('click', onClickSeat)  // 예약할 수 있으니까
+
+                                    } else if (seat == 2) {
+                                        seatElem.classList.add("disable");
+                                    }
+                                    lineElem.appendChild(seatElem)
+                                        // 시트읠 개수만큼 apend 로 하고 
+                                })
+                                content.appendChild(lineElem)
+                            });
+                    
+                    })
+        }
+
+        getseats(0)
+        // 최초의 한번 0번으로 실행되게 
+
+        // 값이 바뀌면 실행되게 한다. 
+    }
+
+
+</script>
+
+
+
+
+</html>

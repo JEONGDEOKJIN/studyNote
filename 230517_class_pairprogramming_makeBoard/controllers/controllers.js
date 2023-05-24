@@ -85,15 +85,10 @@ exports.IdDelete = async(req,res) => {
             console.log("🙇‍♂️🙇‍♂️🙇‍♂️");
             // for each 를 돌 수 있게 result 를 만들어서 넣어주면 되잖아 
             
-            
             console.log(result);
-
-            
-
 
             res.render( "board" , {result} )
             
-
             {result : result} 
 
 

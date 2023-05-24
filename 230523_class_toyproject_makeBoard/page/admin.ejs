@@ -26,23 +26,21 @@
         <!-- 테스트 1 -->
 
         <% data.forEach( (el) => { %>
+            <form action="/admin/approve/<%= el.id %>" method="post">
 
-            <tr> 
-                <td> <%= el.id %> </td>
-                <td> <%= el.name %>  </td>
-                <td> <%= el.age %>  </td>
-                <td> <%= el.user_id %>  </td>
-                <td> <%= el.user_grade %>  </td>
+                <tr> 
+                        <td> <%= el.id %> </td>
+                        <td> <%= el.name %>  </td>
+                        <td> <%= el.age %>  </td>
+                        <td> <%= el.user_id %>  </td>
+                        <td> <%= el.user_grade %>  </td>                    
+                        <td> 
+                            <button>승인합니다✍</button>  
+                        </td>
+                </tr>
+
+            </form>
                 
-                <td> 
-
-                    <form action="/admin/approve" method="post">
-                        <button>승인합니다</button>  
-                    </form>
-                    
-                </td>
-            </tr>
-
         <% } ); %>
 
     </table>

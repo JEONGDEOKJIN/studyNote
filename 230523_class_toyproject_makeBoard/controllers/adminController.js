@@ -22,13 +22,17 @@ const { User } = require("../models")
 // 승인버튼 누르면, > user_grade 가 1이 되어서 > 로그인 할 수 있게 하기
     exports.adminUserApprove = async (req, res) => {
         // 0) 해당 유저의 user_id 를 가져온다. 
-            console.log("어떻게 id 가져올 수 있지🥪🥪" , req)
+            // console.log("어떻게 id 가져올 수 있지🥪🥪" , req)
             // console.log("acc_decoded 🚀🚀" , acc_decoded)
-            // const user_id = req.body
-                // 교수님은 const { acc_decoded } = req; 이렇게 하신거 같은데😥😥😥😥😥😥 
+            // const {acc_decoded} = req;
+            // const {id} = req.params.id;
+            const {id} = req.params.id
+            console.log("req.params.id👉👉👉" , req.params.id)
+            
 
         // 1) 해당 유저의 grade 값을 1로 수정한다. 
-            // await User.update( {user_grade : 1}, {where : { user_id : user_id}} )
+            // 이 쿼리는 정상작동 🔵
+            await User.update( {user_grade : 1}, {where : {id  : id}} )
 
         // 2) 그 다음엔? 
             // grade 가 1로 변경되었으니까, 그렇다고 보여져야 겠지. 
