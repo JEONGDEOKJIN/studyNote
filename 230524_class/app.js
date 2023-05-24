@@ -123,8 +123,7 @@ const app = express();
                     // 대상에게 보낼 예정 
                         // 보낼 대상을 to 뒤에 적는다. 
                         // 이벤트를 푸쉬할 유저의 아이디를 to 메서드의 매개변수로 전달 
-                    io.socket.to(data.id).emit("hi" , data.msg);
-                        
+                    io.sockets.to(data.id).emit("hi" , data.msg);
                 })
 
                     // 유저가 페이지를 나갔을 때 실행되는 이벤트 등록 
