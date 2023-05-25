@@ -114,7 +114,7 @@ const app = express();
                     // 자기 제외 모든 대상에게 이벤트 푸쉬 : 방송 같은
                         // 모든 대상에게, 방송 같은 개념으로 푸쉬
                         // 자기 제외, 이벤트 푸쉬
-                        socket.broadcast.emit("hi" , data.msg); 
+                        // socket.broadcast.emit("hi" , data.msg); 
 
                     // 비밀 대화 
                         // 방 개념, 채팅방을 파서

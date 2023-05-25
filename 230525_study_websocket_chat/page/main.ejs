@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <script src="/socket.io/socket.io.js"></script>
+
+    <style>
+
+        body{
+            position: relative;
+            height: 100vh;
+        }
+
+        .content {
+            position: absolute;
+
+            top: 50%;
+            left: 50%;
+            transform: translate(-50% , -50%);
+
+            width: 500px;
+            height: 500px;
+            border: 1px solid;
+        }
+
+        #send {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            border: 1px solid;
+            box-sizing: border-box;
+            display: flex;
+        }        
+
+        #send #msg {
+            border: 0;
+            box-sizing: border-box;
+            padding: 10px;
+            width: 85%;
+        } 
+
+        #send #sendBtn {
+            background-color: beige;
+            border: none;
+            box-sizing: border-box;
+            padding: 10px;
+            width: 15%;
+        }
+
+        #messages {
+            margin: 0;
+            padding: 0;
+        }
+
+        #messages li {
+            list-style: none;
+        }
+
+        #login {
+            width: 300px;
+            height: 300px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+
+        }
+
+
+        /* 동적으로, 누가 접속했습니다~ 라고 알려주는 거 ⭐⭐⭐⭐⭐⭐⭐⭐⭐ */
+        .join_text {
+            background-color: gray;
+        }
+
+        /* 동적으로, 누가 나갔습니다~ 라고 알려주는 거 ⭐⭐⭐⭐⭐⭐⭐⭐⭐ */
+        .leave_text {
+            background-color: yellow;
+            border: 1px solid;
+        }
+
+
+        /* 동적으로 비웠다가 붙게 하기 ⭐⭐⭐⭐⭐⭐  */
+        #main {
+            display: none;
+        }
+
+
+    </style>
+
+
+
+</head>
+<body>
+
+    <!-- <h1>연결 테스트</h1>
+        <label for=""> 텍스트 </label> <br>
+        <input type="text" id="message"> <br>
+
+        <label for=""> user id </label>
+        <input type="text" id="user_id">
+
+        <button id="testBtn"> 테스트 </button> -->
+
+<div class="content">
+    <!-- 처음에 보이게 되는 화면 : 밑에 부분은 안 보이게 하다가, display block 으로 할 것 임 -->
+        <div> 귀여운 동물 카톡</div>
+        <div id="login">
+            <p>로그인</p>
+            <input type="text" id="username">
+            <button id="loginBtn">접속</button>
+        </div>
+
+    <!-- 두 번째 들어가면 보이는 화면 : 밑에 부분은 나중에 동적으로 보이게 할 것 임 -->
+        <div id="main">
+            <select name="" id="rooms">
+                <option value="고양이 방"> 😺 고양이방 </option>
+                <option value="강아지 방"> 🐶 강아지방 </option>
+            </select>
+
+            <!-- message : 방에 입장했다~ 라는 걸 말해주는 곳 
+                | 너무 신기한데... ⭐⭐⭐⭐⭐⭐  -->
+            <ul id="messages">
+
+            </ul>
+
+            <div id="send">
+                <input type="text" id="msg">
+                <button id="sendBtn">보내기</button>
+            </div>
+            
+            <div id="send2">
+                <input type="text" id="msg2">
+                <button id="sendBtn2">귓속말</button>
+            </div>
+        </div>
+</div>
+
+
+
+
+
+
+</body>
+
+<script>
+
+    window.onload = () => {
+
+        // 연결 테스트 
+            // 1) 보내기 
+                // testBtn.onclick = () => {
+                //     socket.emit("hi" , {msg : message.value , id : user_id.value})
+                // }
+
+            // 2) 서버로 부터 받은 것 브라우저에게 보내기
+                // socket.on("hi" , (data) => {
+
+                //     console.log('3단계, 클라가 받나?' , data.msg)
+
+                //     alert(data);
+                // })
+                    // [애매한 것(궁금한 것) -> 알게 된 것]
+                        // 서버로 부터 받은 데이터는 'data' 매개변수에 들어있을까? 
+                            // 응 다 data 매개변수에 들어있네? 
+                            // [알게된 것] 
+                                // 다만, 클라에서 서버로 보낸거랑 다르게, 서버에서는, data.msg 만 data로 보냈으니까, data 자체의 내용물은 달라.
+                        // 보낸다는 건 어떤 메소드로? 
+                            // render? show? , (main, "data") ?? 
+                            // [알게된 것]
+                                // 아, 여기는 java script 공간이지. 그냥, alert 를 사용해도 브라우저에게 보여줄 수 
+                                
+                    // [에러]
+                        // alert 가 안 나오네
+        
+        // '접속' 버튼 클릭  
+            loginBtn.onclick = () => {
+
+                // 1. 버튼 클릭 하면 > '착시 효과' 로 다음 페이지 보이게 하기
+                    login.style.display = "none";
+                    main.style.display = "block";
+
+                // 2. 들어간 room과 사용자 name 을 표시하기 위해, 필요한 정보 가져오기 
+                    // 사용자 로그인 이름 
+                        const name = username.value;
+                    
+                    // option 중 어떤 값을 가져와야 하는지 확인                        // rooms.options 기능확인
+                        // console.log("rooms.options" , rooms.options);
+                            // id가 rooms인 select 태그 안에 있는 모든 option 과 관련된 정보를 내보냄
+                        // rooms.selectedIndex 기능 확인
+                        // console.log("rooms.selectedIndex" , rooms.selectedIndex);
+                            // id가 rooms인 select 태그 안에서, 어떤 option 이 선택되었는가, 를 나타냄
+                        
+                        // room 에 선택한 option 의 value 가져오기 ⭐⭐⭐⭐⭐ 
+                        let room = rooms.options[rooms.selectedIndex].value
+                        // [해석]
+                            // ⭐⭐⭐ 중요 
+                            // 1) room 선택한 거에서 index 를 가져옴
+                            // 2) rooms.option 에서 접근할 수 있는 많은 값중, 선택한 index 를 할당 
+                            // 3) 그 안에 .value 에 접근해서 가져오기
+                        
+                        
+                        // [질문] 
+                                // 이거랑, 위에거랑, 뭐가 다르지❓❓❓
+                                // 위에 console.log 는 option 태그에서, 어떤 하위 요소를 선택할 수 있는지 테스트 해봄 
+                                // 지금 변수는, 실질적으로, '내가 선택한 방의 값' 을 가져오고 있다.
+                        console.log(room)
+
+
+                // 3. 서버와 연결된 socket 객체 만들기
+                    const socket = io.connect();
+                        // io | 라이브러리 연결을 통해 사용할 수 있는 객체 
+                        // connect | 서버와 연결하게 해주는 메소드 
+                        // socket | 라이브러리에서 받은, 소켓 관련 메소드, 객체 를 갖고 있을 것
+
+                // 4. 서버에게 join Room 이벤트 보내기
+                    // 1) 기본적인 전송
+                        socket.emit("joinRoom" , room, name);
+                
+                    // 2) 변화가 생길 경우 업데이트 | rooms select 태그에 변화가 생기면, 반영해서, 다시 보내기 ⭐⭐⭐⭐⭐
+                        rooms.onchange = function(e){
+                            // CF. 변화가 일어난 걸 어떻게 찾아갈 것 인가 ⭐⭐⭐⭐⭐ 
+                            
+                            // 변화가 일어난 태그를 가져온다 ⭐⭐⭐
+                                let el = e.target;
+                            // 해당 태그에서 index가 찍히는지 확인 
+                                console.log(el.selectedIndex);
+
+                            // 유저가 떠난 것 처리 
+                                socket.emit("leaveRoom" , room, name)
+                                    // [질문] 
+                                        // leaveRoom 으로 다른 이벤트를 설정하면, 서버에서 다르게 반응하나?
+                                        // 응. 그러네. 다르게 반응하네.  
+                            
+                            // 새롭게 클릭한 것으로 room 에 넣기 
+                                room = rooms.options[el.selectedIndex].value;
+                            
+                            // ⭐⭐⭐ joinRoom 에 다시 보내기
+                                socket.emit("joinRoom" , room , name);
+                    // [시사점]
+                        // 1) 방에 들어가는게 유동적으로 변할 수 있는 상황이면, ⭐⭐⭐⭐⭐⭐  
+                            // a) 기본적으로 보내고 
+                            // b) 유동적으로 변경된 정보를 가져와서 다시 담고 
+                            // c) 최종적으로 '변경된 정보를 반영해서 emit' 해줘야 한다. 
+
+                        }
+                
+                // 
+
+                // 5. 방에 입장하면, 입장했다!!! 는 문구 띄워주기
+                    socket.on("joinRoom" , (room , name) => {
+                        messages.innerHTML += `
+                        <li class = "join_text">
+                            ${name} 님이 ${room}에 들어왔음~
+                        </li>
+                        `;
+                    });
+
+                // 6. 방에서 나가면, 나갔따!! 문구 띄우기 
+                    socket.on("leaveRoom" , (room , name) => {
+
+                        messages.innerHTML = `
+                        <li class = "leave_text">
+                            ${name} 님이 ${room} 에서 나갔음 ㅠㅠ 
+                        `
+                    });
+
+            }
+        
+
+            // 힌트 
+            
+            // optionㄴ 태그에서 뭐가 나오는지 
+                // console.log(rooms.options);
+                    // 현재 옵션들을 배열로 가져온다. 
+                // console.log(rooms.selectedIndex)
+                    // 현재 선택한 인덱스 ⭐⭐⭐⭐⭐⭐⭐⭐ 
+        
+        
+    }
+
+</script>
+
+</html>

@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+
+    <script src="/socket.io/socket.io.js"></script>
+
+
+    <style>
+        body {
+            position: relative;
+            height: 100vh;
+        }
+        .content {
+            position: absolute;
+            /* 무조건 가운데로 오게 하기 */
+            top: 50%;
+            left: 50%;
+            transform: translate(-50% , -50%);
+                /* 반지름, 반지름 빼면 > '부모기준' 으로 무조건 가운데로 옴 */
+
+            width: 500px;
+            height: 500px;
+            border: 1px solid;
+        }
+
+        #send {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            border: 1px solid;
+            box-sizing: border-box;
+            display: flex;
+        }
+
+        #send #msg {
+            border: 0;
+            box-sizing: border-box;
+            padding: 10px;
+            width: 85%;
+        } 
+
+        #send #sendBtn {
+            background-color: beige;
+            border: none;
+            box-sizing: border-box;
+            padding: 10px;
+            width: 15%;
+        }
+
+        #messages {
+            margin: 0;
+            padding: 0;
+        }
+
+        #messages li {
+            list-style: none;
+        }
+
+        #login {
+            width: 300px;
+            height: 300px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+
+        }
+        
+
+
+
+        /* 동적으로, 누가 접속했습니다~ 라고 알려주는거 */
+        .join_text {
+            background-color: gray;
+        }
+    
+
+        /* 동적으로, 누가 떠났습니다~ 라고 알려주는거 */
+        .leave_text {
+            background-color: goldenrod;
+            border: 1px solid;
+        }
+
+        /* main 은 비웠다가, 동적으로 붙게 해야 함 ✅✅ */
+        #main {
+            display: none;
+        }
+
+
+    </style>
+
+
+
+</head>
+<body>
+    
+
+    <div class="content">
+        <div> 귀여운 동물 카톡 </div>
+        <div id="login">
+            <p> 로그인 | 닉네임을 정할거야 </p>
+            <input type="text" id="username">
+            <button id="loginBtn"> 접속 </button>
+        </div>
+
+        <div id="main">
+            <select name="" id="rooms">
+                <option value="고양이 방"> 방선택 할거야 | 고양이 방 </option>
+                <option value="강아지 방"> 방선택 할거야 | 강아지 방 </option>    
+            </select>
+
+            <ul id="messages">
+                
+            </ul>
+            
+            <div id="send">
+                <input type="text" id="msg">
+                <button id="sendBtn">보내기</button>
+            </div>
+
+            <div id="send2">
+                <input type="text" id="msg2">
+                <button id="sendBtn2">귓속말</button>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+<script>
+    window.onload = () => {
+        loginBtn.onclick = () => {
+            login.style.display = "none";
+            main.style.display = "block";
+        
+            
+            const name = username.value;
+            
+            // optionㄴ 태그에서 뭐가 나오는지 
+                console.log(rooms.options);
+                    // 현재 옵션들을 배열로 가져온다. 
+                console.log(rooms.selectedIndex)
+                    // 현재 선택한 인덱스 ⭐⭐⭐⭐⭐⭐⭐⭐ 
+            
+            // 선택한 인덱스의 옵션 value 값        
+                let room = rooms.options[rooms.selectedIndex].value;
+                console.log(room);
+                    // 이걸 '방이름' 으로 할 예정
+
+            // 연결 시도
+                const socket = io.connect();
+
+            // 접속 했다는 거 알려주기 
+                socket.emit("joinRoom" , room, name);
+
+
+            // 고양이방, 강아지방 바꿨을 때 
+                rooms.onchange = function(e) {
+                    // 이벤트가 일어난 태그를 가져온다.
+                    let el = e.target 
+
+                    console.log(el.selectedIndex);
+
+                    // 해당 유저가 room 에서 떠남 
+                        // 고양이 유저가 고양이 방에서 떠남
+                    socket.emit("leaveRoom" , room, name);
+
+                    room = room.options[el.selectedIndex].value;
+                    socket.emit ("joinRoom" , room, name);
+                }
+                
+            // (이전과정) 서버는, 이걸 받고, 나름대로 push 를 함 > 서버가 보낸걸 이제 받아서 > (지금) 브라우저에게 준다.
+                socket.on("joinRoom" , (room, name) => {
+                    console.log("접속함?✅✅✅✅✅")
+
+                    messages.innerHTML += `
+                    <li class = "join_text">
+                        ${name} 님이 ${room} 에 들어왔음⚡
+                    </li>
+                    `;
+                })
+
+            // 나갔음~
+                socket.on("leaveRoom" , (room, name) => {
+                    messages.innerHTML += `
+                    <li class ="leave_text">
+                        ${name} 님이 ${room} 에서 나갔음~
+                    </li>
+                    `
+                })
+
+
+            // 🔷 채팅 기능 
+                // 
+                socket.on("chat" , (name, msg) => {
+                    messages.innerHTML += `
+                        <li>
+                            ${name} : ${msg}
+                        </li>
+                    `;
+                })
+            
+                // 
+                sendBtn.onclick = function() {
+                    socket.emit("chat" , room, name, msg.value);
+                    msg.value = "";
+                        // 채팅을 보냈으니까, 비워주기
+                } 
+
+                // 귓속말
+                sendBtn2.onclick = () => {
+                    socket.emit("chat2" , msg2.value, name, msg.value);
+                        // 방이 달라도 귓속말이 간다. 
+                        // 왜냐면, room 이 아니라, 유저 기준으로 보내니까 ⭐⭐⭐⭐⭐ 
+                    msg.value = "";
+                }
+
+            // let room = rooms.options;
+
+        }
+    }
+
+
+// ⭐⭐ 추가 과제 할 것 ⭐⭐ 
+    // 유저 접속을 '배열' 로 만들어놨음. 
+    // 채팅방 옆에 접속자를 보여주는 탭을 하나 만들것
+    // 접속자가 id 로 보일 수 있게
+    // 해당 귓속말을 할 때, id 를 클릭해서, 귓속말 버튼을 누르면, 귓속말이 전송될 수 있게. 
+
+
+</script>
+
+
+
+</html>
