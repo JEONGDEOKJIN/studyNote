@@ -43,5 +43,5 @@ app.use("/login",LoginRouters);
 app.use('/border',BorderRouters);
 
 app.listen(8080, ()=>{
-    console.log("server on~")
+    console.log("8080 server on~")
 })

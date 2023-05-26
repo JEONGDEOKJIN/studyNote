@@ -40,8 +40,9 @@ const app = express();
     const io = socketIo(server);
 
 // 유저 저장하는 배열 
-    let userId = [];
-
+    let userId = [];        // 모든 유저
+    let dogRoomUserId = []      // 강아지방 유저
+    let catRoomUserId = []      // 고양이방 유저
 
     io.sockets.on("connection" , (socket) => {
 
@@ -113,6 +114,18 @@ const app = express();
                                     // connect 는 서버인 io 와 연결하게 됨. 
                                     // 이때, ⭐⭐ socket 은 하나의 객체 이고, 그에 따라 상속받은 메소드들이 있고, 각 객체 마다 고유한 id 가 생성됨 ⭐⭐
 
+                    // c) 해당 방에 입장안 name 을 방에 담기 
+                        // 이게 꼭 필요? 
+                        
+                    
+                    // if (room == '고양이방') {
+                    //     catRoomUserId.push(name)
+                    // } 
+                    
+                    // if (room = '강아지방') {
+                    //     dogRoomUserId.push(name)
+                    // }
+
                 })
 
             // 5) 방 나가게 하기 
@@ -120,6 +133,9 @@ const app = express();
 
                     // a) 나가면, 나간 방에서 제외 
                         socket.leave(room);
+
+                    // a-1) 나가면, 해당 name 이 들어가 있는 room 에서 없애기 
+
 
                     // b) 어느방에, 누가, 나갔는지, 해당 방에 있는 유저들에게 푸쉬 
                         io.to(room).emit("leaveRoom", room, name)
@@ -168,7 +184,17 @@ const app = express();
                     // [해석]
                         // id | 여기서 id 는 귓속말 공란에서 기입 받는다. 그래서, 처음엔 msg2.value 이고, 이게 서버에서 넘어오면서 이름이 id 가 되었다. 
                         // chat | 기본 chat 이벤트를 부른 이유는, 그치, 하나의 렌더링을 만들어놓은거, 를 같이 사용하기 위해서?
-                        
+    
+        // 🔷 채팅방 옆에 현재 로그인한 사용자 보이게 하기 
+            // 현재 접속한 '모든 유저' 확인 
+                console.log(userId)
+            // '고양이방' 에 접속한 유저 확인 
+                console.log(catRoomUserId)
+            // '강아지방' 에 접속한 유저 확인
+                console.log(dogRoomUserId)
+
+
+
     })
 
 

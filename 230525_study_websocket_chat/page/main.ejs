@@ -13,6 +13,10 @@
         body{
             position: relative;
             height: 100vh;
+
+            display: flex;
+            align-items: center;    
+            justify-content: center;
         }
 
         .content {
@@ -74,6 +78,14 @@
 
         }
 
+        #containerNameList {
+            background-color: antiquewhite;
+            width: 200px;
+            height: 500px;
+
+            margin-left: 700px;
+            display: none;
+        }
 
         /* 동적으로, 누가 접속했습니다~ 라고 알려주는 거 ⭐⭐⭐⭐⭐⭐⭐⭐⭐ */
         .join_text {
@@ -109,41 +121,51 @@
 
         <button id="testBtn"> 테스트 </button> -->
 
-<div class="content">
-    <!-- 처음에 보이게 되는 화면 : 밑에 부분은 안 보이게 하다가, display block 으로 할 것 임 -->
-        <div> 귀여운 동물 카톡</div>
-        <div id="login">
-            <p>로그인</p>
-            <input type="text" id="username">
-            <button id="loginBtn">접속</button>
-        </div>
 
-    <!-- 두 번째 들어가면 보이는 화면 : 밑에 부분은 나중에 동적으로 보이게 할 것 임 -->
-        <div id="main">
-            <select name="" id="rooms">
-                <option value="고양이 방"> 😺 고양이방 </option>
-                <option value="강아지 방"> 🐶 강아지방 </option>
-            </select>
+    <!-- 채팅 보이는 화면 -->
+        <div class="content">
+            <!-- 처음에 보이게 되는 화면 : 밑에 부분은 안 보이게 하다가, display block 으로 할 것 임 -->
+                <div> 귀여운 동물 카톡</div>
+                <div id="login">
+                    <p>로그인</p>
+                    <input type="text" id="username">
+                    <button id="loginBtn">접속</button>
+                </div>
 
-            <!-- message : 방에 입장했다~ 라는 걸 말해주는 곳 
-                | 너무 신기한데... ⭐⭐⭐⭐⭐⭐  -->
-            <ul id="messages">
+            <!-- 두 번째 들어가면 보이는 화면 : 밑에 부분은 나중에 동적으로 보이게 할 것 임 -->
+                <div id="main">
+                    <select name="" id="rooms">
+                        <option value="고양이 방"> 😺 고양이방 </option>
+                        <option value="강아지 방"> 🐶 강아지방 </option>
+                    </select>
+
+                    <!-- message : 방에 입장했다~ 라는 걸 말해주는 곳 
+                        | 너무 신기한데... ⭐⭐⭐⭐⭐⭐  -->
+                    <ul id="messages">
+
+                    </ul>
+
+                    <div id="send">
+                        <input type="text" id="msg">
+                        <button id="sendBtn">보내기</button>
+                    </div>
+                    
+                    <div id="send2">
+                        <input type="text" id="msg2">
+                        <button id="sendBtn2">귓속말</button>
+                    </div>
+                </div>
+            
+            </div>
+    
+    
+    <!-- 유저 name list -->
+        <div id="containerNameList">
+            <ul id="nameList">
 
             </ul>
 
-            <div id="send">
-                <input type="text" id="msg">
-                <button id="sendBtn">보내기</button>
-            </div>
-            
-            <div id="send2">
-                <input type="text" id="msg2">
-                <button id="sendBtn2">귓속말</button>
-            </div>
         </div>
-</div>
-
-
 
 
 
@@ -186,6 +208,7 @@
                 // 1. 버튼 클릭 하면 > '착시 효과' 로 다음 페이지 보이게 하기
                     login.style.display = "none";
                     main.style.display = "block";
+                    containerNameList.style.display = "block";
 
             // 🔷 고양이 방에 들어가면, 고양이 방에 들어갔다고 표시하기 
                 // 2. 들어간 room과 사용자 name 을 표시하기 위해, 필요한 정보 가져오기 
@@ -254,6 +277,7 @@
                         }
                 
                 // 5. 방에 입장하면, 입장했다!!! 는 문구 띄워주기
+                    // 5.1 채팅방에 문구를 띄우기
                     socket.on("joinRoom" , (room , name) => {
                         messages.innerHTML += `
                         <li class = "join_text">
@@ -261,6 +285,15 @@
                         </li>
                         `;
                     });
+
+                    // 5.2 채팅방 옆에 name 띄우기 
+                    socket.on("joinRoom" , (room, name) => {
+                        nameList.innerHTML += `
+                        <li> ${name} 님 접속중👐
+                        </li>
+                        `
+                    })
+
 
                 // 6. 방에서 나가면, 나갔따!! 문구 띄우기 
                     socket.on("leaveRoom" , (room , name) => {

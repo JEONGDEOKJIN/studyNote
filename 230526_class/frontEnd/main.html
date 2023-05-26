@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <!-- axios ⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐  -->
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <!-- 요청이 외부로 가고 > 갔다가 들어오면, 컴터는 외부걸로 인식 -> 그래서 cors 테스트를 할 수 있음. -->
+    <!-- 근데 axios 는 cors 를 뚫고 간다.  -->
+
+    <!-- 즉, cors 는 외부접속을 제어하기 위한 것, 
+        나 혼자는 안 되니가, axios 를 가져온건데, 
+        axio 가 근데 cors 를 뚫었어 
+        그리고, cors 에서 8000 번대만 들어올 수 있게 했는데, 자가 접속(내가 내 컴터에서 하는거)은 
+        또 이거 뚫었어 
+    -->
+
+</head>
+
+<style>
+    #isLoading{
+        background-color: white;
+        width: 100%;
+        height: 100%;
+        position: fixed;
+        top: 0;
+        left: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    #isLoading img {
+        width: 300px;
+            /* height 안 주면, 비율대로 커짐 */
+    }
+
+    #isLoading.disable {
+        display: none;
+    }
+
+</style>
+
+<body>
+
+    <div id="isLoading">
+        <img src="./img/loadingGIF.gif" alt="">
+    </div>
+
+    <div>
+        <div>
+            <span>이름 : </span>
+            <span id="user_name"></span>
+            <!-- 블록 블록 > span 이라서, 옆에 붙을 것 임! -->
+        </div>
+
+        <div>
+            <span>나이</span>
+            <span id="user_age"></span>
+        </div>
+
+    </div>
+
+    <a href="./create.html"> 게시글 작성하러 가기 </a>
+
+</body>
+
+<script>
+
+    async function getAPI() {
+        try {
+            // const data = await axios.get('http://127.0.0.1:8007/login/view' , {
+            //     // withCredentials : 브라우저가 쿠키를 서버로 전달 할 수 있는 옵션
+            //         // 이거가 없으면 > undefined 가 나옴 
+            //         // req.body 로 가져오지 않음
+            //         withCredentials: true
+
+            // })
+
+            const {data} = await axios.get('http://127.0.0.1:8007/login/view' , {
+                    withCredentials: true
+                        // withCredentials 없으면 json 안 와.
+                // [해석]
+                    // axios 가 http://127.0.0.1:8007/login/view 여기로 get 요청을 보내 
+                    // 그러면 app.js 미들웨어에 의해 login routers 폴더로 간다.
+                    // login routers 가 가리키는 viewUser 으로 간다. 
+                    // 그러면, json(data) 이렇게, json 형식으로 데이터를 보낸다. 
+                    // 그러면, 그걸 main.html 에서 구조분해할당으로 받는다. 
+                    
+
+                // http://127.0.0.1:8007/login/view 여기로 가서 라우트로 가고 
+                // http://127.0.0.1:8007/login/view 여기에서 8007은 포트 번호
+                // 라이브 서버는 5000번대 
+            });
+    
+            // 로딩 gif 를 돌 때 > 데이터를 가져왔을 때, 끝내줘야 함. ⭐⭐⭐⭐⭐ 
+                // 데이터가 다 들어오면, 사라지게  
+                user_name.innerHTML = data.name
+                user_age.innerHTML = data.age
+                isLoading.classList.add("disable");
+                // get 다음엔 요청할 서버의 주소를 적음
+                // 필요한 건, data 가 필요함 
+                // console.log(data)
+
+
+        } catch (error) {
+            console.log(error)
+            
+        }
+    }
+    getAPI();
+
+</script>
+
+
+</html>
