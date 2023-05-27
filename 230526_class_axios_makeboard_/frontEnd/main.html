@@ -68,8 +68,10 @@
 
 </body>
 
+
 <script>
 
+    // ⭐⭐ async 를 쓴다 == 완료 될 때 까지 기다리는 시간이 생긴다 == 그 동안 위에 있는 로딩 이미지가 동작하게 한다. ⭐⭐
     async function getAPI() {
         try {
             // const data = await axios.get('http://127.0.0.1:8007/login/view' , {
@@ -79,6 +81,8 @@
             //         withCredentials: true
 
             // })
+            
+            console.log("잘 작동되는 api 인데, 이 부분이 원래 잘 찍히는 부분인가 테스트 📅📅📅📅📅📅📅📅📅📅 ")
 
             const {data} = await axios.get('http://127.0.0.1:8007/login/view' , {
                     withCredentials: true
@@ -89,7 +93,7 @@
                     // login routers 가 가리키는 viewUser 으로 간다. 
                     // 그러면, json(data) 이렇게, json 형식으로 데이터를 보낸다. 
                     // 그러면, 그걸 main.html 에서 구조분해할당으로 받는다. 
-                    
+
 
                 // http://127.0.0.1:8007/login/view 여기로 가서 라우트로 가고 
                 // http://127.0.0.1:8007/login/view 여기에서 8007은 포트 번호

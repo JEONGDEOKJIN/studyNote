@@ -41,6 +41,10 @@ const { Post, User } = require("../models")
                     // 4. 다만, 바로 가는게 아니라, isLogin 으로 계속 토큰을 확인한다. ⭐⭐⭐⭐⭐ 
                     // 5. routers 에서, '경로' 를 적는데, 'url 경로에서 변수 역할을 하는게 place holer?' 
                         // 5.1 그래서, '/view/:id' 이렇게 경로를 적음 
+                
+                // [생각해볼 것]
+                    // 이렇게 redirect 를 요청하면, 해당 경로에 대해서, get 요청, 이 들어가는 건가? 
+                    // 그러면, 'router' 에서 이걸 보여줄 수 있는 처리를 해야겠네? 
 
     }
 
@@ -53,7 +57,7 @@ const { Post, User } = require("../models")
             console.log("req.params.id🥙🥙" , req.params.id);        
             // req.params.id 를 하는 이유 : routing url 에서 placeholder 에 담겨서 id 가 넘어왔기 때문에 
 
-        // 2. 
+        // 2. 해당 id 에 해당하는 user row 와 post row 가져와서 > 렌더 기능에 토스 하기
             User.findOne(
             {
                 where : {id : req.params.id},
@@ -93,10 +97,16 @@ const { Post, User } = require("../models")
 
                     const Posts = e.dataValues;
 
-                    console.log(Posts)
-                    res.render("board" , {data : Posts});
-                        // [해석] 
-                            // Posts 는 '배열' 인데, Posts[0] 은 객체 라는 점!
+                    // console.log(Posts)
+                    
+                    res.json(Posts)
+
+                    console.log("boardController 끝 까지 정상 작동🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀")
+
+                    // 밑에건 esj 방식
+                        // res.render("board" , {data : Posts});
+                            // [해석] 
+                                // Posts 는 '배열' 인데, Posts[0] 은 객체 라는 점!
                             
             })
         }
