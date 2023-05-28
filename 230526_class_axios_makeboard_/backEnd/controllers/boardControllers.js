@@ -33,7 +33,8 @@ const { Post, User } = require("../models")
             
 
         // 3. 해당 유저가 작성한 글을 볼 수 있는 페이지로 이동  
-            res.redirect(`/board/view/${user_id}`)
+            // res.redirect(`http://127.0.0.1:5500/frontEnd/board.html`)
+            res.redirect(`/frontEnd/board.html`)
                 // [알게된 것 | 흐름 따라가기]
                     // 1. 우선, 여기에서, '/board/view/1' 여기로 가달라고 요청한거야 
                     // 2. 그러면, 대체 어디에서 보이는거야? 를 생각해보면, 그 다음엔 '라우터' 로 간다. 
@@ -100,7 +101,7 @@ const { Post, User } = require("../models")
                     // console.log(Posts)
                     
                     res.json(Posts)
-
+                    
                     console.log("boardController 끝 까지 정상 작동🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀")
 
                     // 밑에건 esj 방식

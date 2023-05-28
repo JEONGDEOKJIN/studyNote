@@ -51,7 +51,7 @@
                 withCredentials : true
             });
 
-            const {data} = response.data
+            const data = response.data
 
             // [질문 or 애매한 것]
                 // http://127.0.0.1:8007 이건 어디에서 설정? 
@@ -95,11 +95,13 @@
 
             // 3. html 태그에 innerHTML 로 꽂아주기 (반복문 어떻게?)
                 user_name.innerHTML = data.name;
-                msg_list.innerHTML = data.Posts[2].msg;
+                // msg_list.innerHTML = data.Posts[2].msg;
                 
-                // Posts.forEach((el) => {
-                //     msg_list.innerHTML = el.msg                    
-                // });
+                data.Posts.forEach((el) => {
+                    msg_list.innerHTML += ` 
+                    <li> ${el.msg} </li>
+                    `                    
+                });
 
         } catch (error) {
             console.log(error)
@@ -107,9 +109,7 @@
 
     }
 
-document.addEventListener("DOMContentLoaded", function() {
     getAPI();
-});
 
 
 </script>
