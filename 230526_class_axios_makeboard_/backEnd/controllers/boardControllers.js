@@ -33,8 +33,8 @@ const { Post, User } = require("../models")
             
 
         // 3. 해당 유저가 작성한 글을 볼 수 있는 페이지로 이동  
-            // res.redirect(`http://127.0.0.1:5500/frontEnd/board.html`)
-            res.redirect(`/frontEnd/board.html`)
+            res.redirect(`http://127.0.0.1:5500/frontEnd/myboard.html`)
+            // res.redirect(`/frontEnd/board.html`)
                 // [알게된 것 | 흐름 따라가기]
                     // 1. 우선, 여기에서, '/board/view/1' 여기로 가달라고 요청한거야 
                     // 2. 그러면, 대체 어디에서 보이는거야? 를 생각해보면, 그 다음엔 '라우터' 로 간다. 
@@ -111,9 +111,6 @@ const { Post, User } = require("../models")
                             
             })
         }
-
-
-
             // [이 작업의 결과물]
             // 1) User 객체와 그 안에 있는 Posts 객체가 나옴 
                 // 즉, User 객체 안에는 Posts라는 속성이 있고, 
@@ -121,5 +118,77 @@ const { Post, User } = require("../models")
                 // 
 
 
-            
+// 모든 유저가 작성한 모든 게시글 보기
+    exports.allBoardView = (req, res) => {
+        let nameArr = [];
 
+        // 모든 user 를 찾아서 가져오기 
+        User.findAll({
+            include : [
+                {model : Post}
+            ]
+        }).then((e) => {
+        
+            // name 을 가져오려면 어떻게 타고들어가야 하나
+                // console.log( "name ✍:" , e[0].dataValues.name);
+                // console.log( "name ✍:" , e[1].dataValues.name); 
+                // [결과물]
+                    // name ✍: 123
+                    // name ✍: 12
+                // '배열' 에 넣기 (각각 다른 배열에 넣을거지만, index 를 맞춰서, 그 사람의 데이터가 오게 해야 함)
+                    let user_nameArr = []
+                
+                    e.forEach( (el) => {
+                        user_nameArr.push(el.dataValues.name)
+                    });
+
+            // msg 를 뽑으려면, 어떻게 접근해야 하나
+                // console.log("msg 🌻 :" , e[0].dataValues.Posts[0].dataValues.msg)
+                // console.log("msg 🌻 :" , e[0].dataValues.Posts[1].dataValues.msg)
+                // [결과물] 
+                    // msg 🌻 : 123123
+                    // msg 🌻 : dhdhdhdhdh
+                
+                // 배열에 넣기 
+                    let user_postsArr = [];
+
+                    e.forEach( (el) => {
+                        el.dataValues.Posts.forEach((el) => {
+                            user_postsArr.push(el.dataValues.msg)
+                        })
+                    });
+            
+            // 객체에 합쳐보기                
+                // 내가 최대한 짜보고, 안 되면 > gpt 에게 물어봐서, 짬 ⭐⭐⭐⭐⭐ 
+                const user_info = e.map( (el, index) => {
+                    return {
+                        name : el.dataValues.name, 
+                        msg :   el.dataValues.Posts.map((post) => {
+                            return post.dataValues.msg;
+                        })
+                    }
+                });
+                                
+
+            // 잘 나가나 디버깅 : 2차에 완성 | 내가 최대한 짜고 - gpt 한테 수정해달라
+                // 1차 
+                    // console.log("🐶🐶🐶🐶🐶" , user_info)
+                    // [결과물]
+                    // 음... 뽑혀 나오긴 하는데, 이 msg 가 user1 껀지 모르게 나옴 
+                    // name: [ '123', '12', '111', '1', 'bestname', '321', '222' ],
+                    // msg: [
+                    //     '123123',
+                    //     'dhdhdhdhdh',
+                    //     '123123',
+                    //     'hihihi',
+                    //     'hihihi',
+                    //     'slakdfj',
+
+                // 2차 
+                // console.log("🐶🐶🐶🐶🐶" , user_info)
+
+            // 내보내기 
+                res.json(user_info)
+            
+        })
+    }
