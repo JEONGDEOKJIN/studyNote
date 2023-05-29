@@ -33,7 +33,7 @@ const { Post, User } = require("../models")
             
 
         // 3. 해당 유저가 작성한 글을 볼 수 있는 페이지로 이동  
-            res.redirect(`http://127.0.0.1:5500/frontEnd/myboard.html`)
+            res.redirect(`http://127.0.0.1:5500/frontEnd/mypage.html`)
             // res.redirect(`/frontEnd/board.html`)
                 // [알게된 것 | 흐름 따라가기]
                     // 1. 우선, 여기에서, '/board/view/1' 여기로 가달라고 요청한거야 
@@ -192,3 +192,52 @@ const { Post, User } = require("../models")
             
         })
     }
+
+
+
+// 마이페이지
+
+    // 유저 아이디 제공 -> 이렇게 할거면, 굳이, id 찾는 기능을 따로 만들 필요가 없겠네 
+    exports.myPageView = async (req, res) => {
+    // console.log("🙆‍♂️🙆‍♂️🙆‍♂️🙆‍♂️🙆‍♂️🙆‍♂️🙆‍♂️🙆‍♂️🙆‍♂️🙆‍♂️🙆‍♂️🙆‍♂️🙆‍♂️" , req)
+    
+    const {acc_decoded} = req;
+    console.log("🙆‍♂️🙆‍♂️🙆‍♂️🙆‍♂️🙆‍♂️🙆‍♂️🙆‍♂️🙆‍♂️🙆‍♂️🙆‍♂️🙆‍♂️🙆‍♂️🙆‍♂️" , acc_decoded)
+    
+    const user_id = acc_decoded.id
+
+    User.findOne(
+        {
+            where : {id : user_id},
+            include : [
+                {model : Post}
+            ] 
+        }
+        ).then( (e) => {  
+                e.dataValues.Posts = e.dataValues.Posts.map( (i) => i.dataValues);
+                const Posts = e.dataValues;
+                // console.log("🙆‍♂️🙆‍♂️🙆‍♂️🙆‍♂️🙆‍♂️🙆‍♂️🙆‍♂️🙆‍♂️🙆‍♂️🙆‍♂️🙆‍♂️🙆‍♂️🙆‍♂️" , Posts)   
+                // 결과물 
+                    // id: 7,
+                    // name: '222',
+                    // age: 222,
+                    // user_id: '222',
+                    // user_pw: '$2b$10$rSp7C55ssL.LHkBqI2QAIujJ4my3r76EcuYQbxXrAKAFmdW8Joauy',
+                    // createdAt: 2023-05-27T13:02:40.000Z,
+                    // updatedAt: 2023-05-27T13:02:40.000Z,
+                    // Posts: [
+                    //   {
+                    //     id: 29,
+                    //     msg: 'salkdfj',
+                    //     createdAt: 2023-05-27T13:02:46.000Z,
+                    //     updatedAt: 2023-05-27T13:02:46.000Z,
+                    //     user_id: 7
+                    //   }, 등등등 
+                    
+                res.json(Posts)
+        })
+    
+
+    }
+
+

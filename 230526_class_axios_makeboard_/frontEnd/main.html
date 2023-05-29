@@ -64,7 +64,24 @@
 
     </div>
 
-    <a href="./create.html"> 게시글 작성하러 가기 </a>
+    <a href="./create.html"> 게시글 작성하러 가기 </a> <br>
+
+    <a href="./mypage.html"> 마이 페이지 가기 </a> <br>
+
+
+    <!-- board 로 라우팅 시키는게 나을지, signup 으로 라우팅 시키는게 나을지 잘 모르겠음 -->
+    <!-- <form action="http://127.0.0.1:8007/board/mypage/:id" method="get">
+        <button>
+            마이페이지 가기
+        </button>
+    </form> -->
+        <!-- 게시글 작성과 다르게, 마이페이지는 placeholder 를 하는 이유는? 
+            1) 지금 로그인 한 유저의 id 를 기억해야 하기 때문에 
+            2) 게시글 작성하러 가기에는 id 를 기억할 수 있는 방법이 있냐는 거지 
+            3) 아직 생각나는 바가 없으니까, 우선, placeholder 로 해보자
+            4) 음... 근데 방식이 있지 않을까 ?
+        -->
+
 
 </body>
 
@@ -108,6 +125,9 @@
                 // get 다음엔 요청할 서버의 주소를 적음
                 // 필요한 건, data 가 필요함 
                 // console.log(data)q
+
+                user_id.innerHTML = data.id
+
 
 
         } catch (error) {

@@ -59,8 +59,9 @@ exports.Login = async (req, res) => {
 
 
 exports.viewUser = async(req, res) => {
+    
     const {acc_decoded} = req;
-    console.log(acc_decoded);
+    console.log("👍👍👍" , acc_decoded);
         // 이게 비어있을 텐데, 그게 무얼 하면 할 수 있다고❓❓❓ 
 
     const user = await User.findOne({ 
