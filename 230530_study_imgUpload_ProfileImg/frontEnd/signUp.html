@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <!-- axios 로 form 태그 대신 전송⭐⭐⭐ -->
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+
+
+</head>
+<body>
+    
+
+    <!-- 회원가입 기입란 | 동적 form 데이터로 생성 -->
+    <label for="">id : </label>
+    <input type="text" id="user_id"> <br>
+    
+    <label for="">pw : </label> 
+    <input type="password" id="user_pw"> <br> 
+
+    <button id="signUpBtn"> 회원가입🙌 </button>
+
+</body>
+
+<script>
+
+    signUpBtn.onclick = () => {
+
+    // 'form 데이터를 동적' 으로 생성하기 
+
+        // 'form data 인스턴스' 만들어서 > form 변수에 할당
+        const form = new FormData();
+
+        // form 객체에, id 와 pw 데이터 넣기 
+        form.append("user_id" , user_id.value)
+        form.append("user_pw" , user_pw.value)
+
+        // console.log("⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐" , user_id.value)
+        // console.log("⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐" , user_pw.value)
+
+        // form 객체에 넣은 데이터를 axios 로 전송하기 
+            axios.post("http://127.0.0.1:8001/signUp" , form , {
+                withCredentials : true,
+            }, {
+                "Content-Type" : "multipart/form-data" 
+                // [애매한 것]  
+                    // port 번호 관련 : ❓❓❓ http://127.0.0.1:8001/signUp 여기에서, 'port 번호를 8001 로?' vs 'cors 에서 설정한 5000번대?'❓❓❓
+            }).then((e) => {
+                console.log(e.data)
+            }).catch((err) => {
+                console.log(err)
+            })
+    }
+
+
+</script>
+
+
+</html>

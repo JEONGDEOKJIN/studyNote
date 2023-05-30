@@ -16,6 +16,7 @@ const Post = require("./posts")
         config.dev
         )
         // 매개변수니까 순서 중요 ⭐⭐⭐
+        // sequelize 를 만든 개발자들이 그렇게 순서를 부여했기
         
         // [순서가 중요한 이유]
             // 1) 이건 지금 class 정의된 걸, new 키워드를 써서, 객체를 생성 하고 있음. 

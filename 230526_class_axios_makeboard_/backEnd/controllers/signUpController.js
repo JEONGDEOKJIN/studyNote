@@ -17,7 +17,7 @@ exports.signUp = async (req, res) => {
             return res.send("중복 회원 가입 임!!!");
         }
 
-        const hash = bcrypt.hashSync(user_pw , 10);
+        const hash = bcrypt.hashSync(user_pw , 10);   
         await User.create({
             name, 
             age, 
