@@ -4,7 +4,7 @@ const Sequelize = require("sequelize");
 
 
 
-class Users extends Sequelize.Model {
+class User extends Sequelize.Model {
 
     // 컬럼 내용 및 테이블 옵션 설정
     static init(seq) {
@@ -42,7 +42,5 @@ class Users extends Sequelize.Model {
 
 }
 
-
-
 // 내보내기
-    module.exports = Users
+    module.exports = User;

@@ -16,17 +16,22 @@
     
     const path = require("path")
 
-    const uploadRouter = require("./routers/uploads")
-    const signUpRouter = require("./routers/signUpRouter")
 
     const dot = require("dotenv").config();
 
+    
     const app = express();
 
     // cors 설정 
         // npm i cors
     const cors = require("cors");
-const { sequelize } = require("./models");
+    const { sequelize } = require("./models");
+
+
+    const uploadRouter = require("./routers/uploads")
+    const signUpRouter = require("./routers/signUpRouter")
+
+    
     
     app.use(cors({
         // 허용할 도메인 
@@ -69,7 +74,7 @@ const { sequelize } = require("./models");
 
     // '회원가입' 관련 라우터 토스
         // 처음 회원가입 페이지 들어왔을 때 
-            app.use("/signUp" , signUpRouter);
+        app.use("/signUp" , signUpRouter);
 
 
 // 🔷 sequelize 로 1) 테이블 없으면 만들고 2) 있으면 유지시키기 
