@@ -8,7 +8,7 @@ const User = require("./users")
 const Post = require("./posts")
 
 
-    // 이때 순서를 잘 지켜야 함
+    // 이때 순서를 잘 지켜야 함 ⭐⭐⭐⭐⭐
     const sequelize = new Sequelize(
         config.dev.database, 
         config.dev.username,

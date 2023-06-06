@@ -189,6 +189,7 @@ const { Post, User } = require("../models")
 
             // 내보내기 
                 res.json(user_info)
+                    // 이제 이걸 axios 로 받게 된다. 
             
         })
     }
