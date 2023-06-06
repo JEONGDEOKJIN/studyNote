@@ -4,7 +4,7 @@ const routers = require("express").Router();
 const { Upload } = require("../mid/imgUpload");
 
 
-// upload.sin
+// upload.single
 // form 읽어서 타입이 FILE이면 FILE 객체에 담아주고
 // 타입이 객체면 BODY 객체에 담아준다.
 routers.post("/" ,  Upload.single("upload") , (req, res) => {
@@ -23,7 +23,7 @@ routers.post("/" ,  Upload.single("upload") , (req, res) => {
 
 
     // Upload.single 
-        // 매개변수 : ("form 에서 장한 파일의 name 의 인풋을 전달")
+        // 매개변수 : ("form 에서 저장한 파일의 name 의 인풋을 전달")
         // 매개변수 : form 에서 이미지 파일을 가지고 있는 input 의 name 을 작성해준다. 
 
 

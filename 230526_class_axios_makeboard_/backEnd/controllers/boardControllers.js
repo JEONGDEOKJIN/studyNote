@@ -2,6 +2,10 @@
 
 
 const { Post, User } = require("../models")
+    // [해석]
+        //  ../models 하면 == 해당 폴더에서 index.js 를 가리킨다.
+        // const {User, Post} = require('../models/index'); 이거랑 동일한 말 
+
 
 
 // 게시글 생성 기능 

@@ -47,6 +47,7 @@
     // ⭐⭐ css 에서 정적 파일 경로 추가했던 것 처럼, 경로 잡아준다. 
     // 폴더명 까지 ⭐⭐⭐⭐⭐⭐⭐
     app.use("/img" , express.static(path.join( __dirname, "uploads")))
+    
 
 
 // 서버 대기 상태 
