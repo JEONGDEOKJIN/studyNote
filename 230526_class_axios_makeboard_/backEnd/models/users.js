@@ -39,6 +39,7 @@ class Users extends Sequelize.Model {
 
     static associate(db) {
         db.User.hasMany(db.Post, {foreignKey : "user_id" , sourceKey : "id"})
+        
     }
     // [2차 해석] ⭐⭐⭐⭐⭐⭐⭐⭐
         // foreignKey | 마음대로 이름을 지어줘도 된다. 

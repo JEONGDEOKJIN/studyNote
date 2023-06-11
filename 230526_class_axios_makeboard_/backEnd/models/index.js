@@ -33,12 +33,14 @@ const Post = require("./posts")
             // 3) constructor 함수를 실행하는게 new Sequelize 이고, 
                 // 제대로 실행시키려면, 반드시, 분서를 맞춰야만 함 ⭐⭐⭐⭐⭐ 
 
-const db = {};
+                
+// 지금까지 만든 인스턴스를 db 에 넣기 
+    const db = {};
 
+    db.sequelize = sequelize;
+    db.User = User;
+    db.Post = Post;
 
-db.sequelize = sequelize;
-db.User = User;
-db.Post = Post;
 
 // 테이블 초기화
 User.init(sequelize);
