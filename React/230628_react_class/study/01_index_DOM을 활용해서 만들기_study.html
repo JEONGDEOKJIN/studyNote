@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <div id="root">
+
+    </div>
+
+
+
+
+</body>
+
+
+<script>
+
+    // tag id가 root 인 요소 선택 -> root 변수에 담기 
+        const root = document.querySelector('#root');
+
+    // 버튼 태그(요소, element) 생성 
+        const button = document.createElement('button');
+
+    // 버튼에 기본적으로 보일 텍스트 넣기
+        button.innerHTML = "<div> 클릭 </div>"
+            // [해석]
+                // 아, 혹시, 다른 팀 코드는 여기가 innerHTML 로 되어있었으려나? 
+                // button 태그 안에 div 태그를 넣는것. 
+
+
+    // '클릭 이벤트시 벌어지는 일' 붙여넣기
+        button.addEventListener('click' , (e) => {
+            if(e.target.innerHTML === "Login") {
+                e.target.innerHTML = "Logout";
+                    // [궁금증 ❓]
+                        // 근데, innerText 가 아니라 innerHTML 로 해도 되는거야?
+                    // [답변 👏]
+                            // 기본적으로 p 태그가 숨어있거나 한게 아님. 
+                            // '✅ 그냥 문자열' 임.  
+            } else {
+                // 아니면, login! 으로 한다. 
+                e.target.innerHTML = "Login"
+            }
+        })
+
+    
+    // 버튼 태그를 root 에 추가하기
+        root.append(button)
+
+
+
+</script>
+
+
+
+
+</html>

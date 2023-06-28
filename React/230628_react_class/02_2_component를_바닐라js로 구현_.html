@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <div id="root">
+
+    </div>
+
+
+
+</body>
+
+    <script>
+        // 컴포넌트 가장 어려울 것 
+        // 컴포넌트 기능
+            // 사용자 ui 의 기본 단위
+            // 재사용할 것 같은 애들을 만든다. 
+            // 조각 만들고 -> 이 조각을 담을 부모 만들고 -> 감쌀 부모 만들고 완성 
+
+        // 컴포넌트 란? 
+            // 자주 사용할 것 같은 UI 요소를 기본단위(재사용성)
+
+            // 컴포넌트는 '상태' 와 '속성' 을 갖고 있음. 
+            // '속성' 은 Props 라는게 있음.
+            // react 는 데이터 흐름이 '단방향성' 임. 
+
+            // 부모에서 자식으로 값을 전달할 수 있음. 
+            // 자식에서 부모에게 값을 전달할 수 없음.
+
+
+        // class 
+            // 컴포넌트 클래스 
+
+            // component 는 component 의 모양을 만들 것 임. 
+            // 이걸 상속 받아서 사용할 것 임. 
+
+            class Component {
+                target;
+                state;  // 상태값 컴포넌트의 유지되는 데이터 | 컴포넌트의 상태값
+
+                constructor (target) {
+                    // 컴포넌트의 target 을 설정
+                    this.target = target;
+                    this.setup();
+                    this.render();
+                    console.log("나는 최초에 render 되었지💪")
+                }
+
+                // 초기 설정 함수
+                setup(){
+                    // 컴포넌트를 초기 설정 렌더링 하기 전에 동작하는 함수.
+                    console.log("component 초기 셋팅")
+                }
+
+                template(){
+                    // 컴포넌트 HTML 템플릿을 반환해줄 것 임. 
+                    // 페이지에 그릴 HTML 
+                    return "";
+                }
+
+                render(){
+                    // 컴포넌트를 타겟 요소에 렌더링
+                    this.target.innerHTML = this.template();
+
+                    this.setEvent();
+                    
+                }
+
+                setEvent() {
+                    // 컴포넌트 이벤트 셋팅 
+                    console.log("컴포넌트 이벤트 셋팅");
+                }
+
+                setState(_state) {
+                    // 컴포넌트의 상태를 업데이트
+                    // 업데이트 되면 -> 리렌더링(rerendering)
+
+                    this.state = {...this.state, ..._state};
+                        // 여기에서 this 는 앞으로 만들어질 인스턴스를 가리킴
+                    this.render();
+
+                    console.log("나 상태 바뀜");
+                }
+        }
+
+        // 가상 DOM 클래스 정의 
+        // 렌더링 시킬 것 임
+            class VirtualDOM {
+                constructor (component , target) {
+                    // 컴포넌트 넘겨받는, 매개변수로 전달받은 컴포넌트 생성 후, 타겟 요소 전달!
+                    // 컴포넌트 클래스 생성자 함수의 매개변수로 타겟 전달.
+                    this.Component = new component(target);
+                }
+
+                render() {
+                    // 컴포넌트 렌더링 
+                    this.Component.template();
+                }
+            }
+
+
+        // app class 컴포넌트를 상속받아서 만들어볼 것 임. 
+        class App extends Component {
+
+            // 초기 셋팅
+            setup() {
+                // App 의 컴포넌트 초기 셋팅 함수
+                this.state = { items : ["아이템 1" , "아이템2"] };
+                    // [궁금한 점]  
+                        // 여기에서 this 는 Component 를 가리키나? 
+            }
+
+            // html 리턴
+            template() {
+                // App 컴포넌트의 HTML 을 생성해서 반환
+                const { items } = this.state;
+                return `
+                    <ul> 
+                        ${items.map((item) => `<li> ${item} </li>` )}
+                    </ul>
+                    <button>추가</button>
+                `
+                // {items.map((item) => {`<li> ${item} </li>` })} 여기에서, {} 화살표 함수 다음 {} 이걸 쓰면 => return 이 나오게 됨. 
+            }
+
+            setEvent() {
+                // App 컴포넌트
+                this.target.querySelector('button').addEventListener('click' , () => {
+                    
+                    const {items} = this.state;
+                    this.setState({items : [...items, `아이템 ${items.length + 1}`]});    // 상태변경할 때는 setState
+
+                })
+                this.target.query
+
+            }
+        }
+        
+        // 클래스를 동적할당해서 쓰기! 
+
+        // root 는 선택자로 한번만 잡는다. 
+        const root = new VirtualDOM(App, document.querySelector('#root'))
+            
+        // root
+        root.render();
+
+
+
+    </script>
+
+
+
+
+
+</html>

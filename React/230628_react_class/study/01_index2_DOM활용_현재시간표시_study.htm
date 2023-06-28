@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+
+    <div id="root">
+
+    </div>
+
+
+
+</body>
+
+
+    <script>
+
+        // clock 함수 
+        const Clock = () => {
+
+            const div = document.createElement('div');
+            const h1 = document.createElement('h1');
+            const h2 = document.createElement('h2');
+
+            const txt = "시간이 표시된"
+
+            let time = `time : ${new Date().toLocaleTimeString()}`;
+                // [궁금증]
+                    // 근데, #{} 여기 안에는 '변수만 쓸 수 있는거 아냐?'
+
+            h1.innerHTML = txt;
+            h2.innerHTML = time;
+
+            div.append(h1, h2)
+
+            document.querySelector('#root').innerHTML = div.innerHTML
+                // [궁금한 것 😥]
+                    // ('#root').innerHTML다음에는 '문자열' 이 들어와야 하는거 아닌가 ?
+                // [답변 👏]
+                    // .innerHTML 은 ⭐'문자열' 을 필요로 함.⭐| 몰랐던 부분 ⭐⭐
+                    // 그래서, 이 성질 때문에, 그냥 div 로 적으면 값을 가져오지 못 함. 
+                    // 그래서, div.innerHTML 로 적어줬음.       
+        
+            }
+
+        setInterval(Clock , 1000);
+            // [해석]
+                // Clock 이라는 함수를 1초(1000 ms) 간격으로 실행하게 하기
+            // [알게된 것 👏]
+                // setInterval 함수는 특정 함수를, 특정 시간 간격으로 실행한다! 라는 걸 배움. 
+                // 그래서, 2000 를 넣으면, 2초 마다 실행이 되기 때문에, 현재 시간이 2초 마다 업데이트가 된다.
+
+    </script>
+
+
+
+</html>

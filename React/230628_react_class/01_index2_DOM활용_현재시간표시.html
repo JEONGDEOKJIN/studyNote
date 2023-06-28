@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+
+    <div id="root">
+
+
+    </div>
+
+
+
+</body>
+    <script>
+
+        // 로컬 시간을 나타내게 해보자.
+        const Clock = () => {
+
+            const div = document.createElement('div');
+            const h1 = document.createElement('h1');
+            const h2 = document.createElement('h2');
+
+            const txt = "시간임"
+
+            let time = `time : ${new Date().toLocaleTimeString()}`;
+
+            h1.innerHTML = txt;
+            h2.innerHTML = time;
+
+            div.append(h1, h2)
+
+            document.querySelector('#root').innerHTML = div.innerHTML
+            // document.querySelector('#root').append(div)
+
+        } 
+
+        setInterval(Clock, 1000);
+
+        // DOM 을 직접 이렇게 조작했었음. 
+        // 이제는 '상태값' 을 사용할 것 임. 상태값이 변화하면 -> DOM 을 다시 그려주게 
+            // 👉reactState.html 여기
+
+
+    </script>
+
+
+
+</html>

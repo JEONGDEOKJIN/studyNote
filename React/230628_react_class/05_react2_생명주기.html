@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+
+<!-- 🔹 react, react DOM 라이브러리 -->
+<script
+    crossorigin
+    src="https://unpkg.com/react@18/umd/react.development.js"
+></script>
+<script
+    crossorigin
+    src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"
+></script>
+
+
+<!-- ES5 에서 개발된 게 있고, ES6 문법이 있음. | 다만, ES5 때 개발된게 많음. SO, ES5 에서 개발된걸 바꿔서 써주게 함 -->
+<!-- Babel 을 가져와서 JSX 문법을 사용 -->
+    <!-- JSX 문법 : 자바스크립트 공간을 HTML 처럼 사용! 하는 것.  -->
+    <!-- 자바스크립트 코드를 변환해주는 착한 도구 BABEL 
+            자바스크립트 문법은 꾸준히 진화해왔음. 
+            자바스크립트 문법이 꾸준히 진화하면, ES6 -> ES5 로 변환
+            babel 을 통해서, 문법을, '쉽게' 고칠 수 있다. 
+
+            babel 은 JSX 구문을 브라우저에서 읽을 수 있는 자바스크립트로 변환해준다.
+    -->
+<!-- BABEL, WEBPACK 모두 중요함⭐⭐ -->
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+
+
+</head>
+
+
+
+<body>
+
+    
+
+    <div id="root">
+
+    </div>
+
+
+</body>
+
+<!-- babel 덕분에 jsx 사용 가능 -->
+    <script type="text/babel">
+        class Clock extends React.Component {
+            constructor (props) {
+                super(props);
+                this.state = {
+                    Time : new Date().toLocaleTimeString()
+                }
+            }
+
+        // react 생명 주기 
+            // 생명주기란 
+
+            // 화면이 그려지고, 시기와 state 값이 변했을 때, 동작해야 하는 작업이 있을 경우, 
+            // 이런 부분을 제어할 수 있게 리액트에서 만들어준 lifecycle 함수 이다. (생명주기)
+
+            // 상태가 변했을 때, 바로 사용할 수 없으니까, 업데이트 해서 써라 
+            
+            // 생명주기 안쓰고 했던거
+            // update() {
+            //     setState({})
+            //     // 아직 변경전 상태가 찍힘 -> 그래서, 리액트가 제공하는 라이프사이클 함수를 써야만 함. 
+            //     console.log(this.state);
+            // }
+
+            componentDidMount() {
+                // 여기 내용이 컴포넌트가 생서오디면, 호출됨. 
+                // 딱 최초에 한번만! 
+                
+                // set interval 하지 않기를 추천! ⭐
+                setInterval(() => {
+                    this.setState({Time : new Date().toLocaleTimeString()})
+                }, 1000);
+                console.log("최초에 실행됨")
+                    // 상태가 변경이 되면 -> update 가 호출되고 -> 업데이트
+
+            }
+
+
+            componentDidUpdate() {
+                console.log("state 업데이트 됨")
+
+                // 리액트는 상태를 잘 다뤄야 함. ⭐⭐⭐⭐⭐
+            }
+        
+
+            render() {
+                return (
+                    <>
+                        <h1> 안녕, 내 컴퓨터 시간 </h1>
+                        <h2> time : { this.state.Time } </h2>
+                    </>
+                )
+            }
+        }
+
+        const root = ReactDOM.createRoot(document.querySelector("#root"));
+
+        root.render(<Clock />)
+            // 컴포넌트는 닫는 태그를 이렇게 써도 된다. ⭐⭐ 
+
+
+    </script>
+
+
+
+</html>
