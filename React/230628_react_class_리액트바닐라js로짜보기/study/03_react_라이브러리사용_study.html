@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+<!-- 🔹 react, react DOM 라이브러리 -->
+    <script
+    crossorigin
+    src="https://unpkg.com/react@18/umd/react.development.js"
+    ></script>
+
+    <script
+    crossorigin
+    src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"
+    ></script>
+
+
+<!-- ES5 에서 개발된 게 있고, ES6 문법이 있음. | 다만, ES5 때 개발된게 많음. SO, ES5 에서 개발된걸 바꿔서 써주게 함 -->
+<!-- Babel 을 가져와서 JSX 문법을 사용 -->
+    <!-- JSX 문법 : 자바스크립트 공간을 HTML 처럼 사용! 하는 것.  -->
+    <!-- 자바스크립트 코드를 변환해주는 착한 도구 BABEL 
+            자바스크립트 문법은 꾸준히 진화해왔음. 
+            자바스크립트 문법이 꾸준히 진화하면, ES6 -> ES5 로 변환
+            babel 을 통해서, 문법을, '쉽게' 고칠 수 있다. 
+
+            babel 은 JSX 구문을 브라우저에서 읽을 수 있는 자바스크립트로 변환해준다.
+    -->
+    <!-- '자바스크립트 공간을 HTML 처럼 사용' 하기 위함 -->
+<!-- BABEL, WEBPACK 모두 중요함⭐⭐ -->
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+</head>
+
+
+<body>
+    
+    <div id="root">
+
+    </div>
+
+    <script type="text/babel">
+
+        class LoginBtn extends React.Component {
+            
+            constructor (props) {
+
+                super(props)
+                    // [알게된 점 👏]
+                        // super =  자식 클래스에서 부모 클래스의 메소드를 호출함
+                        // super 만 쓰면 => 부모 클래스의 'constructor' 를 호출 ⭐⭐⭐⭐⭐ 
+                        // super.greet 를 쓰면 => 부모 클래스의 메소드 중 greet 을 호출
+
+                    // [알게된 점👏]
+                        // super 를 쓰면 -> 부모 클래스의 constructor 함수가 '실행' 됨. ⭐
+                        // 이때, 매개변수로 prop 이 필요함 
+                        // 이 prop 은 바닐라에서 target 이 쓰인 문법과 동일. 
+                        // ex) 그러면 이건가? 👇
+                                // constructor (props) {
+                                //     this.props = props
+                                // }
+                        // 그러면, LoginBtn 이 실행될 때, props 를 어딘가에서 받게 됨. 
+                    // [할것✅]
+                        // 다시 와서 봐야함
+                
+                this.state = {
+                    isLogin : false
+                }
+            }
+                // [코드읽기🕵️‍♂️]
+                    // 생성자 함수를 만들건데, property 를 매개변수로 가져올거야 
+                    // 바닐라에서 보면, 그려지고자 하는 target HTML 일 수 있어.
+                // [궁금한 점😥]
+                    // props 는 바닐라에서, target 인가? 
+                    // 지금 이 순간, props 가 어떤 의미인지 모르겠어 
+
+
+            render() {
+                return (
+                    <>
+                    <button onClick = { () => {
+                        this.setState({isLogin : !this.state.isLogin})
+                        // 나는 setState 를 선언해준 적이 없는데 쓸 수 있는 이유는 super을 써서, 부모 클래스를 가져왔기 땜에
+                    } } > 
+                    
+                    {this.state.isLogin ? "Logout👐" : "Login🚀"}
+                    
+                    </button> 
+                    </>
+                )
+            }
+
+            // [코드읽기🕵️‍♂️]
+                // render 메소드 기능 
+                    // 1) render 메소드가 호출되고, button 이 클릭된다면 
+                        // a) setState 메소드를 써서, ⭐'isLogin 속성에 할당된 값'⭐ 을 'true -> false' 혹은 그 반대로 ⭐변경⭐ 한다.
+                        // b) true vs false 에 따라서 -> ⭐'찍히는 문자열이 변경'⭐ 
+                        // c) 이 문자열을 button 에 넣어준다.                  
+        }
+
+        // 'component 를 그려넣을 공간' 을 가져와서 -> root 에 변수에 넣기
+        const root = ReactDOM.createRoot(document.querySelector('#root'));
+
+        root.render( <LoginBtn id = "2" > 안녕 </LoginBtn> )
+            // [코드읽기🕵️‍♂️]
+                // 1) 이제, ⭐jsx 문법⭐ 에 맞게 ReactDom 에 넘겨줄거야
+                // 2) 뭘? 내가 변경하고 싶은 html 요소를! 
+                // 3) 그러면, reactDom (가상 DOM) 에서는 a) JSX 문법을 실제 dom 에 맞게 변환하고 b) 변경사항만 반영해서 효율적으로 렌더링 해줄거야
+
+
+
+            // [궁금증😥]
+                // 1) 여기에서 root 는 무엇을 상속받은걸까? react 로 부터 상속받아 만들어진 모든 class 를 붙일 수 있나?
+            // [알게된 것👏]
+                // 1) JSX 문을 쓰면, 'HTML 요소' 를 javascript 메소드가 읽게 할 수 있음. 
+                // 2) 위에서 열심히 만든 class 는 태그 이름이 되네? 근데 왜 이렇게 되지? 
+
+
+            // [궁금증😥]
+                // 위에서 열심히 만든 class 는 왜 태그 이름이 되는거야? 
+
+            // [알게된 것👏]
+                // JSX 는 '자바스크립트 공간에서, HTML 을 조작' 할 수 있게 해줌. 
+                // 'HTML 을 조작' 하기 위해서 '기존에는 DOM 을 직접 조작' 했음. EX) document.createElement('div')
+                // JSX 는 'HTML 을 조작' 하기 위해 '가상의 DOM 을 활용' 하게 됨. 
+                // 즉, 1) '조작하고 싶은 HTML 을 가상의 DOM' 에 넣고 
+                //  2) '가상의 DOM을 실제 DOM 과 비교한 뒤', 
+                //  3) '변경된 부분만 실제 DOM' 에 반영한다. 
+
+                // [궁금한 것😥]
+                    // root id 를 가진걸 가져온다는 건 알겠어. 
+                    // 그 다음, root = ReactDOM.createRoot 를 한다는건, 뭐지? 
+                    // 음... 
+                    // 이제, root.render() 메소드의 매개변수로, 'JSX 문법에 따른 HTML 태그' 를 넣으면 
+                        // a) 실제 DOM 조작의 경우, 
+                            // ㄱ) const LoginBtn = document.createElement('button')
+                            // ㄴ) LoginBtn.id = ("2")
+                            // ㄷ) LoginBtn.innerHTML = "안녕"
+                            // ㄹ) root.appendChild('LoginBtn') 이렇게 될 텐데 
+                        // b) 이 과정을 JSX 문법으로 작성해서 
+                            // -> render 메소드의 매개변수로 넣으면 
+                            // -> 알아서, 위의 DOM 처럼, 풀어주겠다는 거지? 
+
+                // [알게된 것👏]
+                    // 1) 내가 JSX 문법에 맞게 기재하면 
+                    // 2) REACT 는 가상 DOM 안에서, 변경된부분을 확인한 후 
+                    // 3) 알아서 실제 DOM에 맞게 변환해준다. 
+                    // 4) 다만, '단순 문법 변환' 뿐 아니라 '변경사항만 반영한다는 효율적인 렌더링' 까지 갖추고 있다.
+
+    
+    // 🔹 전체 흐름을 정리하면 
+
+        // 1. LoginBtn class 를 정의
+            // 1) 구성요소 
+                // a) 생성자 함수(constructor)
+                // b) render()
+
+        // 2. jsx 문법 활용해서, root에, 위에서 만든, LoginBtn 넣어주기
+            // 포인트 
+                // 1) ⭐'클래스 실행'⭐ 되는게, 내 기존 상식과 다름 
+                    // LoginBtn class 정의된 부분이, render 안에 들어가는 순간, '실행' 됨. 
+                // 2) ⭐'클래스 실행' 될 때, '생성자 함수의 매개변수인 props' 가 자동적으로 들어간다.⭐
+                    // 'class 실행 구문' 에서 '생성자 함수의 매개변수' 로 들어가는 props 는 id 임. ⭐⭐⭐⭐⭐
+                // 3) '클래스 선언 및 실행' 이 굉장히 ⭐'응축'⭐ 되어 있다고 생각함. 
+
+
+    // 🔹 정말, 더 간단하게 정리하면 
+        // 1) class 를 정의하고 
+        // 2) JSX 문법으로, class 를 실행 해서, 가상 DOM 에 넣어준다.
+
+
+
+    </script>
+
+
+
+
+    
+</body>
+</html>

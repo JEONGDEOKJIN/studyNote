@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <!-- REACT 및 BEBEL! -->
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+</head>
+<body>
+    
+    <div id="root">
+
+    </div>
+
+
+</body>
+
+<!-- 모듈로 읽을 수 있게✅ -->
+<!-- <script src="./src/app.js" type="module"> </script> -->
+
+
+<script type="text/babel"> 
+
+    class TEXT extends React.Component {
+        constructor (props) {
+            super(props)
+                // 부모 생성자 함수 호출해서 props 전달 😥😥😥 
+        }
+
+        render() {
+            return <h2> {this.props.text} </h2>
+                // 속성을 받아서, 그 안에 있는 text
+                // react 컴포넌트에서는 state 와 속성이 있다고 했음 ⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐ 
+        }
+    }
+
+
+    class LoginBtnText extends React.Component {
+        constructor (props) {
+            super(props);
+            console.log(props);
+        }
+
+        render() {
+            // this. props flag 조건부 렌더링
+            // 속성이름으로, props 에 전달하는 객체의 키값으로 전달된다. 
+            // props = {text : "로그아웃"} 이렇게 전달되고 -> 
+            return this.props.flag ? <TEXT text="로그아웃" /> : <TEXT text = "로그인" /> 
+        }
+        // 여기의 text 가 props 에 전달됨 ⭐⭐⭐ 
+        // 그래서 props.text 를 쓸 수 있게 됨. 
+    }
+
+    class LoginBtn extends React.Component {
+        constructor(props){
+            super(props)    // 부모 생성자 호출!
+            this.state = {
+                isLogin : false
+            }
+
+            this.handleClick = this.handleClick.bind(this);
+                // bind 메소드로 바인딩하면, 함수 호출할 때, ⭐컨텍스트를, 유지⭐ 할 수 있다. 
+                // 리액트에서 유용함
+                // 중요한 이유는, this 가 실행되는 곳이 유동적이니까. | 위험성이 있음. (필요성)
+
+        }
+
+        // 클릭했을 때 동작할 함수
+        handleClick() {
+            this.setState( {isLogin : !this.state.isLogin} )
+        }
+
+        render(){
+            return ( <button onClick = {this.handleClick}>
+                <LoginBtnText flag = {this.state.isLogin} />
+            </button> )
+            // 이렇게 전달하면, props 
+        }
+
+    }
+
+
+    // 로그인 버튼을 가져다 쓸 페이지 컴포넌트 
+
+    class App extends React.Component {
+        
+        constructor (props) {
+            super(props)
+            this.state =  {
+                isLogin : false
+            }
+
+        }
+        render() {
+            return (
+                <>
+                    <TEXT text="로그인 레이아웃"  /> 
+                    <LoginBtn />
+                </>
+            )
+        }
+
+    }
+
+    // 루트 요소 생성
+        // 루트로 설정할 태그 
+        const root = ReactDOM.createRoot(document.querySelector("#root"));
+
+        root.render(<App />);
+            // [궁금증😥]
+                // 여기에는 prop 이 없는데 괜찮나❓❓
+
+            // 최종적으로 페이지니까, 그걸 넣는다. 
+
+            // App 에는 1) 로그인 버튼 2) text 컴포넌트가 있음 
+
+            // 로그인 버튼 컴포넌트에는 > 또 000 컴포넌트가 있고 
+            // text 컴포넌트에는 > 000 컴포넌트가 있음. 
+
+            // props 는 부모에서 자식에게 전달하는 값임. 
+
+
+
+
+
+</script>
+
+
+
+
+
+
+</html>

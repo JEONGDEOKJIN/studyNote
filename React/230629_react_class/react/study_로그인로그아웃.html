@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+<!-- 설치 script | REACT | ReactDom | BEBEL! -->
+<script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+<script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+
+
+</head>
+<body>
+    
+    <!-- 가상 DOM(reactDOM) 이 들어갈 root 태그 -->
+    <div id="root">
+
+    </div>
+
+</body>
+
+<script type="text/babel">
+
+
+    // [느낀점 👏]
+        // 정말, 간단하게 생각하면, html 요소를 작동시키는 걸, 다른 방식으로 하는 거다. 
+        // 그러면, html 요소를 움직일 때, 필요한 핵심 요소! 에만 집중하면 된다. 
+
+
+
+
+    // 1️⃣ 만들고 싶은 'ui(html 요소)'를, React.Component '상속' 및 'overwriting' 활용해서, 'class'로 정의하기
+
+        // ◼ TEXT 클래스 
+        class TEXT extends React.Component {
+
+            // 1) 생성자 함수 
+                constructor (props) {
+                    super(props)
+                    // [꼭 생각해봐야 할 것⭐⭐⭐⭐⭐]
+                        // 1) 생성자 함수를 생성해서, 객체를 만들면, = html 요소를 만들면 
+                        // 2) 반드시, 부모 class 에 접근해서, props 요소를 받아오게 하는 거야 ⭐⭐⭐ 
+                }
+
+                render() {
+                    return <h2> {this.props.text} </h2>
+                }
+                    // [알게된 것👏]
+                        // 그 어떤 곳에서도, TEXT 클래스의 render 메소드를 정의해준 곳이 없음. 
+                        // 그런데도, TEXT 클래스는 render 메소드를 실행해서, text 를 h2 로 그리고 있음. 
+                        // 이게 가능한 이유는 
+                            // a) TEXT 클래스가 실행되면, 
+                            // b) react 가 ⭐이미 짜놓은 대로⭐ 
+                            // c) 생성자 함수 실행 -> render 함수가 실행 되기 때문
+
+                        // 그러면 react가 이미 짜놓은 것들은? ⭐⭐⭐⭐⭐⭐⭐ 
+                            // 1) render, constructor, setState, 등
+                            // 2) 생명주기 함수, 
+                            // 3) handle 은 주로 사용자가 정함. 무조건적 실행은 아님. 
+
+                    // [궁금한 점]
+                        // 그러면, 이 맥락에서 생명주기란? 
+        }
+
+
+        // ◼ LoginBtnText 클래스 
+            // 기능 요약 
+                // 1) 특정 시점에서 실행이 되면 
+                // 2) '속성요소' 를 가져오고 
+                // 3) true 면 -> 로그아웃 , false 면 -> 로그인의 '텍스트를 그린다.'
+
+            // requirement 요소 
+                // TEXT 클래스 
+        class LoginBtnText extends React.Component{
+
+            // 1) 생정자 함수 
+                constructor(props) {
+
+                    super(props)
+                    console.log(props)
+                    // [알게된 것👏]
+                        // flag 속성이, props 으로 전달되게 된다. 
+                }
+
+            // 2) props flag 에 따라 ⭐⭐'조건부 렌더링'⭐⭐ 
+                render() {
+                    return this.props.flag ? <TEXT text = "로그아웃" /> : <TEXT text = "로그인" /> 
+                }
+                    // [알게된 점👏]
+                        // class 가 갖는 모양이 어쩌면, 비슷비슷, 할 수 있음. ⭐⭐⭐ 
+
+                    // [읽어보기🕵️‍♂️]
+                        // 1) 전 단게에서, 클릭여부에 따라, true, false 값이 변화하게 됨. 
+                        // 2) true 면 -> 로그아웃 텍스트가 보이게 
+                        // 3) false 면 -> 로그인 텍스트가 보이게 하기  
+        }
+            // [잘 모르겠는거 😥]
+                // '속성' 이 props 로 생겨나고, 들어온다는 것. 
+                // 생겨난 속성이, LoginBtnText 로 또한 들어온 다는 것 😥😥😥😥😥
+
+
+        // ◼ LoginBtn 클래스 
+            // 기능 요약 
+                // 1) 특정 트리거에 의해, 클래스가 실행되면 
+                // 2) 객체를 만들고 -> 객체는 jsx 문법, reactDOM 에 의해 -> 결국, html 요소가 된다. 
+                // 3) 만들어진 객체에 '클릭 이벤트' 가 발생하면 -> 상태값을 true, false 변경하고 -> 값에 따라 다른 문자열을 그려준다. 
+            // 필요 기능 
+                // LoginBtnText
+        class LoginBtn extends React.Component {
+            // 1) 생성자 메소드 | 실행되면, 만들어질 객체 정의하기
+                constructor (props) {
+
+                    super(props)
+                        // [궁금증😥]
+                            // 왜 부모 클래스에서는 props 를 요구할까? 
+                            // [추측]
+                                // 우선, html 을 제어할 때, '속성' 은 굉장히 중요함 
+                                // 그러니까, 그걸, props 로 가져와서 해보는것 같음 
+
+                    this.state = {
+                        isLogin : false
+                    }
+
+                    this.handleClick = this.handleClick.bind(this);
+                        // [알게된 점👏]
+                            // 바인딩을 한다는 건? 
+                                // 특정 메소드가 실행되면 
+                                // 해당 메소드가 가리키는 this 가 
+                                // 딱 특정한 class (이 경우엔 HTML 요소) 로 '고정' 시켜 놓는다. 
+
+                            // 바인딩의 기능은? 
+                                // handleClick 메소드 가 실행될 때, 
+                                // this 가 'LoginBtn 컴포넌트 인스턴스' 를 가리키도록, 보장, 하기 위함. 
+                                // 이렇게 '보장 되어야' -> LoginBtn의 setState에 정확히 접근할 수 있음. 
+                            
+                            // 굳이 바인딩을 해야 하는 이유는? 
+                                // [잘 모르겠는 점😥] 😥😥😥😥😥😥😥😥
+                                    // 1) 함수 실행이 어디서 되냐에 따라서, THIS 가 가리키는 객체가 다르다는 건, 느낌적으로 알겠음. 
+                                    // 2) 그런데, 그거랑, 특정 메소드 실행이랑, 어떤 관련이 있는건지, 명확히 모르겠음. 
+
+                            // [알게된 점👏]
+                                // 동일 메서드가, 이벤트 핸들러, 콜백함수로 사용되면, this 는 전역객체 또는 undefined 를 가리킴 
+                                // 그런데, 이 메소드들은, 이 메소드의 기능을 수행하기 위해서는, 컴포넌트의 props 혹은 state 에 접근해야할 필요가 있음. 
+                                // 그래서, 이 메소드가, 특정 요소에 붙어있다고, 알려줘야 함! 
+                                // 따라서 ⭐이벤트 핸들러, 콜백함수⭐ 에는 바인딩을 사용 
+                                // [부족한 점😥]
+                                    // 음... 사실 명확하게 설명은 못 하겠음. 
+                }
+
+            // 2) 이벤트 감지 메소드 | 클릭했을 때, 동작 메소드 
+                handleClick() {
+                    this.setState( {isLogin : !this.state.isLogin} )
+                }
+                    // handleClick 기능 
+                        // 1) 특정 트리거에 의해 실행된다면 
+                        // 2) 객체의 state 속성의 islogin 에 접근해서 true vs false 를 바꾼다.
+                        // 3) 바꾼 값을 isLogin 속성에 저장한다.
+            
+            // 3) render 메소드
+                // [✅ requirement | 연결기능] 
+                    // '어떤 text 를 붙일거야?' 는 LoginBtnText 클래스가 담당
+
+                render() {
+                    return (
+                        <button onClick = {this.handleClick}> 
+                            <LoginBtnText flag = {this.state.isLogin} />
+                        </button>
+                    )
+                    // 아마도, LoginBtnText flag 는 true, false 에 따라서 '다른 텍스트값' 을 반환할 듯
+
+                }
+        }
+
+
+
+
+
+
+
+
+        // ◼ Comment class 를 render 하는 App 클래스 만들기
+            // App 클래스 구성요소 
+                // 1) TEXT -> 이게 각각의 class 가 되어야 겠지
+                // 2) LoginBtn -> 이게 각각의 class 가 되어야 겠지
+
+            // App class 주요 기능 
+                // 1) 어떤 순간에 실행되면 
+                // 2) 'Comment 클래스를 실행하는 render 메소드' 를 실행함
+            // requirement
+                // 이 기능이 실행되려면, Comment 클래스가 정의되어 있어야 함 
+
+        class App extends React.Component {
+
+            // 지금 이 상황에서 '그려주는 메소드' 를 쓰고 싶어. 내가 마주하게 되는 건
+                // 1) 부모에게 있나?
+                // 2) 직접 만들어야 하나? 
+                // [알게된 것👏]
+                    // a) 부모 메소드를 그대로 사용하려고 할 경우, -> 그냥 쓰면 됨 
+                    // b) 부모와 다른 나만의 메소드를 만들고 싶으면 -> 그냥 쓰면 됨 
+                    // c) 나만의 메소드를 만들 때, 부모의 메소드를 가져와서 쓰고 싶으면 -> super 를 써서 가져오면 됨 
+                    // d) 내가 나만의 메소드를 만들었는데, 부모의 메소드와 동일한 이름을 만들었어! 
+                        // 그렇다고 해도 부모의 메소드가 사라지지 않음. 
+                        // super 를 붙여서 부모의 기능을 가져다가 쓸 수 있음. 
+                        // [예시]
+                            // class Animal {
+                            //     constructor(name) {
+                            //         this.name = name;
+                            //     }
+
+                            //     speak() {
+                            //         return this.name + " makes a noise";
+                            //     }
+                            // }
+
+                            // class Dog extends Animal {
+                            //     speak() {
+                            //         const animalSpeak = super.speak(); // 부모 클래스의 메소드를 호출                                //     }
+                            // }
+            // [궁금증😥] 
+                // 그러면, 내가 쓰고 싶은 메소드가 '이미 만들어졌는지 아닌지' 를 어떻게 판단해? 
+                // [알게된 것👏]
+                    // 1. 굳이, 알 필요가 없음. 
+                    // 2. 왜냐면, 사용될 메소드는 '생명주기 그림' 에 따라서 제한적임 
+                    // 3. 사용하게 될 것은 '해당 메소드 안에서 어떻게 바뀔 것 인가.' 하는 점 임
+
+            constructor (props) {
+                super(props)
+                this.state = {
+                    isLogin : false
+                }
+            }
+                // [알게된 것👏]
+                    // '생성자함수가 있다' = 언젠가 실행이 된다. 
+                    // 생성자 함수가 실행되면, 객체(인스턴스) 가 만들어진다. 
+                    // 만들어진 인스턴스는 jsx 문법에 의해 'HTML 태그' 로 변환된다. ㅓ
+                        // 즉, document.createElement('div') 하고, id 부여하고, appendChild 등등의 과정을 압축해준다.
+                
+            render() {
+                return (
+                    <>
+                        <TEXT text = "로그인 레이아웃" />
+                        <LoginBtn />
+                    </>
+                )
+            }
+        
+        }
+            
+
+
+        
+
+    // 2️⃣ 'jsx 문법'으로, 'class 를 실행' 시켜서, '가상 DOM' 에 넣어주기
+        // 1) root div 를 가상 DOM 으로 만들기 | 가상 DOM 이 들어갈 공간 만들기
+            const root = ReactDOM.createRoot(document.querySelector('#root'))
+
+        // 2) 가상 공간에, jsx 문법으로 쓴, 클래스를, 붙인다. 
+            root.render(<App />)
+
+
+</script>
+
+
+
+</html>

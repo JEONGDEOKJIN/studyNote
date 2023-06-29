@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+<!-- 설치 script | REACT | ReactDom | BEBEL! -->
+<script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+<script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+<!-- css 불러와 -->
+
+
+</head>
+<body>
+    
+
+    <div id="root">
+
+    </div>
+
+
+</body>
+
+<script type="text/babel">
+    
+    // 1️⃣ 'ui 요소' 를 'React component 상속 및 오버라이딩' 해서 '클래스' 로 만들기
+
+        // ◼ 댓글이 될 컴포넌트 
+            class CommentItem extends React.Component {
+                constructor(props) {
+                    super(props)
+                }
+
+                render() {
+                    return (
+                        <ul>
+                            <li> {this.props.userid} </li>
+                            <li> {this.props.content} </li>
+                            <li> {this.props.date} </li>
+                        </ul>
+                    )
+                }
+
+            }
+
+
+        // ◼ 댓글 작성 form 그리는 컴포넌트 
+            class CommentForm extends React.Component {
+                constructor(props) {
+                    super(props)
+                    this.state = {
+                        value : " "
+                    }
+
+                    this.changeHandler = this.changeHandler.bind(this)
+                    this.submitHandler = this.submitHandler.bind(this)
+
+                }
+
+                // 입력값을 처리할 함수
+                changeHandler(e) {
+                    const { value } = e.target
+                    this.setState({
+                        ...this.state,
+                        value
+                    })
+                }
+
+                // 입력을 했으면, 처리할 함수
+                submitHandler(e) {
+                    e.preventDefault();
+
+                    this.props.create(this.state.value)
+
+                    this.setState( {value : ""} )
+                }
+
+                render() {
+                    return (
+                        <li>
+                            <form onSubmit = {this.submitHandler} >
+                                <h4> 댓글 작성 <span> : {this.props.lenhth} </span> </h4>
+                                <span>
+                                    <input type="text" onChange = {this.changeHandler} value = {this.state.value} />
+                                </span>
+                                <input type="submit"  value="등록" />
+                            </form>
+                        </li>
+                    )
+                }
+
+
+            }
+
+
+        // ◼ 댓글 리스트 받아서 그리는 컴포넌트 
+            class CommentList extends React.Component {
+
+                constructor(props) {
+                    super(props)
+                }
+
+                loop(value, index) {
+                    return <CommentItem key = {index} userid = {value.userid} content = {value.content} date={value.date} />
+                }
+
+                render() {
+                    return <li> {this.props.items.map(this.loop)} </li>
+                }
+
+            }
+
+        // ◼ 댓글 기능 담당할 컴포넌트 
+            class Comment extends React.Component {
+
+                constructor(props) {
+                    super(props)
+                    this.state = {
+                        comment : [
+
+                            {
+                                userid : "dj", 
+                                content : "첫번째 댓글", 
+                                date : "2023-06-29",
+                            },
+                            {
+                                userid : "dj", 
+                                content : "2번째 댓글", 
+                                date : "2023-06-29",
+                            },
+                            {
+                                userid : "dj", 
+                                content : "3번째 댓글", 
+                                date : "2023-06-29",
+                            },
+                        ]
+                    }
+            
+            // 바인딩 
+                // [알게된 것👏]
+                    // 특정 콜백함수, 이벤트 핸들러의 경우, this 가 전역객체 혹은 undefined 를 가리키게 되는 경우가 있음. 
+                    // 그 상태로 놔두면, 해당 이벤트 핸들러는 원하는 객체의 setState 값 등에 접근할 수 없음.
+                    // 따라서, 해당 ⭐'이벤트 핸들러 또는 콜백함수'⭐ 가 원하는 타겟에 접근하기 위해, 안전하게 바인딩, 을 해준다. 
+
+                this.create = this.create.bind(this);
+                    // [궁금한 것]
+                        // 바인딩을 어떤 것에 대해 해야 하는지 
+                        // 바인딩 문법! 
+            }
+
+            // 새로운 댓글을 추가하는 함수 | 그릴 데이터 업데이트 하기 
+            create(content) {
+
+                this.setState( {comment : [{userid : "dj" , content, date : "2023/06/29"} , ...this.state.comment ]})
+            }
+                // [생각해볼 것👏]
+                    // 이 메소드에는 this 가 들어갔다 -> 그래서, 바인딩을 해줬다. 
+                    // 그러면, this 가 들어가는 모든 메소드에는 바인딩을 해줘야 하나? ❓❓❓
+
+                // [궁금증] ❓❓❓
+                    // 근데, 그냥, 저 이름이, 덩그러니 합쳐져?
+                    // 누가 이름을 적거나, 쓰는거 없이? 
+
+            // 그려주기 
+            render() {
+                return (
+                    <ul>
+                        {/* 댓글 작성 폼*/}
+                        <CommentForm create = {this.create}  length = {this.state.comment.length} />
+                    
+                        { /* 댓글 리스트 보여줄 곳*/ }
+                        <CommentList items = {this.state.comment} />
+                    </ul>
+                )
+            }
+            // [생각해볼 것👏]
+                // CommentForm 폼 자체는 새로운 것 같은데 ✅
+                
+
+        
+        }   
+
+
+
+        // ◼ 페이지 컴포넌트 | App 클래스  
+            // App 클래스 기능 요약
+                // 1) 댓글이 그려지는 영역
+            // requirement 
+                // 1) 영역에 그려질 댓글 내용들
+
+            class App extends React.Component {
+
+                render() {
+                    return (
+                        <div>
+
+                            <Comment />
+                            {/* [코드 읽기] 
+                                이렇게 작성하면, Comment 클래스를 이곳에서 실행한다. 는 말. 
+
+                                [알게된 것👏]
+                                    // 이 과정의 목표는 결국, HTML 을 조작하는 것 
+                                    // 이를 위해 직접 JS 로 DOM 을 조작하는 방식에서 
+                                    // ReactDOM 조작, 이라는 가상 DOM 조작 방식을 택한 것
+                                    // 본질은 'HTML 조작' 이므로, '클래스가 실행된 결과물이 html 태그' 인 것에 놀라지 말 것⭐⭐
+
+                            */}
+                        </div>
+                    )
+                }
+                
+                // [해석]
+                    // 아마도, 추가되는 html 요소가 없으므로, 생성자 함수는 없어도 되는?
+            }
+
+
+    // 2️⃣ 'jsx 문법' 으로, 위에서 정의된 class 를 실행, 시켜서, 가상 DOM 에 넣어주기
+    // 1) div 를, '가상 DOM 이 들어갈 공간' 으로 만들어주기 
+        const root = ReactDOM.createRoot(document.querySelector("#root"))
+
+    // 2) 가상 DOM 에 넣어주기
+        root.render(<App />);
+
+
+
+
+</script>
+
+
+
+</html>

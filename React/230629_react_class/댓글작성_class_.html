@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+<!-- 설치 script | REACT | ReactDom | BEBEL! -->
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+<!-- css 불러와 -->
+
+
+</head>
+<body>
+
+    <!-- 리액트로 게시판 만들기 -->
+        <!-- ✅새로운거 배웠을 때, 로그인 &ㅣ 게시판! 만들 수 있으면 됨. -->
+
+    <div id="root">
+
+    </div>
+    
+</body>
+
+<script type="text/babel">
+
+    // 댓글이 될 컴포넌트 
+    // props 값을 받아서 댓글을 만들어줄 컴포넌트
+
+    class CommentItem extends React.Component {
+        constructor(props){
+            super(props) 
+
+            // props = { userid : "작성자" , content : "내용" , date : "날짜" }
+        }
+
+        render() {
+            return(
+                // react DOM 에서는 HTML 에서 사용하던 class 가 아닌 className 으로 사용한다.
+                // class 로 사용하게 되면, 경고문이 뜨게 될 것 
+                <ul className ="" >
+                    <li> {this.props.userid} </li>
+                    <li> {this.props.content} </li>
+                    <li> {this.props.date} </li>
+                </ul>
+            )
+        }
+    }
+    
+    // 댓글 작성 form 그리는 컴포넌트
+        class CommentForm extends React.Component {
+            constructor (props) {
+                super(props)
+                this.state = {
+                    // form 에서 보낼 값
+                    // input 에 입력값을 상태값 value에 넣어줄 것 임. 
+                    value : " "
+                }
+                    // 입력한 값을 상태값으로 들고 있다가 보낼 것 임
+
+                // 바인딩 해주기 | this 를 쓰기 때문에! 
+                this.changeHandler = this.changeHandler.bind(this)
+                this.submitHandler = this.submitHandler.bind(this)
+                
+            }
+
+            // 입력값을 처리할 함수
+            changeHandler(e) {
+                // input 의 value 를 구조분해할당! 으로 가져온다.
+                const { value } = e.target
+                this.setState({
+                    ...this.state, 
+                    value
+                })
+            }
+
+            // 입력을 했으면, 입력을 처리할 함수
+            submitHandler(e) {
+                // 새로고침되는 이벤트 막고
+                e.preventDefault();
+
+                // 댓글 추가해줄 곳 
+                    this.props.create(this.state.value)
+
+                // 여기에서 작성한 댓글을 추가해준다. | 그래서 빈값으로 놓는다. | 추가가 되면, 다시 상태값이 초기화 된다. 
+                this.setState( {value : ""} )
+
+            }
+
+            render() {
+                return(
+                    <li> 
+                        <form onSubmit = {this.submitHandler} > 
+                            <h4> 댓글 작성  <span> : {this.props.length} </span> </h4>
+                            <span> 
+                                <input type="text" onChange = {this.changeHandler} value={this.state.value} />
+                            </span>
+                            <input type="submit"  value="등록" />
+                            
+                        </form>
+                    </li>
+                )
+            }
+
+        }
+
+
+        // 댓글의 리스트를 받아서, 그려줄 컴포넌트 
+        class CommentList extends React.Component {
+            constructor(props) {
+                super(props)
+            }
+
+            loop(value, index) {
+                // 여기에서 구조분해할당 받아서 해도 됨✅
+                return <CommentItem key={index} userid={value.userid} content={value.content} date={value.date} /> 
+            }
+            // CommentItem 이건 부모에게서 값을 받아서 사용하게 될 놈임. 
+
+            render() {
+                return <li> {this.props.items.map(this.loop)} </li>
+            }
+            // 여러개를 props 로 받을 거야. 
+            // key 로 index 를 준다. 
+            // key 는 필수는 아닌데, '성능이 좋아진다고함'
+            // key 는 react 가 요소를 식별할 때, 씀. | 없어지거나, 생성되거나 할 때, 사용 | 성능이 좋아짐 
+            // 다만, index 로 전달하는게 좋은 방법은 아님 | 다만, 상관은 없음. 
+            // 그러면, key 로 하려면? 
+
+        }
+
+
+
+        // 댓글 기능 담당할 컴포넌트
+            class Comment extends React.Component {
+
+                constructor(props) {
+                    super(props)
+                    this.state = {
+                        comment : [
+                            // 추가한 새글
+
+                            { 
+                                userid : "dj", 
+                                content : "댓글 안녕", 
+                                date : "2023-06-29",
+                            }, 
+                            {
+                                userid : "dj", 
+                                content : "댓글2 안녕", 
+                                date : "2023-06-29",
+                            }, 
+                            {
+                                userid : "dj", 
+                                content : "댓글3 안녕", 
+                                date : "2023-06-29",
+                            }
+                        ]
+                    }
+
+                    this.create = this.create.bind(this);
+                        // create 를 넘겨서, 쓸 수 있음. 
+                }
+
+                // 새로운 댓글을 추가 해주는 함수
+                create(content) {
+
+                    // this 가 들어가기 때문에, context 가 될 수 있게, 바인드를 사용 
+                    // 👉 constructor 아래에! 
+                    this.setState({ comment : [{ userid : "soon" , content, date : "2023/06/29"}, ...this.state.comment  ] })
+
+                }
+
+                // 댓글이 작성된 리스트를 그려줄 것 임
+                render() {
+                    return(
+                        <ul>
+                            { /* 댓글 작성 폼 */ }
+                            <CommentForm create={this.create} length={this.state.comment.length} />
+                            
+                            { /* 댓글 리스트를 보여줄 곳 */ }
+                            <CommentList items={this.state.comment}  />
+                        </ul>
+                            // props 로 사용할 값 (길이) 를 전달해줘야 함
+                            // props 를 items 로 받았음 
+
+                            // 함수도 넘겨서, 사용해볼 것 임 
+                    )
+                }
+
+            }
+
+
+            // 페이지 컴포넌트 
+                class App extends React.Component {
+                    render() {
+                        return (
+                            <div>
+                                {/* 댓글 레이아웃 컴포넌트 가져옴 | 이렇게 하나를 만들면, 다른 곳에 복사해서 붙여넣으면 돼 ⭐⭐⭐⭐⭐ */}
+                                <Comment />
+                                <Comment />
+                                <Comment />
+                                <Comment />
+                                <Comment />
+                                <Comment />
+
+                            </div>
+                        )
+                    }
+                }
+
+
+        // root 에 그려주기 
+            const root = ReactDOM.createRoot(document.querySelector("#root"));
+            root.render(<App />);
+
+
+            // 댓글창 여러개 해야 함 | 데이터 따로 
+
+
+    // 과제 포인트 ⭐⭐⭐⭐⭐
+        // 상태관리 하는거 
+        // props 속성 값 관리 
+        // 컴포넌트를 최소단위까지 쪼개보자
+
+
+
+
+
+
+
+</script>
+
+
+
+
+</html>

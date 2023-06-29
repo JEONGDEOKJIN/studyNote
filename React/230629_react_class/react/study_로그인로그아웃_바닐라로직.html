@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+    <div id="root">
+        
+    </div>
+    
+
+</body>
+    <!-- 1) 가만히 있을 때, '로그인' 글자가 보이는 버튼 만들기 -->
+
+    <!-- 2) 클릭하면 로그인 , 로그아웃 으로 변하게 하기  -->
+
+
+<script>
+
+    // 가만히 있을 때, '로그인' 글자 보이는 버튼 만들기 
+        const _button = document.createElement('button')
+        _button.id = 'buttonID'
+        _button.innerText = "로그인"
+        root.append(_button)
+
+    // 클릭했을 때, 로그아웃, 로그인, 반복되게 만들기 
+    buttonID.onclick = () => {     
+        if(buttonID.innerText == "로그인") {
+            buttonID.innerText = "로그아웃"
+        } else {
+            buttonID.innerText = "로그인"
+        }
+    }
+
+
+
+</script>
+
+
+</html>
