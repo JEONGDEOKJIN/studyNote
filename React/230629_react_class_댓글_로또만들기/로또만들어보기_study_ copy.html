@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <!-- REACT 및 BEBEL! -->
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+
+</head>
+<body>
+    
+    <div id="root">
+
+    </div>
+
+
+</body>
+
+
+<script type="text/babel">
+
+
+    class NumberBtn extends React.Component {
+
+        constructor (props){
+            super(props)
+            this.state = {
+                number : this.setNumber()
+            }
+
+        this.handleClick = this.handleClick.bind(this);
+
+        }
+
+        setNumber () {
+            const number = []   
+            for (let i = 1; i <= 45; i++) {
+            number.push(i)
+        }   
+            return number
+        }
+
+        pickNumber() {
+            const pickNumber = []
+
+            for (let i = 1; i <=6; i++){
+                pickNumber.push(this.setNumber()[Math.floor(Math.random() * 45)])
+        }
+            return pickNumber
+
+        }
+
+        handleClick() {
+            this.setState ( {number : this.pickNumber()} )
+        }
+
+        render() {
+            return (
+                <button onClick = {this.handleClick}> 
+                    {this.state.number}
+                </button>
+            )
+        }
+    }
+
+
+
+    class App extends React.Component {
+
+        constructor(props){
+            super(props)
+        }
+
+        render() {
+            return (
+                <>
+                    <NumberBtn />
+                </>
+            )
+        }
+
+    }
+
+
+    const root = ReactDOM.createRoot(document.querySelector('#root'))
+
+    root.render(<App />)
+
+
+
+
+
+
+
+
+
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+</html>
