@@ -55,6 +55,7 @@
         // 여기의 text 가 props 에 전달됨 ⭐⭐⭐ 
         // 그래서 props.text 를 쓸 수 있게 됨. 
     }
+    
 
     class LoginBtn extends React.Component {
         constructor(props){
@@ -67,7 +68,6 @@
                 // bind 메소드로 바인딩하면, 함수 호출할 때, ⭐컨텍스트를, 유지⭐ 할 수 있다. 
                 // 리액트에서 유용함
                 // 중요한 이유는, this 가 실행되는 곳이 유동적이니까. | 위험성이 있음. (필요성)
-
         }
 
         // 클릭했을 때 동작할 함수
@@ -80,6 +80,11 @@
                 <LoginBtnText flag = {this.state.isLogin} />
             </button> )
             // 이렇게 전달하면, props 
+            // 즉, LoginBtnText 컴포넌트의 flag 속성(props) 에, flag = {this.state.isLogin} 이걸 전달해
+            
+
+
+
         }
 
     }

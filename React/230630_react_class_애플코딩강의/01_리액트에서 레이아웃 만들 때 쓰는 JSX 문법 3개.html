@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+<!-- 설치 script | REACT | ReactDom | BEBEL! -->
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+</head>
+
+<style>
+
+    body {
+        margin: 0;
+        padding: 0;
+
+        /* background-color: blue;*/
+    }
+
+
+    .header {
+        background-color: lightgray;
+        /* width: 200px; */
+        color: black;
+    }
+
+    /* 공통버튼 */
+    .button { 
+        cursor: pointer;
+    }
+
+    .likesBtn {
+        background-color: lightgreen;
+    }
+
+    .recommendNumBtn{
+        background-color: lightblue;
+    }
+
+    .winnerList {
+        cursor: pointer;
+        lighting-color: lightpink;
+    }
+
+</style>
+
+
+<body>
+
+
+    <div id="root">
+
+    </div>
+    
+
+
+<script type="text/babel">
+
+
+
+
+    // 준비된 공 보여주는 컴포넌트 
+    class SettingNumber extends React.Component {
+        constructor(props) {
+            super(props)
+            this.state = {
+                settingNumber : this.settingNumber()
+                    // [궁금한 것😥] 
+                        // 1) 이렇게 해줘도 되나? 2) settingNumber() 이렇게 실행해야 하나?
+                        // ()
+            }
+            // [코드읽기] 
+                // state 란? 👉 '값 저장(create)'할 때 쓰는 '변수' 같은 것 
+                // 처음에 이 객체가 생겨났을 때, 나타났으면 하는 변수 같은 느낌
+        }
+        
+        // 랜덤 번호 준비하는 함수 
+        settingNumber = () => {
+
+            const numberBox = [ ];
+
+            for (let i = 1; i <= 45; i++) {
+                numberBox.push(i)
+            }            
+
+            return numberBox
+        }
+
+        render() {
+            return (
+                <h3> 
+                    준비되어 있는 번호들 : <span> {this.state.settingNumber} </span>
+                </h3>
+            )
+        }
+
+    }
+
+    class WinnerListText extends React.Component {
+
+        constructor (props) {
+            super(props)
+        }
+
+        render() {
+            return(
+                this.props.flag ? "123명👲👲👲👲👲👲👲👲👲👲👲" : "이거보고 1등 당첨된 사람들 몇명?🔮🔮🔮🔮🔮🔮"
+            )
+        }
+    }
+
+
+
+    class WinnerList extends React.Component {
+
+        constructor (props) {
+            super(props)
+
+            this.state = {
+                isOpen : false,
+                // buttonText : "클릭하면, 내가 추천해준 번호로, 1등 당첨된 사람들, 알려줌"
+            }
+        }
+
+        winnerList = () => {
+            this.setState({isOpen : !this.state.isOpen})
+        }
+
+        render() {
+            return(
+                <button className="winnerList button" onClick = {this.winnerList} >
+                
+                <WinnerListText flag = {this.state.isOpen} />
+
+                {/* this.state.buttonText */}
+                </button>
+            )
+        }
+    }
+
+
+
+    class RecommendNumberBtn extends React.Component {
+        
+        constructor (props) {
+            super(props)
+
+            this.state = {
+                isDrawStart : false,
+                winNumber : []
+            }
+
+            this.handleClick = this.handleClick.bind(this)
+        }
+
+        // 클릭시 실행될 함수 
+            handleClick() {
+                
+                this.recommendNumber()
+                // this.setState( {isDrawStart : !this.state.isDrawStart} )
+            }
+
+        // 로또 뽑는 함수 
+            recommendNumber () {
+            
+            const numberBox = []
+            const recommendNumber = []
+
+            for (let i = 1; i <= 45; i++) {
+                numberBox.push(i)
+            }    
+
+            // 랜덤 인덱스 만들기 
+                // console.log("랜덤 인덱스 : " , Math.floor(Math.random() * 45))
+
+            // 박스에서 랜덤 인덱스 만큼 뽑기
+            for (let i = 1; i <=6; i++){
+                recommendNumber.push(numberBox[Math.floor(Math.random() * 45)])
+            }
+
+            // 결과 
+            // console.log("꼭! 1등 될 번호 오캐이! : " , recommendNumber)
+            this.setState({
+                winNumber : recommendNumber
+            })
+        }
+
+
+        // 그려주기 
+        render(){
+            return (
+                    <>
+                        <button onClick = {this.handleClick}>
+                            당첨 될 것 인가 두구두구두구🙆‍♂️
+                        </button>
+                        <div>
+                            {this.state.winNumber.join()}
+                        </div>
+                    </>
+                )   
+            }
+        }
+
+
+
+
+    class App extends React.Component {
+        
+        constructor (props) {
+
+            super(props) 
+
+            this.state = {
+                // settingNumber : [1,2,3,4,5,6,7,8,9,10],
+                recommendNumber : [1,2,3], 
+                likes : 0,
+            }
+
+            // onClick 에서 일어나는 메소드는 바인딩 하기 
+            this.increaseLikeNum = this.increaseLikeNum.bind(this)
+                // 필요한 이유 
+                    // 1) 메소드가 호출(실행) 되면 -> '해당 메소드를 호출한 객체' 가 this 가 됨.
+                    // 2) increaseLikeNum 가 호출(실행) 되는 건 -> likesBtn 을 클릭! 했을 때 
+                    // 3) 그러면, 이때는 DOM 이 this 가 됨 😥😥😥 | 이 부분이 잘 이해가 안 됨 
+                    // 4) 그래서, 만들어진, 이것을 가리키도록, 바인딩함 | 
+                        // 여기에서 가리켜져야 할 것은 App 인가? ❓❓❓ 
+            // this.recommendNumber = this.recommendNumber.bind(this)
+        }
+
+
+        // 이 함수의 위치를 여기에 놓는지❓ | 아니면 여기에❓ 
+        increaseLikeNum = () => {
+            this.setState( {likes : this.state.likes + 1} )
+        }
+
+
+        render() {
+            // 변수에 저장해서 쓰고 싶으면 1) 원래 변수 2) state 써서 
+            let headerTitle = '로또번호 알려줌'
+
+            // // 이 함수의 위치를 여기에 놓는지❓ 
+            // function increaseLikeNum () {
+            //     this.setState( {likes : this.state.likes + 1} )
+            // }
+
+            return (
+                <div className = "App"> 
+
+                    <div className = "header">
+                        <h1> {headerTitle}  </h1>
+                    </div>
+
+                    <div className = "list">
+                        
+                        <SettingNumber />
+
+                        <WinnerList /> 
+
+                        <p> 추천 번호 : {this.state.recommendNumber} </p>
+                        <p>  <span className="likesBtn button" onClick = {this.increaseLikeNum}> 👍좋아요 </span> {this.state.likes} </p>
+
+
+                        {/* 이걸 class 로 빼보자  */}
+                        <RecommendNumberBtn />
+
+                    
+                    </div>
+
+
+                </div>
+            )
+        }
+    }
+
+
+    // 가상DOM 가져와서, 붙여주기 
+        const root = ReactDOM.createRoot(document.querySelector("#root"))
+        root.render(<App />)
+
+
+
+</script>
+
+
+
+
+
+
+</body>
+</html>
