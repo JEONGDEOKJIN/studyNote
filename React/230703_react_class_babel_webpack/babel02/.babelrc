@@ -1,0 +1,9 @@
+{
+    // 설정 
+    "plugins" : ["@babel/plugin-transform-modules-commonjs"]
+        // 사용할 plugins!! 
+
+        // presets 자바스크립트 기능 도는 구문을 변환하는 babel 플러그인을 의미함. 
+        // 어떤 플러그인을 사용해서 변환 시킬 건지! 
+
+}
