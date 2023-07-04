@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+<!-- 설치 script | REACT | ReactDom | BEBEL! -->
+<script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+<script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+
+</head>
+
+<style>
+
+    body { 
+        margin: 0;
+        padding: 0;
+    }
+
+    .black-nav {
+        background-color: black;
+        color: white;
+        font-size: 2rem;
+        font-weight: 600;
+        padding: 0.5em;
+    }
+
+    .list {
+        /* background-color: rgb(245, 244, 244); */
+        /* background-co/lor: rgb(212, 207, 207); */
+        width: 20em;
+        padding-left: 0.5em;
+        padding-top: 0.2em;
+        padding-bottom: 0.2em;
+        border-bottom: 1px solid rgb(124, 124, 124);
+    }
+
+    .thumbs { 
+        cursor: pointer;
+    }
+
+    .sortContentTitle { 
+        cursor: pointer;
+    }
+
+    .modal {
+        margin-top: 20px;
+        padding: 20px;
+        background-color: #eee;
+        text-align: left;
+    }
+    
+</style>
+
+
+
+<body>
+
+    <div id="root">
+
+    </div>
+
+</body>
+
+<script type="text/babel">
+
+
+    // 모달창 만들기 
+    class Modal extends React.Component {
+
+        constructor(props) {
+            super(props)
+            this.state = {
+                title : "모달창 제목", 
+                date : "모달창 날짜",
+                desc : "상세 내용"
+            }
+        }
+
+        render() {
+            return(
+                <div className="modal">
+                    <h3> {this.state.title} </h3>
+                    <p> {this.state.date} </p>
+                    <p> {this.state.desc} </p>
+                </div>
+            )
+        }
+
+    }
+
+
+
+
+
+
+    // 블로그 글 목록 만들어보기 
+    class App extends React.Component {
+
+        constructor(props) {
+            super(props)
+            this.state = {
+                blogTitle : "react blog", 
+                contentTitle : ["3_state 는 무엇인가" , "2_props는 무엇인가" , "1_거의 알아가는 단계?"], 
+                likeNum : 0
+            }
+        }
+
+        increaseNum = () => {
+            this.setState({likeNum : this.state.likeNum + 1})
+        }
+
+        sortContentTitle = () => {
+            let copyContentTitle = [...this.state.contentTitle] 
+                // [알게된 점👏]
+                    // 1) [...] 없이, copy 를 만들면, 여전히 주소값은 동일하기 때문에, 기존 state 와 setState 상 변화가 없음 -> 따라서 바뀌지 않음.
+                        // 기존state 와 setState 상 변경된게 없다고 판단하여, 바뀌는게 없음. 
+                        // 그 이유는 contentTitle 타입은 배열이고, 배열은 레퍼런스 타입으로써, 주소값만 갖고 있기 때문에.
+                    // 2) setState 할 때는 shallow copy 본을 만들어서, 원본을 보존해주는게 중요함 ⭐⭐⭐ 
+            // copyContentTitle[0] = "제목을 이걸로 바꿀것이야!"
+
+            let sortCopyContentTitle = copyContentTitle.sort()
+            console.log("정렬된 결과👉" , sortCopyContentTitle)
+
+            this.setState({ contentTitle : sortCopyContentTitle })
+        }
+
+        render() {
+            return(
+            <div className="App">
+                <div className="black-nav">
+                    <div> {this.state.blogTitle} </div>
+                </div>
+
+                <div className="list" >
+                    <button onClick={this.sortContentTitle} className="sortContentTitle" >✍ 정렬 </button>
+                </div>
+
+                <div className = "list">
+                    <h3> {this.state.contentTitle[0]} <span className="thumbs"  onClick={this.increaseNum} > 👍 </span>  {this.state.likeNum} </h3>
+                    <p  > 2월 17일 발행  </p>
+                </div>
+                <div className = "list">
+                    <h3> {this.state.contentTitle[1]} </h3>
+                    <p> 2월 17일 발행 </p>
+                </div>
+                <div className = "list">
+                    <h3> {this.state.contentTitle[2]} </h3>
+                    <p> 2월 17일 발행 </p>
+                </div>
+
+                <Modal />
+
+            </div>)
+        }
+
+    }
+
+
+// 가상 DOM 에 붙여주기 
+    const root = ReactDOM.createRoot(document.querySelector('#root'))
+    root.render( <App /> )
+
+</script>
+
+
+</html>

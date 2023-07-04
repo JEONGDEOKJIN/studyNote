@@ -1,0 +1,193 @@
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+
+.com {
+  border: 1px solid;
+}
+
+
+.red {
+  color: red  ;
+}
+
+.blue {
+  color: blue;
+}
+
+
+.buttons {
+  display: flex;
+}
+
+.header_container {
+  /* background-color: lightgray; */
+  color: black;
+  
+}
+
+.nav_container {
+  /* background-color: lightgoldenrodyellow; */
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+
+  height: 5rem;
+  font-weight: 500;
+  font-size: 1.5rem;
+
+}
+
+
+.dayOfWeek_container {
+  /* background-color: rgb(226, 226, 223); */
+  display: flex;
+  width: 77rem;
+  margin : 0px auto;
+
+  /* display: flex;/ */
+  justify-content: space-around;
+  /* border-bottom: 1px solid gray; */
+  
+}
+
+
+.dayOfWeekdays_container {
+ /* background-color: rgb(226, 226, 223); */
+ display: flex;
+ width: 55rem;
+ margin : 0px auto;
+
+ /* display: flex;/ */
+ justify-content: space-around;
+ /* border-bottom: 1px solid gray; */
+ 
+}
+
+.dayOfWeek {
+  height: 2rem;
+  width: 6rem;
+  /* background-color: rgb(243, 243, 232); */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+
+}
+
+
+
+.footer_container {
+  background-color: floralwhite;
+  
+  height: 5rem;
+  font-size: 1.5rem;
+  font-weight: 500;
+
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+
+
+
+.daysOfMonth_container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+
+.weekdaysOfMonth_container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 55rem;
+
+  margin-left: auto;
+  margin-right: auto;
+  
+}
+
+.eachDay:last-child {
+  margin-right: auto ;
+
+  margin-left: 3rem;
+}
+
+.DaysOfMonth {
+  display: flex;
+  
+  width: 77rem;
+  /* height: 50rem; */
+
+  /* background-color: blue; */
+
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+
+}
+
+
+.eachDay {
+  background-color: lemonchiffon;
+  width: 6rem;
+  height: 6.5rem;
+  flex-grow: 0;
+
+  margin-right: 2rem;
+  margin-left: 2rem;
+  margin-bottom: 1rem;
+
+  cursor: pointer;
+
+}
+
+.ribbonOfDay {
+  background-color: rosybrown;
+  height: 2rem;
+}
+
+.numberOfDay {
+  font-size: 2rem; 
+  font-weight: 400;
+  margin-top: 0.3rem;
+}
