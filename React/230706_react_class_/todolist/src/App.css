@@ -1,0 +1,154 @@
+.App {
+
+  width: 100%;
+  height: 100vh;
+
+  background-color: rgb(238, 236, 236);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+
+}
+
+
+.title_container {
+  width: 50rem;
+  height: 3rem;
+
+  background-color: rgb(202, 201, 201); 
+  
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+
+}
+
+.titleDeco {
+  background-color: rgb(27, 26, 26);
+  color: white;
+
+}
+
+.title_no { 
+  width: 7rem;
+  height: 100%;
+
+  display: flex;
+  flex-grow: 0;
+  justify-content: center;
+  align-items: center;
+
+}
+
+.title_check {
+  width: 7rem;
+  height: 100%;
+
+  display: flex;
+  flex-grow: 0;
+  justify-content: center;
+  align-items: center;
+}
+
+.title_list {  
+  width: 100%;
+  height: 100%;
+
+  display: flex;
+  flex-grow: 0;
+  justify-content: center;
+  align-items: center;
+}
+
+.itemDeco{
+  background-color: rgb(232, 229, 229); 
+}
+
+.todoBoard_item {
+  width: 50rem;
+  height: 3rem;
+  
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  
+}
+
+
+.todo_item {
+  width: 50rem;
+  height: 3rem;
+  
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+
+  border-bottom: 1px rgb(200, 198, 198) solid
+}
+
+
+
+
+.todo_item_no { 
+  width: 7rem;
+  height: 100%;
+
+  display: flex;
+  flex-grow: 0;
+  justify-content: center;
+  align-items: center;
+}
+
+.todo_item_check {
+  width: 7rem;
+  height: 100%;
+
+  display: flex;
+  flex-grow: 0;
+  justify-content: center;
+  align-items: center;
+}
+
+.item_done {
+  width: 100%;
+  border-bottom: 1px solid;
+}
+
+.todo_item_list {
+  width: 100%;
+  height: 100%;
+
+
+  display: flex;
+  flex-grow: 0;
+  justify-content: center;
+  align-items: center;
+}
+
+.check_line_through{ 
+  text-decoration-line: line-through;
+
+}
+
+.createItem_container{  
+  background-color: rgb(243, 239, 239);
+  color: white;
+  border-bottom: 1px solid gray;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  height: 2.5rem;
+}
+
+
+.createItem_input { 
+  width: 30rem;
+  height: 1.5rem;
+  margin-right: 1rem;
+}
+
+

@@ -25,7 +25,7 @@ export default class Main extends Component {
                 <Footer />
 
 
-                <Mycom3  newnum = {1}  newnum2 = {2}    />
+                {/* <Mycom3  newnum = {1}  newnum2 = {2}    /> */}
 
             </>
         )

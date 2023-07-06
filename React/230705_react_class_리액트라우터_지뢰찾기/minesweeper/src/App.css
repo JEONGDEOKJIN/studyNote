@@ -1,0 +1,81 @@
+
+.App {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.blockComponent_container {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  flex-wrap: wrap;
+  width: 33rem;
+  height: 33rem;
+
+  background-color: lightblue;
+}
+
+.block_container {
+
+  width: 10rem;
+  height: 10rem;
+  border: 1px solid gray;
+  background-color: lightyellow;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+
+  cursor: pointer;
+  flex-grow: 0;
+
+
+}
+
+
+.block_container_bomb {
+  width: 10rem;
+  height: 10rem;
+  border: 1px solid gray;
+  background-color: lightcoral;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+
+  cursor: pointer;
+  flex-grow: 0;
+
+
+}
+
+
+
+.block_container_ready{
+  width: 10rem;
+  height: 10rem;
+  /* border: 1px solid ;/ */
+  background-color: rgb(247, 238, 226);
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  cursor: pointer;
+  flex-grow: 0;
+}
+
+
+
+.gameOverModal {
+  /* width: 100vh; */
+  /* height: 100vh; */
+  /* background-color: blue; */
+}
+
+
+
