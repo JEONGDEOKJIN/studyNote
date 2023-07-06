@@ -8,10 +8,6 @@ const Item = ({createItem}) => {
 
     
     const [todoItem, setToDoItem] = useState([])
-
-    const [itemChecked , setItemChecked] = useState(false)
-
-    const [clickNumber, setClickNumber] = useState(-1)
     
     useEffect( () => {
         if(createItem){
@@ -21,20 +17,20 @@ const Item = ({createItem}) => {
     } , [createItem])
 
     
-    function getCheckboxValue (event)  {
-        console.log(event.target.value)
-        setClickNumber(event.target.value)
-        
-        setItemChecked(!itemChecked)
-        console.log(clickNumber)
-
-        // console.log(event.target)
-        // setItemChecked( preItem => [...preItem , event.target.value ])
-
-        // if(event.target.checked){
+        // function getCheckboxValue (event)  {
+        //     console.log(event.target.value)
+        //     setClickNumber(event.target.value)
+            
         //     setItemChecked(!itemChecked)
-        // }
-    } 
+        //     console.log(clickNumber)
+
+        //     // console.log(event.target)
+        //     // setItemChecked( preItem => [...preItem , event.target.value ])
+
+        //     // if(event.target.checked){
+        //     //     setItemChecked(!itemChecked)
+        //     // }
+        // } 
 
 
     return (
@@ -43,7 +39,7 @@ const Item = ({createItem}) => {
             
             // console.log("👉👉👉👉👉👉👉" , clickNumber)
             return(
-                <ItemDetail  clickNumber = {clickNumber}   item = {item} index = {index}  itemChecked={itemChecked}  getCheckboxValue={getCheckboxValue} />
+                <ItemDetail    item = {item} index = {index}   />
             
             )
 
