@@ -1,0 +1,13 @@
+
+.header_container {
+background-color: #021F59;
+color: white;
+font-size: 1.5rem;
+font-weight: 500;
+padding: 1em;
+display: flex;
+justify-content: center;
+align-items: center;
+}
+
+

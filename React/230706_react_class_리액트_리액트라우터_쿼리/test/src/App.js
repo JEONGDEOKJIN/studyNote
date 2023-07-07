@@ -2,6 +2,7 @@ import './App.css';
 
 import { Route, Routes , Navigate } from 'react-router-dom';
   // Routes 가 예전엔 switch 였음 ⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐ 
+  
 import { useState } from 'react';
 
 import {Detail, Login, Main, Mypage, Shop} from './pages'

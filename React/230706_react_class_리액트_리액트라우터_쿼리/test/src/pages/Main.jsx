@@ -11,9 +11,6 @@ const Main = ({login}) => {
 
             <Body path={"/mypage"} name={"마이페이지"} login={login}  />
 
-
-
-
     </div>
   )
 }
