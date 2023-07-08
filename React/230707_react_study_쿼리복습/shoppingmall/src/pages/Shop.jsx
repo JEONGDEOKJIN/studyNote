@@ -1,8 +1,13 @@
 import React from 'react'
+import { Header } from '../components'
 
 const Shop = () => {
   return (
-    <div>Shop</div>
+    <div>
+
+      <Header title = {"상점 입니다."}  />
+
+    </div>
   )
 }
 

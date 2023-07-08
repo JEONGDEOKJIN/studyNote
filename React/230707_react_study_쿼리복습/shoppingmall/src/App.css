@@ -1,6 +1,6 @@
 
 .header_container {
-background-color: #021F59;
+background-color: #000000;
 color: white;
 font-size: 1.5rem;
 font-weight: 500;
@@ -11,3 +11,17 @@ align-items: center;
 }
 
 
+.main_container { 
+    background-color: #F2ACE0;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    height: 100vh;
+}
+
+
+.item_container {
+    background-color: #9AE1E5;
+    width: 10em;
+    /* height: 30em; */
+}
