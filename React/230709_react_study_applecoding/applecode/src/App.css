@@ -1,0 +1,41 @@
+body { 
+  margin: 0;
+  padding: 0;
+}
+
+.black-nav {
+  background-color: black;
+  color: white;
+  font-size: 2rem;
+  font-weight: 600;
+  padding: 0.5em;
+}
+
+.list {
+  /* background-color: rgb(245, 244, 244); */
+  /* background-co/lor: rgb(212, 207, 207); */
+  width: 20em;
+  padding-left: 0.5em;
+  padding-top: 0.2em;
+  padding-bottom: 0.2em;
+  border-bottom: 1px solid rgb(124, 124, 124);
+}
+
+.thumbs { 
+  cursor: pointer;
+}
+
+.modal { 
+  background-color: blue;
+  width: 1500px;
+  height: 1500px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+
+.listTitle {
+  cursor: pointer;
+}

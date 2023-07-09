@@ -14,6 +14,7 @@ const Body = ( {path, name, login , item} ) => {
 
     <div className='body' >
         
+        {/* A 처럼 이동시 1) Link 사용 가능 2) useNavigate 메소드 사용 가능 */}
         <Link to={path} > {name} 페이지 이동  </Link>
         <button onClick={ () => {
             nav(path)
