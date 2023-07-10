@@ -17,7 +17,6 @@ const Count = () => {
     // type : 동작 시킬 행동의 이름 
     // payload : 선택사항 | 필요하면 넘기고, 없으면 안 넘겨도 됨. | 상태를 변경할 때, 데이터 전달이 필요하면 사용! 
 
-    
     const handlerAdd = () => {
         dispatch( {type : "김치 볶음밥"} )
             // 규칙에 맞게 ? 

@@ -15,10 +15,15 @@ const Body = ( {path, name, login , item} ) => {
     <div className='body' >
         
         {/* A 처럼 이동시 1) Link 사용 가능 2) useNavigate 메소드 사용 가능 */}
-        <Link to={path} > {name} 페이지 이동  </Link>
-        <button onClick={ () => {
-            nav(path)
-        } } >  {name} 페이지 이동  </button>
+            {/* 1) Link 이용 */}
+            <Link to={path} > {name} 페이지 이동  </Link>
+
+            {/* 2) useNavigate 이용 */}
+            <button onClick={ () => {
+                nav(path)
+            } } >  {name} 페이지 이동  </button>
+
+
 
         {/* 조건부 렌더링 ⭐⭐ */}
         {item && item.id ? <div> {item.id}  </div> : null }

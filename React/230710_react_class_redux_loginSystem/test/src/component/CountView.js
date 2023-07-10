@@ -20,7 +20,7 @@ const CountView = () => {
         // count 값을 상태로 보고 있음. 
     return (
     <div>
-        {count}       
+        {count}        
         <CountView2> </CountView2>
 
     </div>

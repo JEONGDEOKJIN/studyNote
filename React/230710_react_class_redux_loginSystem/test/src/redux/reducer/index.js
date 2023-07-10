@@ -27,7 +27,7 @@ let init = {
         // 음식이 뭔지 판단하는 조건문 
 
         switch (action.type) {
-            case "김치 볶음밥":
+            case "김치 볶음밥": 
                 // [해석]
                     // action 은, 주문을 할 때, action 에 담아서 보내게 됨. 
                     // action.type 은, action 객체에 담을 때 key 로 type 을 썼기 때문!
