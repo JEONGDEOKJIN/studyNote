@@ -12,7 +12,7 @@ const Body = ( {path, name, login , item} ) => {
 
     return (
 
-    <div className='body' >
+    <div className='body' > 
         
         {/* A 처럼 이동시 1) Link 사용 가능 2) useNavigate 메소드 사용 가능 */}
             {/* 1) Link 이용 */}
