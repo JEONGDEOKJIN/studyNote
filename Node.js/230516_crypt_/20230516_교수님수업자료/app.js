@@ -166,6 +166,10 @@ const mysql = mysql2.createPool({
     multipleStatements : true
 })
 
+
+
+
+
 // 테이블 초기화
 const usersInit = async () =>{
     try {
@@ -186,6 +190,7 @@ app.get("/",(req,res)=>{
 app.get("/login",(req,res)=>{
     res.render("login");
 })
+
 
 app.post("/join", async(req,res)=>{
     const {user_id,user_pw} = req.body;

@@ -9,6 +9,8 @@
 
 // 🔷 전역변수 및 모듈 임포트
 const express = require("express");
+
+
 const path = require("path");       // express 에 있는 내장 모듈
 
 const socketIo = require("socket.io");
@@ -29,6 +31,7 @@ const app = express();
     const server = app.listen(8009, () => {
         console.log("8009 에서 듣고 있어 🔮🔮🔮")
     })
+
 
 // 라우팅
     app.get('/' , (req, res) => {
