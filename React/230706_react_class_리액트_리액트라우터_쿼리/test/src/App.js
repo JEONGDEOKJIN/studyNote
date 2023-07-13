@@ -22,8 +22,8 @@ function App() {
     return login === true ? <Mypage login={login} /> : <Navigate to={'/'} />;
     // return login === true ? <Mypage login={login} /> : <Navigate to={'/login'} />;
       // 이쪽으로 이동 시켜도
-
   }
+  
 
   return (
     <div className="App">

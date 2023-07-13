@@ -21,11 +21,8 @@ function App() {
     // 객체의 키 값을 해당하는 리듀서 키값을 사용해주자 login 
       // (reducer index.js 에서 정함)combine reducer 에서 이렇게 정해서 이렇게 쓴다 ⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐ 
 
-const weatherData = useSelector( state => state.weatherData );
-  // 날씨 검색 버튼 누르면 
-
-
-
+  const weatherData = useSelector( state => state.weatherData );
+    // 날씨 검색 버튼 누르면 
 
 
   const login = () => {
