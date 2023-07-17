@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+
+<script>
+
+function commentElements(kArray){
+    let saveNum = []
+
+    let firstArr = kArray[0]
+    let firstArr_len = kArray[0].length
+
+    let secondArr = kArray[1]
+    let secondArr_len = kArray[1].length
+    
+    let thirdArr = kArray[2]
+    let thirdArr_len = kArray[2].length
+
+    for (let i = 0; i <firstArr_len ; i++){
+        for(let j = 0; j < secondArr_len; j++){
+            if (firstArr[i] == secondArr[j]){
+                for (let k = 0; k <thirdArr_len; k++ ){
+                    if(firstArr[i] == thirdArr[k]){
+                        saveNum.push(firstArr[i])
+                    }
+                }
+            }
+        }
+    }
+    let newSaveNum = new Set(saveNum)   
+    console.log([...newSaveNum])
+}
+
+commentElements([[1,2,3,3],[3,4,5],[2,3,4,7,8]])
+commentElements([[1,2,3],[1,2,3,4],[1,2]])
+
+
+</script>
+
+
+</html>

@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+
+    <div>
+        <label for="">할일 추가</label>
+        <input type="text" id="addTodo">
+        <button id="todoSave" >할일 저장</button>
+    </div>
+    <div>
+        <label for="" id="todo_01">완료체크</label>
+        <input type="checkbox" id="checkbox" >
+        <span id="todolist_read_01" >  </span>
+        <button id="delete_btn_01" value="todo_01">삭제</button>
+    </div>
+    <div>
+        <label for="" id="todo_02">완료체크</label>
+        <input type="checkbox" id="checkbox" >
+        <span id="todolist_read_02" >  </span>
+        <button id="delete_btn_02" value="todo_02">삭제</button>
+    </div>
+
+    <div>
+        <label for="" id="todo_03">완료체크</label>
+        <input type="checkbox" id="checkbox" >
+        <span id="todolist_read_03" >  </span>
+        <button id="delete_btn_03" value="todo_03">삭제</button>
+    </div>
+    <div>
+        <label for="" id="todo_04">완료체크</label>
+        <input type="checkbox" id="checkbox" >
+        <span id="todolist_read_04" >  </span>
+        <button id="delete_btn_04" value="todo_04">삭제</button>
+    </div>
+    <div>
+        <label for="" id="todo_05">완료체크</label>
+        <input type="checkbox" id="checkbox" >
+        <span id="todolist_read_05" >  </span>
+        <button id="delete_btn_05" value="todo_05">삭제</button>
+    </div>
+
+</body>
+
+<script>
+
+
+const checkbox = document.querySelector('#checkbox')
+const todoSave = document.querySelector('#todoSave')
+const todolist_read = document.querySelector('#todolist_read')
+
+
+// 할일 저장
+todoSave.addEventListener('click' , () => {
+    saveLocalStorage()
+})
+
+// 체크 완료
+checkbox.addEventListener('click' , () => {
+    console.log("체크")
+    window.localStorage.setItem("todo_01" , '완료')
+})
+
+// 저장하기
+function saveLocalStorage() {
+    // const todolist_value = document.querySelector('#todolist').value
+    const addTodo = document.querySelector('#addTodo').value
+    window.localStorage.setItem("todo_05" , addTodo)
+    
+}
+
+// 불러오기
+const todo_01_value = window.localStorage.getItem('todo_01')
+todolist_read_01.innerHTML= todo_01_value
+
+const todo_02_value = window.localStorage.getItem('todo_02')
+todolist_read_02.innerHTML= todo_02_value
+
+const todo_03_value = window.localStorage.getItem('todo_03')
+todolist_read_03.innerHTML= todo_03_value
+
+const todo_04_value = window.localStorage.getItem('todo_04')
+todolist_read_04.innerHTML= todo_04_value
+
+const todo_05_value = window.localStorage.getItem('todo_05')
+todolist_read_05.innerHTML= todo_05_value
+
+
+// 삭제
+delete_btn_01.addEventListener('click' , (e) => {
+    console.log(e.target.value)
+    window.localStorage.removeItem(e.target.value);
+})
+delete_btn_02.addEventListener('click' , (e) => {
+    console.log(e.target.value)
+    window.localStorage.removeItem(e.target.value);
+})
+delete_btn_03.addEventListener('click' , (e) => {
+    console.log(e.target.value)
+    window.localStorage.removeItem(e.target.value);
+})
+delete_btn_04.addEventListener('click' , (e) => {
+    console.log(e.target.value)
+    window.localStorage.removeItem(e.target.value);
+})
+delete_btn_05.addEventListener('click' , (e) => {
+    console.log(e.target.value)
+    window.localStorage.removeItem(e.target.value);
+})
+
+
+
+</script>
+
+
+
+</html>

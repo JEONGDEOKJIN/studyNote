@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+
+<script>
+
+// 주어진 함수 내부를 구현할 것.(재귀함수)
+    
+    // 6 / 2 나눈다 -> 몫은 3, 나머지는 0 -> 몫은 그 다음 나누기 대상으로 넘어간다. 나머지는 이진수 자장 끝자리로 간다. 
+    // 3 / 2 -> 몫은 1 -> 나머지는 1 -> 몫이 2보다 작으니가, 이진수 로 넘어간다. 나머지는 이진수 끝자리 -1 이 된다. 
+
+    // 나머지의 첫 번째 가 이진수 의 가장 끝 자리 된다. 
+    // 끝에 남은 몫은 이진수의 첫 번째 자리가 된다. 
+
+
+    function base10ToString(n) {
+        
+        // 이진수 담는 배열
+        let arrNumber = [];
+        
+        // 몫 담는 변수
+        let tempLeft = n;
+
+
+        while (tempLeft > 2) {
+            base10ToStringHelper(tempLeft)
+        }
+
+
+        // 끝에 남은 값을 이진수 끝으로 넣기 
+        arrNumber.push(tempLeft)
+
+
+        // 배열 순서 거꾸로 해서 2진수 출력
+        const temp = arrNumber.reverse()
+        console.log("배열 순서 거꾸로!" , temp.join(''))
+
+
+        function base10ToStringHelper(n) {
+            if (tempLeft > 1) {
+                console.log("현재 시작되는 값" , n)
+                arrNumber.push(n % 2)    
+                // console.log("이진수에 들어가는 값" , arrNumber)
+                
+                tempLeft = Math.floor(n/2)
+                // console.log("tempLeft, 나누고 남은 값" , tempLeft)
+                return tempLeft
+
+            } else {
+                arrNumber.push(n % 2)   
+                status = false
+                // console.log("여기까지 왔어! 끝이야!")
+            }
+        }
+    }
+
+    base10ToString(100)
+
+
+</script>
+
+</html>

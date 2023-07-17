@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+</body>
+
+<script>
+
+// 소수란 1보다 큰 자연수중 1과 자신만을 약수로 가지는 수를 말한다. 
+
+
+    function isPrime(n) {
+
+        let count = 0;
+        
+        for(let i = 1; i <= n ; i++ ) {
+            
+            // 딱 떨어지는 경우
+            if (n % i == 0) {
+                count++ 
+            }
+        }
+
+        if (count == 2) {
+            console.log("true")
+        } else { 
+            console.log("false")
+        }
+    }
+
+    isPrime(31)
+    isPrime(10)
+    // console.log(isPrime(31))    // true
+    // console.log(isPrime(10))    // false
+
+
+</script>
+
+
+</html>

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+
+<script>
+
+    function isPalindromeRecursive(word) {
+        
+        let temp = []
+        let tempReverse = []
+
+        temp = word
+        console.log(temp)
+
+        tempReverse = [...word].reverse().join('')
+        console.log(tempReverse)
+
+        if (temp === tempReverse){
+            console.log("true") 
+        } else {
+            console.log("false")
+        }
+    }
+
+    isPalindromeRecursive("abc")
+    // isPalindromeRecursive("appleelppa")
+
+
+    // reverse 랑 결과 내는 것 모두에 재귀를 쓸 수 있는거 같은데? 
+
+        // 저렇게 1 + 2 + 3 + 4 이렇게 한 단계식 풀어놓는다면? 
+
+
+
+
+
+
+</script>
+
+</html>

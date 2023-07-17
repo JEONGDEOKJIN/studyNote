@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+
+<script>
+
+    function recursive(word) {
+        let temp = []
+        temp = word
+        return ([...word].reverse().join(''))
+    }
+
+    function recursiveHelp(word){
+        recursive(word) == recursive(recursive(word)) ? console.log("true") : console.log("false");
+    }
+
+    recursiveHelp("appleelppa")
+    recursiveHelp("appleelpaa")
+
+
+
+
+
+</script>
+
+</html>

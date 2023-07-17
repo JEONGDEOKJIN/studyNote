@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+
+</body>
+
+<script>
+
+    function makeArr(strArr){
+        // 들어오는 strArr 길이 
+        let arrLength = strArr.length
+        // 정방향 
+        let choice_onside = []
+        // 역방향
+        let choice_onside_reverse = []
+        // 최동 배열 
+        let arrFinal = []
+        // 사용 가능한 인덱스들
+        let ableIndex = []
+        
+
+        for (let k = 0; k < arrLength; k++) {
+
+            // 앞자리 선택  
+            let choice_onside = [strArr[k]]
+            let choice_onside_reverse = [strArr[k]]
+            console.log("선택한 앞자리 인덱스" , k)
+            console.log("선택한 앞자리 값" , choice_onside)
+            
+            // 들어가야할 공간에서 선택한거 제거하기 | 가능한 인덱스 뽑기
+            ableIndex = range(arrLength)
+            console.log(" ableIndex " , ableIndex)
+
+            ableIndex.splice(k,1)
+            console.log("쓸 수 있는 인덱스" , ableIndex)
+
+            // 가능한 인덱스로 정방향으로 배열 만들고 👉 final 에 합치기. 
+            ableIndex.forEach((item) => {
+                choice_onside.push(strArr[item])
+            })
+            
+            ableIndex.reverse().forEach((item) => {
+                choice_onside_reverse.push(strArr[item])
+            })
+            console.log("📌정방향" , choice_onside)
+            console.log("📌역방향" , choice_onside_reverse)
+
+            arrFinal.push(choice_onside)
+            arrFinal.push(choice_onside_reverse)
+            console.log("최종합치기" , arrFinal)
+        }
+    }
+
+
+    function range(n) {
+    let sum = []
+    for (let i = 0; i < n ; i++){
+        sum.push(i)
+        console.log(sum)
+    }
+    return sum
+}
+
+
+
+    function permute(strArr, begin, end) {
+        
+        makeArr(strArr)
+
+    }
+
+    function permuteArray(strArr) {
+
+        permute(strArr)
+
+    }
+
+    permuteArray(["1" , "b" , "c"])
+
+
+</script>
+
+
+
+</html>

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+
+</body>
+
+<script>
+
+    function makeArr(strArr){
+        // 들어오는 strArr 길이 
+        let arrLength = strArr.length
+
+        let choice_onside = []
+
+        // 끝에 보여줘야 할 배열
+        let arrTotal = []
+
+        for (let k = 0; k < 3; k++) {
+
+            // 앞자리 선택  
+            let choice_onside = [strArr[k]] 
+            console.log("앞자리 바꾸기" , choice_onside)
+            
+            // 들어가야할 공간에서 선택한거 제거하기 
+                // pop? 
+                // 이때 선택된 인덱스 말고, 다른 인덱스만 남아있어야
+                // 이제 그걸 꺼내서, foreach 로 해서, push 로 남기면 된다. 
+
+
+
+            // 선택한 것 이외에, 정방향으로 배열 하나 만들기. 
+            for(let i = k+1; i < arrLength; i++){
+                
+                choice_onside.push(strArr[i])
+
+                console.log("정방향 넣기" , choice_onside)
+            }
+        }
+
+        console.log("정방향 배열에 앞자리 바꾸기 " , choice_onside)
+
+        // 하나 선택하기 
+            // 선택한 배열 값 | 향후, 동적으로 변경해야 함 ✅
+        // let choice_reverse = [strArr[0]] 
+        
+            // [해석] i 가 1인 이유는, choice 를 0 으로 했기 때문에! 
+        
+        // 선택하고 남은 것들로, 역방향 배열 만들기
+        // for(let j = arrLength-1 ; j >= 1 ; j--){
+        //     // console.log(" 현재값" , j)
+        //     choice_reverse.push(strArr[j])
+        //     console.log( "역방향 넣기" ,  choice_reverse)
+        // }
+
+        // 전체 배열에 합치기 
+        // arrTotal.push(choice_onside)
+        // arrTotal.push(choice_reverse)
+        // console.log("전체결과" , arrTotal)
+
+    }
+
+    function permute(strArr, begin, end) {
+        
+        makeArr(strArr)
+
+    }
+
+    function permuteArray(strArr) {
+
+        permute(strArr)
+
+    }
+
+    permuteArray(["1" , "b" , "c"])
+
+
+</script>
+
+
+
+</html>

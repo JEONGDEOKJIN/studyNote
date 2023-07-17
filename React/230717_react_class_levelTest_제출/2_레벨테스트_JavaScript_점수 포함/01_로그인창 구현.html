@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<style>
+
+    body{
+        background-color: lightgray
+    }
+
+    h1{
+        font-size: 35px;
+    }
+
+    input{
+        border: 1px solid lightgray;
+        border-radius: 3px;
+        height: 35px;
+        width: 300px;
+    }
+
+    .login_container{
+        
+        background-color: white;
+        border-radius: 5px;
+        width: 400px;
+        height: 350px;
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        justify-content: space-evenly;
+
+    }
+
+    .input_container{
+        display: flex;
+        justify-content: flex-end;
+        flex-direction: column;
+    }
+
+
+    button {
+        width: 310px;
+        height: 40px;
+        border-radius: 3px;
+    }
+
+    label {
+        /* margin-right: auto; */
+        /* margin-left: 50px; */
+    }
+
+</style>
+<body>
+
+
+    <div class="login_container">
+        <h1> Login </h1>
+        
+        <div class="input_container">
+            <label for="" style="font-weight: 600; font-size: 18px;">너의 이름</label>
+            <input type="text" placeholder="너의이름">
+        </div>
+    
+        <div class="input_container">
+            <label for="" style="font-weight: 600; font-size: 18px;" >비밀번호</label>
+            <input type="text" placeholder="요기에 입력">
+        </div>
+        <button style="background-color : green ; color : white">로그인 버튼</button>
+    </div>
+    
+</body>
+</html>

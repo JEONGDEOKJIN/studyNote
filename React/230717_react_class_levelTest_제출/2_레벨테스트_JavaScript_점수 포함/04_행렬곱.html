@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+
+<script>
+
+/*
+행렬 2개가 주어졌을 때 곱할 수 있는 행렬인지 확인하고 
+곱할 수 있다면 그 결과를 출력하고, 
+곱할 수 없다면 -1을 출력하는 코드를 작성하라.(10점, 부분점수 있음)
+
+*/
+
+
+a = [[1,2] , 
+    [2,4]]
+
+b = [[1,0] , 
+    [0,3]]
+
+function matrixMultiply(a, b){
+
+    c = [[0,0] , [0,0]]
+
+    console.log(a, b)
+    console.log( a[0][1]*b[0][1] + a[0][1]*b[0][1])
+
+    if(a[0].length == b[1].length && a[1].length == b[0].length){
+        console.log("행렬 계산 곱 가능")
+
+        c[0][0] = a[0][0]*b[0][0] + a[0][1]*b[0][1]
+        c[0][1] = a[0][0]*b[0][1] + a[0][1]*b[1][1]
+        
+        c[1][0] = a[1][0]*b[0][0] + a[1][1]*b[1][0]
+        c[1][1] = a[1][0]*b[0][1] + a[1][1]*b[1][1]
+
+    } else {
+        console.log("행렬곱 계산 불가")
+    }
+
+    console.log(c)
+}
+
+matrixMultiply(a,b)
+
+
+
+
+
+
+</script>
+
+
+</html>

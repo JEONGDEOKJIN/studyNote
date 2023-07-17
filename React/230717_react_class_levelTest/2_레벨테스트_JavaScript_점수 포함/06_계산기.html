@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<style>
+
+
+
+    body {
+        /* box-sizing: content-box; */
+        font-size: large;
+        font-weight: 600;
+    }
+    
+    div {
+        /* box-sizing : border-box; */
+        /* width: 150px; */
+        height: 150px;
+        border: 1px solid;
+        
+    }
+
+    .number_container {
+        border-collapse: collapse;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    
+    .container {
+        width: 1500px;
+        height: 1000px;
+    }
+
+    .result {
+        width: 800px;
+        background-color: lightgray;
+    }
+
+    .AC_CONTAINER {
+        width: 800px;
+        display: flex;
+    }
+    
+    #ac {
+        width : 600px;
+        cursor: pointer;
+        background-color: lightgray;
+    }
+    
+    #divide , #div_plus ,#div_equal , #div_-, 
+    #div_x  {
+        width : 200px;
+        background-color: orange;
+    }
+    
+    .x_container , .-_container , .equal_container {
+        width: 800px;
+        display: flex;
+        cursor: pointer;
+        background-color: lightgray;
+    }
+    
+
+    .plus_container {
+        width: 800px;
+        display: flex;
+        background-color: lightgray;
+        cursor: pointer;
+    }
+
+    #div_7, #div_8 , #div_9, #div_6, #div_5, #div_dot,
+    #div_4, #div_3, #div_2, #div_1{
+        width : 200px;
+        
+    }
+    
+    #div_0 {
+        width: 400px;
+        /* background-color: blue; */
+    }
+
+</style>
+
+
+<body>
+
+
+    <div class="container">
+        <!-- 결과 -->
+        <div class="result" > 결과 </div>
+
+        <div class="AC_CONTAINER" >
+            <div id="ac" > AC </div>
+            <div id="divide"> ➗ </div>
+        </div>
+
+        <div class="x_container">
+            <div id="div_7"> 7</div>
+            <div id="div_8"> 8</div>
+            <div id="div_9"> 9</div>
+            <div id="div_x"> ✖</div>
+        </div>
+        
+        <div class="-_container">
+            <div id="div_4"> 4</div>
+            <div id="div_5"> 5</div>
+            <div id="div_6"> 6</div>
+            <div id="div_-"> ➖</div>
+        </div>
+        
+        <div class="plus_container">
+            <div value="1" id="div_1"> 1</div>
+            <div id="div_2"> 2</div>
+            <div id="div_3"> 3</div>
+            <div id="div_plus"> + </div>
+        </div>
+        
+        <div class="equal_container">
+            <div id="div_0"> 0</div>
+            <div id="div_dot"> .</div>
+            <div id="div_equal"> = </div>
+        </div>
+
+    </div>
+
+
+
+
+
+    
+</body>
+
+
+<script>
+
+    let num1 = 0
+    let num2 = 0 
+    let operation = "="
+
+    div_1.addEventListener('click' , (event) => [
+        // console.log(event.target.innerText);
+        num1 = event.target.innerText,
+        console.log(num1),
+        calculation(num1, operation, num2)
+    ])
+    
+    div_2.addEventListener('click' , (event) => [
+        // console.log(event.target.innerText)
+        num2 = event.target.innerText,
+        console.log(num2),
+        calculation(num1, operation, num2)
+    ])
+    
+    div_plus.addEventListener('click' , (event) => [
+        // console.log(event.target.innerText)
+        operation = event.target.innerText,
+        console.log(operation),
+        calculation(num1, operation, num2)
+    ])
+
+
+
+    function calculation(num1, operation, num2) {
+        if(operation == '+') {
+            console(num1 * num2)
+        }
+    }
+
+
+</script>
+
+
+
+
+
+</html>

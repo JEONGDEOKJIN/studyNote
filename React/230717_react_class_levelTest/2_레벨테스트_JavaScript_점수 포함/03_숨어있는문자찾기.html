@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+
+
+<script>
+
+    /*
+	문자 pineapple에는 apple이라는 문자가 숨어 있다.
+    경일이는 이렇듯 문자열 속에 숨어있는 문자를 찾아보려고 한다. (5점)
+    첫번째 입력에서는 문자열이 입력되고, 두번째에는 찾을 문자가 입력되어야 한다. 
+    그 문자가 시작하는 index를 반환하는 코드를 작성하라.
+    */
+
+
+    function findWord (text, word){
+
+        let arrText = []
+        let arrWord = []
+
+        arrText.push(text)
+        _arrText = arrText.join()
+        let _arrText_len = _arrText.length
+        // console.log("📌" , _arrText)
+        
+        arrWord.push(word)
+        _arrWord = arrWord.join()
+        // console.log("👏" , _arrWord)
+        
+        let word_len= _arrWord.length
+        // console.log("👐" , word_len)
+
+        let sliceText = _arrText.slice(0,5)
+        // console.log("📌", sliceText)
+        // console.log(_arrText_len)
+
+        for (let i=0; i <_arrText_len; i++ ){
+            if( _arrWord == _arrText.slice(i,i+5)){
+                // console.log("🎏" , _arrText.slice(i,word_len))
+                console.log(i)
+            }
+
+        }
+
+    }
+
+    findWord("pineapple is yummy" , "apple")
+
+
+
+
+
+
+
+</script>
+
+
+
+</html>

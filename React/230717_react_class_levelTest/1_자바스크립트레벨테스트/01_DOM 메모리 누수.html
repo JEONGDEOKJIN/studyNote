@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <div id="one"> One </div>
+    <div id="two"> Two </div>
+
+</body>
+
+<script>
+
+// 	다음 코드는 DOM 메모리 누수를 보여준다. one클릭시 two가 제거되지만 one을 다시한번 클릭하더라도 여전히 제거된 two를 참조하려한다.
+// 	이러한 현상이 발생되는 이유(서술)와 해결코드를 작성할 것 
+    // 👉 ‘two’ 태그는 window 객체 안에서 삭제 되어야 하는데, 그렇지 않았기 때문입니다. 
+
+    const one = document.getElementById('one');
+    const two = document.getElementById('two');
+
+    one.addEventListener('click' , function() {
+        
+        // two.remove();
+        document.removeChild(one)       
+
+        console.log(two)
+    })
+
+
+
+</script>
+
+
+
+</html>
