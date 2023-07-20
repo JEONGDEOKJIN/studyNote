@@ -27,7 +27,7 @@ const Order = () => {
       <p> 로그인 완료되어야, 마이페이지로 갈 수 있어요 </p>
 
 
-      <button onClick={handleOrder}>  🔮마이페이지 가긴 가야지  </button>
+      <button onClick={}>  🔮마이페이지 가긴 가야지  </button>
 
     </div>
   )

@@ -13,6 +13,7 @@ const DECREMENT = "DECREMENT";
 
 
 const Reducer = () => {
+    
     // 상태의 초기값이 필요함 
         const init = {
             count : 0
