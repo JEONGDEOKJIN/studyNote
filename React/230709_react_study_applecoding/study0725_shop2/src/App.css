@@ -1,0 +1,38 @@
+
+.main_BGI_container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+
+.main_middle_container {
+  display: flex;
+  
+}
+
+.main_background_image {
+  /* background-color: blue; */
+  width: 80vh;
+  height: 300px;
+  background-image: url('https://media.pocketgamer.com/artwork/na-31674-1596216580/gogogo-ios-artwork-key-art.jpg');
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+}
+
+.main_item_img_container { 
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  align-items: center;
+}
+.main_item_img { 
+  width: 300px;
+  height: 200px;
+
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+}
