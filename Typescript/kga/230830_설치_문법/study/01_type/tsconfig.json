@@ -1,0 +1,15 @@
+{
+  "compilerOptions" : {
+  "module" : "CommonJS",    // CommonJS 모듈 시스템의 키워드 : require 과 module.export
+  "outDir" : "./dist",    // ./dist 로 파일 내보내기
+  "target" : "ES6",   // 변환된 버전은 ECMAScript 2015
+  "esModuleInterop" : true,   // CommonJS 와 ECMAScript 2015 간 싱크 맞추기  
+  "strict" : true,    // 엄격한 타입 검사
+  "baseUrl" : "./src",    // '파일 찾을 경로를 custom'
+  "paths" : {   // 경로에 붙이는 '별칭(alias)'
+      "@user/*" : ["user/*"]   
+  }
+}
+, "include" : ["src/**/*"]  // 컴파일 포함 대상 : scr 경로 아래에 '모든 경로' 에 있는 모든 파일' 
+// , "exclude" : ["**/*.test.ts"]    // 컴파일 제외 대상 : '모든 경로' 에 있는 'test.ts 확장자' 가 붙는 파일 
+}
