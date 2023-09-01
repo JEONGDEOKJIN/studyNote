@@ -1,0 +1,17 @@
+{
+  "compilerOptions" : {
+  "module" : "CommonJS",
+  "outDir" : "./dist", 
+  "target" : "ES6",
+  "esModuleInterop" : true, // 이건 true 로만 하는 옵션 
+  "strict" : true, 
+  "baseUrl" : "./src", 
+  "paths" : {
+      "@user/*" : ["user/*"]  // user 아래 있는 걸 모두 이렇게 지정? ❓❓ 
+  }
+}
+, "include" : ["src/**/*"]  // 모든 폴더 및 모든 파일
+, "exclude" : ["**/*.test.ts"]    // 컴파일에서 제외할 파일 
+  // .ts 확장자가 붙은 애들은 제외 하겠다!
+
+}
