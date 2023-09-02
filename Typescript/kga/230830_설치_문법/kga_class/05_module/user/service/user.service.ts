@@ -23,7 +23,6 @@ class UserService {
 
         // 타입을 이후에 만들 것 임 
     async login (type : string, credentials : UserParams) : Promise<AuthenticationResponse> {
-        
             const result = await this.strategy.login(type, credentials)
             return result
     }  // 응답값 성공 여부를 여기에 적을 것 임
