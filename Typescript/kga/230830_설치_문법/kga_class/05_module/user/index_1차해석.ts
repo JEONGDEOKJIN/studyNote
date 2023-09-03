@@ -23,6 +23,12 @@ const strategy = new Strategy();
         
     /*
 
+                /* [해석 ver1.0]
+                    해당 인스턴스에서는 이제, Strategy 의 '멤버 속성 및 멤버 메소드' 를 갖고 있게 됨. (왜냐면, 클래스는 객체를 생성하는 템플릿 이니까.)
+                    그럼, strategy 객체에는 어떤 멤버 속성과 멤버 메소드가 있고, 그게 어디에서, 왜 필요할까? 
+                */
+
+
 // 전략 등록 
     strategy.set('email' , new EmailAuthenticator());
         /* [수업] {strategy : {EmailAuthenticator} , set() , login() } 이렇게 담겨 있게 됨.
@@ -100,6 +106,11 @@ const strategy = new Strategy();
     */
     
     
+            /* [2.0 해석] strategy 의 결과값은 결과적으로 boolean 일 것 이고, 그게 Userservice 로 들어가게 된다. 
+                이제 이 각각의 클래스 기능을 이해하는데에 좀 어려움을 겪고 있음 😥😥 
+                전략 패턴을 활용하여, 다양한 방식의 로그인 처리를 지원.
+                다양한 로그인 처리 방식을 알게 된 strategy 가 UserService 안으로 들어가면, 무슨 일이 생기는 거야?
+            */
 
 
 // 유저 로그인 로직 클래스 생성 및 유저 서비스 로직 객체 생성자 매개변수로 전달

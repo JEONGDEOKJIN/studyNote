@@ -38,6 +38,18 @@ class UserService {
                     },                
         */
 
+                    /* 해석 ver1.0
+                        원래 이렇게 멤버 변수로 정의되어 있어야 하는데, constructor 에서 접근제한자를 사용해서, 멤버 변수가 선언되어 있다고 하는 거구나! 알겠음!
+                    */
+
+                    /* [해석ver1.0]            
+                        클래스 이름을 타입으로 사용하면 해당 변수에는 해당 클래스의 인스턴스만 할당될 수 있음. ⭐⭐⭐ 
+                        즉, 현재, Strategy 는 class 임. 그런데, 왜 strategy 변수가 Strategy 타입을 갖는다는 건지 이해를 못 했음. 
+                        어떤 타입을 갖게 하려면, interface 를 거쳐야 하는데, 거치지 않았으니까! ⭐⭐⭐⭐⭐ 
+                        근데 알고 보니, Typescript 에서, 1) class 이름으로도 타입 지정을 할 수 있고 2) 그렇게 되면, 해당 변수에는, 해당 클래스의 인스턴스만 할당 될 수 있다는 걸 알게 되었음. 
+                        따라서, strategy 변수에는 Strategy의 인스턴스만 올 수 있음. 
+                        그러면, 'Strategy의 인스턴스' 는? 
+                    */
         
         // [수업] 타입을 이후에 만들 것 임 
     async login (type : string, credentials : UserParams) : Promise<AuthenticationResponse> {
