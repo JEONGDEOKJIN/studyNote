@@ -1,6 +1,3 @@
-
-
-
 import type {Config} from "@jest/types";
     // 모듈의 타입이 정해져 있는 곳에서 Config 가져옴
 

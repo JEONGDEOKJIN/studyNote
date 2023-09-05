@@ -179,7 +179,4 @@ export class Block extends BlockHeader implements IBlock {
             // 블록이 유효성 검사를 통과했다! (정상적인 블록이다!)
             return {isError : false , value : _newBlock}
         }
-
-
 }
-

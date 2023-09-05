@@ -1,6 +1,7 @@
+
 class CryptoModule {
     // 클래스의 static 이기 때문에 바로 전역적으로 사용 가능 
-    // 동적할당으로 하 필요없이 
+    // 동적할당으로 할 필요없이 
     static hashToBinary(hash : string) : string {
         let binary : string = ""
 

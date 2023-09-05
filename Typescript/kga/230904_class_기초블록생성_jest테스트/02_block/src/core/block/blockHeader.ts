@@ -12,14 +12,14 @@ class BlockHeader implements IBlockHeader {
         // 블록을 생성할 때, 이전 블록 정보가 필요 
         // 이전 블록의 해시, 다르면 -> 중간에 비었다는 의미 
         // 이전 블록 높이,
-        this.version = BlockHeader.geVersion()
+        this.version = BlockHeader.getVersion()
         this.timestamp = BlockHeader.getTimestamp()
         this.height = _previousBlock.height + 1;
         this.previousHash = _previousBlock.hash
 
     }
 
-    static geVersion(){
+    static getVersion(){
         return "1.0.0"
     }
 

@@ -16,7 +16,7 @@ export interface Failure<E>{
     value : E;
 }
 
-    export type Failable<R,E> = Result<R> | Failure<E>
+export type Failable<R,E> = Result<R> | Failure<E>
     // 만든 것에 이제 타입을 2개 
     // 결과값이 있으면 -> Result R 을 사용
     // 없으면 -> Failure E 를 사용!

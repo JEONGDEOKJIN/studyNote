@@ -1,0 +1,185 @@
+// 블록의 클래스를 만들 파일 
+// 실제 블록 클래스 만들 파일 
+
+
+import {SHA256} from 'crypto-js';
+import merkle from 'merkle';
+import BlockHeader from './blockHeader'
+import { IBlock } from '@core/interface/block.interface';
+    //       "@core/*" : ["src/core/*"], 이거에 의해, 별칭으로 지정된 것 임. 
+    // IBlock 은 블록의 객체 구조를 정의한 놈임 
+
+import { Failable } from '@core/interface/failable.interface';
+import CryptoModule from '@core/crypto/crypto.module';
+
+
+// block의 형태를 클래스로 정의
+export class Block extends BlockHeader implements IBlock {
+    // 블록 Header 의 내용이 추가 됨 
+    // 모양은 iBlockHeader 
+    // 이제 블록 전체 내용을 여기에 작성 | IBlock 에서 받아온 걸 토대로 작성 
+
+    hash: string; 
+    merkleRoot: string;
+    nonce: number;
+    difficulty: number;
+    data: string[];
+    constructor(_previousBlock : Block , _data : string[]){
+        // 부모 클래스 생성자 호출 super
+        super(_previousBlock);  // BlockHeader 여기 클래스에 전달해서 내용을 작성해줄 것 
+
+        this.merkleRoot = Block.getMerkleRoot(_data)
+            // 작성먼저 하고 -> 그 다음에 돌아오기
+
+        // 블록 본인의 데이터를 해시화 한게 Block 의 해시값! 임. 
+        this.hash = Block.createBlockHash(this);
+
+        // 블록 채굴은 뒤에 추가
+        // 지금은 0 으로 
+        this.nonce = 0;
+
+        //  지금은 고정값. 블록 채굴 되고, 나중에 추가될 것!
+        this.difficulty = 3
+
+        this.data = _data;
+
+    }
+
+    // 블록 추가 함수 
+    static generateBlock (_previousBlock : Block , _data : string[]) : Block{
+        const generateBlock = new Block(_previousBlock , _data);
+        
+        // 마이닝 통해, 블록의 생성 권한을 받은 블록을 만들고
+        const newBlock = Block.findBlock(generateBlock);
+            // 이 블록 안에 해시값을 계속 만들어 
+            // 난이도에 충족하는 해시값을 계속 만들어 
+
+        return newBlock;
+            // 추가된 블록은 chain 클래스에 넣어줄 것
+            // 지금은 Block 만! 지금은 Block 의 구조만! 
+
+    }
+
+    // 블록 추가 
+    // 마이닝(채굴) 
+        // 연산을 통해서, 난이도에 맞는(난이도의 값에 따른 정답), 블록의 값을 찾는다. | 그 값을 찾을 때 까지 계속 연산
+        // findBlock = 동작의 이름은, '마이닝' | 블록을 채굴하는 동작 
+        // POW = 작업 증명 = 블록의 난이도에 충족하는 값을 구하기 위해서, 연산 작업을 계속 진행 -> 조건에 충족하는 값을 구하면 
+            // -> 보상으로 블록의 생성 권한을 얻는다. 
+            // -> 컴퓨터의 cpu 자원을 사용함. 
+            // 나중엔, gpu 연산이 뛰어나서, gpu 를 사용
+
+            // 블록 생성하고 -> 네트워크에 '블록생성했어' 알려주고 -> 체인 길이 확인 -> longest 임 -> 그러면 보상 받음 ⭐⭐⭐ 
+            // 블록 생성하고 -> 다른 사람이 좀 더 체인이 길었어 -> 그러면 보상을 받지 못 함. 
+            // 왜 이래야 하지❓❓❓❓❓❓ 
+
+        
+
+        static findBlock(generateBlock : Block){
+            let hash : string;
+            
+            // 처음에 nonce 를 0 으로 준다. 
+            // 마이닝은 난이도에 따라서 답을 찾는데, -> 블록 채굴을 할 때, 연산을 몇 번 진행했는지! 를 이곳에 값을 담을 것 임.
+            // nonce 변수는 블록을 채굴하는데 연산을 몇번진행 했는지 값을 여기에
+            let nonce : number = 0;
+
+            while(true){
+                generateBlock.nonce = nonce;
+
+                // nonce 이 값을 증가시켜서, hash 값을 계속 바꿔서, 진행
+                    // nonce 값이 계속 증가 되다가 바뀐다? 
+                    // nonce 가 올라가면 -> hash 값이 바뀐다? 
+                nonce++;
+                
+                hash = Block.createBlockHash(generateBlock);
+                    // 블록 해시 구하는 구문 추가 
+                    // SHA 256 을 해시화 시킨 해시값
+
+                // 16진수를 -> 2진수로 변환해서, 난이도에 맞는 값인지를 확인함
+                    // 16진수를 2진수로 변환해서, 0의 개수가 난이도의 개수에 개수에 충족하는지 체크
+                    // 문제를 맞추면, 블록 채굴의 권한 갖고 -> 블록을 생성할 수 있음. 
+
+                // 충족되었는지 확인하려면, binary 2인값이 바뀌는 이유는, 
+                const binary : string = CryptoModule.hashToBinary(hash);
+                    // 이진수 값이 필요한데, 이걸 구하는 식
+                    // 2진수로 바뀐 것 에서 0의 개수가 몇개 있는가! 를 체크 
+            
+                console.log("binary" , binary)
+
+                // 연산의 값이, 난이도에, 충족했는지, 체크할 변수
+                const result : boolean = binary.startsWith("0".repeat(generateBlock.difficulty))
+                    // 문자열에서 앞의 부분을 체크하는데, 0 의 개수를 반복
+                    // 체크할 때, 문자열의 난이도 만큼!!! 0의 개수가 있는지를 체크!!! 
+
+                    // startWith : 문자열의 시작이, 매개변수로 전달된 문자열로 시작되는지 체크!
+                    // ex) 만약, difficulty 값이 3 이라면, 
+                    // ex) binary 안에 있는 값이 000 으로 시작하는지 여부 -> true, false 값이 나올 것 
+
+                console.log("result" , result)
+                
+                // 퀴즈를 맞췄으면 -> 블록을 채굴할 수 있는 권한을 얻음 -> 채굴된 블록을 반환! (조건에 충족해서 나온 값을 반환!)
+                if(result){
+                    // 연산을 통해, 완성된 hash 값과, 
+                    generateBlock.hash = hash;
+                    // 완성된 블록을 내보내주자
+                    return generateBlock;
+                }
+            }
+        }
+
+        // 블록의 해시를 구하는 함수
+        static createBlockHash(_block : Block) : string{
+            // 블록의 모든 정보를 가지고 
+            const {version , timestamp, height, merkleRoot, previousHash, difficulty , nonce} = _block;
+
+            // 모든 정보를 가지고, SHA256 로 해시화 시킨것! 이게 000 이다. 
+            const value : string = `${version} ${timestamp} ${height} ${merkleRoot} ${previousHash} ${difficulty}  ${nonce} `
+
+            return SHA256(value).toString();
+        }
+
+
+        // 블록에 있는 데이터를 더하고 더하고 해서 -> 머클 루트
+        // 머클 루트 반환 구하는 함수 
+        static getMerkleRoot<T>(_data : T[]) : string {
+            const merkleTree = merkle("sha256").sync(_data);
+            return merkleTree.root();
+        }
+
+        // T[]
+            // T 를 주면 -> 타입을 STRING 으로 줄 수 이음. 
+            // 타입을 함수처럼 사용할 때 지정할 수 있음
+            // 어떤 타입을 받는지 모르기 때문에 
+            // any 랑 비슷❓❓❓❓❓❓ 
+
+
+        // 블록이 유효한지, 정상적인 블록인지 검사
+            // 새로운 블록이랑, 이전 블록이랑 가져온다. 
+        static isValidNewBlock(_newBlock : Block , _previousBlock : Block) : Failable<Block, string>{
+            
+            // 블록의 유효성 검사를 하는데, 
+
+            // 블록의 높이가 정상적인지 검사
+                // 이전블록이 1 이면, 다음 블록은 2
+            if(_previousBlock.height + 1 !== +_newBlock.height)
+                return {isError : true, value : "이전 높이 오류"}
+
+            // 이전 블록의 해시값이, 새로운 블록의 이전 해시값과 동일한지 확인 
+            if(_previousBlock.hash !== _newBlock.previousHash)
+                return {isError : true , value : "이번 블록 해시 오류"}
+
+            // 생성된 블록의 정보를 가지고, 다시 해시해서, 블록의 값이 변조되었는지, 정상적인 블록인지 확인
+            if(Block.createBlockHash(_newBlock) !== _newBlock.hash)
+                return {isError : true, value : "블록 해시 오류"}
+            
+                // 누가 블록 채굴했데! 라는 말을 들음 
+                // so, 블록을 확인하고 -> 정상적인 블록이면 -> 블록을 추가. 이걸 검증함수에서 정의함
+                
+            
+            // 블록이 유효성 검사를 통과했다! (정상적인 블록이다!)
+            return {isError : false , value : _newBlock}
+        }
+
+
+}
+
