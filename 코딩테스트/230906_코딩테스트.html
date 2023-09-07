@@ -11,27 +11,23 @@
 
 <script>
 
-    function solution(strArr) {
-        let answer = [];
-        
-        console.log(strArr)
-        strArr.map((item , index) => {
-            if(index % 2 == 0){
-                item = item.toLowerCase()
-                
-            }else{
-                item = item.toUpperCase()      // 이게 왜 안 되나? 왜 안 되나? 
-                console.log(item)
-            }
-
-            answer.push(item)
-        })
-        console.log(answer)
-        return answer;
-    }
-
-    solution(["aaa","bbb","ccc","ddd"])
+function solution(num_list) {
     
+    let arrLength = num_list.length()
+    let answer;
+    
+    if(arrLength >= 11){
+    answer = num_list.reduce((acc, cur) => acc + cur , 0)
+    }else{
+    answer = num_list.reduce( (acc, cur) => acc * cur )   
+    } 
+    
+    return answer;
+
+}
+
+solution([3, 4, 5, 2, 5, 4, 6, 7, 3, 7, 2, 2, 1])
+
 
 
 </script>

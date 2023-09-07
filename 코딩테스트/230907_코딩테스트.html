@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+
+<script>
+
+    function solution(strArr) {
+        let answer = [];
+        
+        console.log(strArr)
+        strArr.map((item , index) => {
+            if(index % 2 == 0){
+                item = item.toLowerCase()
+                
+            }else{
+                item = item.toUpperCase()      // 이게 왜 안 되나? 왜 안 되나? 
+                console.log(item)
+            }
+
+            answer.push(item)
+        })
+        console.log(answer)
+        return answer;
+    }
+
+    solution(["aaa","bbb","ccc","ddd"])
+    
+
+
+</script>
+
+</html>

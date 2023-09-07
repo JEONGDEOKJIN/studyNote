@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+
+
+<script>
+
+            
+            const arrCandidateNums = []
+            const arrWinNums  =[]
+
+
+            for (let i = 1; i < 46; i++) {
+                arrCandidateNums.push(i)
+            }
+            console.log(arrCandidateNums)
+
+            while(true){
+                let uniqueNumState = true
+                let winNum
+    
+                while(true){
+                    let winNum = Math.floor(Math.random()*45) + 1
+                    console.log(winNum)
+                    
+                    arrCandidateNums.map( (item, index) => {
+                        if(item == winNum){
+                            uniqueNumState == false
+                        }else {
+                            uniqueNumState == true
+
+                            // splice 이렇게 하면 제거 되는게 맞나❓❓❓❓❓ 👇👇👇 
+                                // arrCandidateNums.splice(winNum, 1)
+                                // console.log(arrCandidateNums)
+                    }
+                })
+    
+                    if(uniqueNumState == true)
+                        break;
+                }
+    
+                arrWinNums.push(winNum)
+                
+                if(arrWinNums.length >= 6)
+                    break;
+            }
+
+            console.log(arrWinNums)
+
+
+
+
+
+</script>
+</html>
