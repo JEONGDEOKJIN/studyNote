@@ -23,6 +23,7 @@ import {WebSocket , WebSocketServer} from "ws"
         addBlock = 2
     }
 
+
     // 값을 어떤 상태로 지정할 때 enum 을 사용
         // ex) run 상태, run 상태, work 상태, 작업하거나, 달리거나 하는 '상태' 를 '변수' 로 사용 
         // '변수' 로 알기 쉽게! 
@@ -61,7 +62,7 @@ import {WebSocket , WebSocketServer} from "ws"
 
         constructor(){
             super() // Chain 부모의 생성자 함수를 실행 
-            this.sockets = [];
+            this.sockets = [];  // 이건, 웹소켓 서버에 연결된 소켓 리스트를 확인할 때, 해당 소켓들의 address 및 port 를 담게 됨. 
         }
 
         getSockets() : Array<WebSocket> {
@@ -83,6 +84,9 @@ import {WebSocket , WebSocketServer} from "ws"
             socket.on("message" , (_data : string) => {
 
                 // 받은 데이터를 문자열로 변환하고 -> 객체로 변환
+                    // console.log("toString 했을 때" , _data.toString())
+                    // console.log("JSON.parse까지 했을 때" , JSON.parse(_data.toString()))
+
                 const data = JSON.parse(_data.toString())   
                 
                     console.log("type : 1) all 전체를 가져오거나 2) add 하거나 3) latest 최근거 | 지금 Chain 클래스에서 만든 chain 값이 있음. 📌",data )
@@ -182,8 +186,8 @@ import {WebSocket , WebSocketServer} from "ws"
         }
         
         addToPeer(peer : string) : void {
+
             // 상대방이 내 ip 에 접속 했을 때, socket 을 생성하고, 연결한다. 
-            
             const socket : WebSocket = new WebSocket(peer);
             // 매개변수로 들어온 peer 주소로, 연결을 시도한다.
 

@@ -27,14 +27,24 @@ npx tsc --init
 ```
 
 
-- 테스트 코드 작성할 때
+### 테스트 코드 작성할 때
 ``` sh
 npm i -D @types/jest jest
     # 타입 스크립트도 같이 작성하기 때문에, @types/jest 이것도 들어간다.  
 ```
 
 
-## jest.config.ts
+#### jest.config.ts
 - jest 로 테스트 코드를 실행할 때, 옵션설정 파일
 - 확장자, 테스트 환경 등등 지정
 - jest 를 js, ts 등등 어디에서 만들 것 인가. 
+
+---
+
+
+- p2p > server 에 있는 index.ts 파일 실행시키려면 
+```
+해당 경로에 까지 가거나 cd 에서 경로 설정을 해줘서 아래와 같이 실행. 
+왜냐면 1) ts 파일 실행하기 위해서 ts-node 해야 하고 2) 
+$ npx ts-node index.ts 
+```

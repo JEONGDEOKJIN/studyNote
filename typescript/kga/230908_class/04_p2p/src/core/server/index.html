@@ -30,6 +30,7 @@
     <div id="peerView">  
 
     </div>
+    
 
     <div>
         <label for="">block</label>
@@ -76,7 +77,8 @@
 
     const _blockCreate = async() => {
         const _blockData = [blockData.value]
-        const {data : block} = await axios.post("http://localhost:8080/block/mine" , {data : _blockData})
+
+        const {data : block} = await axios.post("http://localhost:8080/block/mine" , {data : _blockData})   // _blockData 는 '배열' 형태로 들어감
     }
 
     blockCreate.onclick = _blockCreate;
