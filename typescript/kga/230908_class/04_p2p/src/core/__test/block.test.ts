@@ -1,3 +1,7 @@
+// [이 파일 실행시키려면] ⭐⭐ 
+    // npm run test 
+
+
 
 // 여기에 TDD 작성 
 // 테스트 코드 작성하고 -> 그 다음 개발 
@@ -63,6 +67,7 @@ import Chain from '@core/chain/chain'
         let newChain2 : Chain;
         
         // 테스트할 코드의 최소 단위
+        
         it("블록 추가" , () => {
             const data = ["Block 1"];
             newBlock = Block.generateBlock(GENESIS, data , GENESIS)
@@ -72,16 +77,15 @@ import Chain from '@core/chain/chain'
             // 이전 블록은 GENESIS(최초블록)
             console.log(newBlock);
             
-
             // 새로운 데이터 
             const data2 = ["Block2"]
 
             newBlock2 = Block.generateBlock(newBlock , data2 , GENESIS);
             console.log(newBlock2)
 
-        } )
+        })
 
-        it("블록 유효성 검증. 이 블록이 정상적인이 검증" , () => {
+        it("블록 유효성 검증. 이 블록이 정상적인이 검증. 정상적인 block 을 네트워크에 넣기 위해" , () => {
             const isValidNewBlock = Block.isValidNewBlock(newBlock, GENESIS)    // 🔵 작동함 
             // const isValidNewBlock = Block.isValidNewBlock(newBlock2, GENESIS)    // 미작동. 왜냐면, newBlock2 라는 틀린 데이터를 넣었기 때문에  😥
             if(isValidNewBlock.isError){
@@ -141,9 +145,6 @@ import Chain from '@core/chain/chain'
             console.log(newChain.getBlockByHash(newBlock.hash))     // 이거 해도 찾아짐🔵
             console.log("🚀🚀newchain" , newChain.get())
         })
-        
-
-
 
         it("네트워크 체인 비교(longest chain rule (롱기스트 체인 룰)" , () => {
             newChain2 = new Chain();
@@ -153,7 +154,6 @@ import Chain from '@core/chain/chain'
                 // 첫번째 체인이 좀 더 기니까, 본인 체인을 갈아 꼈음.
         })
 
-
         // 블록 난이도 조절할 때! 
             // 그 블록 생성 주기 난이도를 올리고, 내리고
         it("이전 10번째 블록 or 최초 블록" , () => {
@@ -161,7 +161,7 @@ import Chain from '@core/chain/chain'
             // 현재 블록이 생성된 시간이, 이전 10번째 블록으로 부터, 얼마나 걸렸는지 확인! 
             // 블록의 정해진 생성 주기 보다, 빠르면, 난이도를 올리고, 아니면 내린다. 
 
-            for (let i = 0; i < 55; i++) {
+            for (let i = 0; i < 30; i++) {
                 let block = Block.generateBlock(newChain.latestBlock(), ["block"], newChain.getAdjustmentBlock())
                 newChain.addToChain(block)                
             }
@@ -171,7 +171,6 @@ import Chain from '@core/chain/chain'
                 // 길이가 10번째 인 블록! 
         })
 
-        
         // 이후에 peer to peer 연결해서, 비교 
         // 그 다음 지갑에 뭐가 있고, 
         // 트랜잭션의 내용을 좀 더 들어갈 것 

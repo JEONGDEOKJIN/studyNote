@@ -77,7 +77,7 @@ import {WebSocket , WebSocketServer} from "ws"
                 this.sockets.push(
                     `${socket._socket.remoteAddress} : ${socket._socket.remotePort}`
                     );
-                    // 이렇게 sockets 로 들어가게 됨 👉 [ '192.168.0.6' :  '7545'] 
+                    // 이렇게 sockets 로 들어가게 됨 👉 [ '192.168.0.6' :  '7545'] 👉 현재 접속한 유저 확인할 때 나옴
 
             // socket.send() 실행 해야만 -> message 이벤트가 발생   
                 // 현재, 코드에서는, 'peer접속' 클릭 이후의 로직에서 socket.send() 이 없으므로 -> message 이벤트 발생 안 함 -> 🔵 수정완료
@@ -156,8 +156,6 @@ import {WebSocket , WebSocketServer} from "ws"
             
             socket.send(JSON.stringify(messageDJ))   
                 // 블록보내기
-
-
 
         }
         // 매개변수 socket : 연결 시도한 사람의 SOCKET 을 받기 

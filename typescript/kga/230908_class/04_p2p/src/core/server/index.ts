@@ -122,6 +122,9 @@ app.post("/block/mine" , (req : Request, res : Response) => {
             // 포트번호(port) : 7545  
                 // 추후에 Ganache(가나싱) 사용하기 위해서, 포트 번호를 7545 로 함. 
                 // Ganache 란? : 이더리움 메인넷, 테스트넷, 사용하지 않고도, 스마트 컨트랙트 개발이 가능한 '개인(로컬) 블록체인 환경'
+            
+            // 그런데, 이걸, peer 라는 변수에 담네? 
+                // 그러면, peer 가 의미하는 건, 이러한 url 과 이러한 port 로, peer 로써 들어가겠다. 
 
         res.end()
     }

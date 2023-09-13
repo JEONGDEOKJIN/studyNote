@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+
+<script>
+
+function solution(num_list) {
+    var answer;
+    var temp_a;
+    var temp_b;
+    
+    num_list.map((item , index ) => {
+        if(Math.sign(item) == -1 && temp_a == undefined || null) temp_a = index;
+    })
+    temp_a == null || undefined ? answer = -1 : answer = temp_a;
+    return answer;
+}
+
+
+solution([12, 4, 15, 46, 38, -2, 15])
+// solution([13, 22, 53, 24, 15, 6])
+
+
+</script>
+
+</html>

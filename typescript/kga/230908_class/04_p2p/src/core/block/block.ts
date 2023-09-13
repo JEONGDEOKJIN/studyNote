@@ -28,6 +28,7 @@ export class Block extends BlockHeader implements IBlock {
     nonce: number;
     difficulty: number;
     data: string[];
+
     constructor(_previousBlock : Block , _data : string[] , _adjustmentBlock : Block){
         // 부모 클래스 생성자 호출 super
         super(_previousBlock);  // BlockHeader 여기 클래스에 전달해서 내용을 작성해줄 것 
@@ -45,6 +46,7 @@ export class Block extends BlockHeader implements IBlock {
         //  지금은 고정값. 블록 채굴 되고, 나중에 추가될 것!
         // this.difficulty = 3 | 예전 코드 
         this.difficulty = Block.getDifficulty(this, _adjustmentBlock , _previousBlock)
+            // 로직 : 블록 10개마다 조절하고 2) 예상시간의 2배보다 빠르거나, 느려야, 조절함
 
         this.data = _data;
 
@@ -52,7 +54,23 @@ export class Block extends BlockHeader implements IBlock {
 
     // 블록 추가 함수 
     static generateBlock (_previousBlock : Block , _data : string[] , _adjustmentBlock : Block) : Block{
-        const generateBlock = new Block(_previousBlock , _data , _adjustmentBlock);
+        const generateBlock = new Block(_previousBlock , _data , _adjustmentBlock);     // adjustmentBlock 은 난이도 조절 위한 용도
+            /* generateBlock = {
+                // blockHeader 에서 상속 받은 애들
+                    version : string;
+                    height: number;
+                    timestamp: number;
+                    previousHash:
+                
+                // Block 에서 추가된 애들
+                merkleRoot : "머클루트에 대한 해시값"
+                hash : ""   // 지금 이 data 에 대한 해시값이 나올 것 
+                nonce : 0    // difficulty 문제를 맞출 때 가지 몇번 시도 했는가. 
+                difficulty :    // 만약, difficulty 가 3이면, hash 값이, 처음부터 세번째 까지, 000 으로 시작해야 함 
+                                // 1) 블록 10개마다 조절하고 2) 예상시간의 2배보다 빠르거나, 느려야, 조절함
+                }
+            */
+
         
         // 마이닝 통해, 블록의 생성 권한을 받은 블록을 만들고
         const newBlock = Block.findBlock(generateBlock);
@@ -79,8 +97,24 @@ export class Block extends BlockHeader implements IBlock {
             // 왜 이래야 하지❓❓❓❓❓❓ 
 
         
-
+        // 마이닝 | 블록을 채굴
         static findBlock(generateBlock : Block){
+                /* generateBlock = {
+                    // blockHeader 에서 상속 받은 애들
+                        version : string;
+                        height: number;
+                        timestamp: number;
+                        previousHash:
+                    
+                    // Block 에서 추가된 애들
+                    merkleRoot : "머클루트에 대한 해시값"
+                    hash : ""   // 지금 이 data 에 대한 해시값이 나올 것 
+                    nonce : 0    // difficulty 문제를 맞출 때 가지 몇번 시도 했는가. 
+                    difficulty :    // 만약, difficulty 가 3이면, hash 값이, 처음부터 세번째 까지, 000 으로 시작해야 함 
+                                    // 1) 블록 10개마다 조절하고 2) 예상시간의 2배보다 빠르거나, 느려야, 조절함
+                    }
+                */
+                
             let hash : string;
             
             // 처음에 nonce 를 0 으로 준다. 
@@ -188,10 +222,9 @@ export class Block extends BlockHeader implements IBlock {
             if(_previousBlock.hash !== _newBlock.previousHash)
                 return {isError : true , value : "이번 블록 해시 오류"}
 
-            // 생성된 블록의 정보를 가지고, 다시 해시해서, 블록의 값이 변조되었는지, 정상적인 블록인지 확인
+            // 채굴 할 때 사용한, 블록의 정보를 가지고, 다시 해시해서, 블록의 값이 변조되었는지, 정상적인 블록인지 확인
             if(Block.createBlockHash(_newBlock) !== _newBlock.hash)
                 return {isError : true, value : "블록 해시 오류"}
-            
                 // 누가 블록 채굴했데! 라는 말을 들음 
                 // so, 블록을 확인하고 -> 정상적인 블록이면 -> 블록을 추가. 이걸 검증함수에서 정의함
                 
@@ -210,7 +243,7 @@ export class Block extends BlockHeader implements IBlock {
             
             if(_newBlock.height <= 0 ) throw new Error("높이가 0 이 들어왔어요! 최초 블록이라는 말. 채굴한게 최초 블록이면 안 되잖아!")
             if(_newBlock.height < 10) return 0  // 난이도를 0 으로 준다. 
-            if(_newBlock.height < 12) return 1  // 난이도를 1 으로 준다.
+            if(_newBlock.height < 12) return 1  // 난이도를 1 으로 준다.    // 상수값을 반환
                 // 블록이 만들어지기 전 까지는, 이렇게 
                 // 블록의 높이가 20 이하일 경우에는 체크 x 
                 // 블록의 높이가 10의 배수가 아닐 경우에는, 이전 블록 난이도를 설정. 
@@ -220,12 +253,18 @@ export class Block extends BlockHeader implements IBlock {
             if(_newBlock.height % DIFFICULTY_ADJUSTMENT_INTERVAL !== 0) return _previousBlock.difficulty;
 
             // 시간의 차이를 구하기 
-            const timeToken : number = _newBlock.timestamp = _adjustmentBlock.timestamp // 10개 이전 블록의 시간을 빼준다. 
-            const TimeExpected : number = BLOCK_GENERATION_INTERVAL * 10 * DIFFICULTY_ADJUSTMENT_INTERVAL   // 10개 만들어지는 시간을 구함!  
-    
+            const timeToken : number = _newBlock.timestamp - _adjustmentBlock.timestamp // 10개 이전 블록의 시간을 빼준다. 
+            const TimeExpected : number = BLOCK_GENERATION_INTERVAL * DIFFICULTY_ADJUSTMENT_INTERVAL   // 10개 만들어지는 시간을 구함!  
+                /*  BLOCK_GENERATION_INTERVAL : 10분 | DIFFICULTY_ADJUSTMENT_INTERVAL : 10개 의 간격을 둔다. -> so, 총 10개 만들어지는 시간
+                */
+
+
             // 생성시간이 빨랐다
                 // 총 걸린시간 < 목표시간 / 2 = 이전블록 난이도 1 증가
-            if( timeToken < TimeExpected/2 ) return _previousBlock.difficulty + 1;
+            if( timeToken < TimeExpected / 2 ) return _previousBlock.difficulty +1;
+                // [궁그증] 여기에서 왜 2로 나눠주지❓❓
+                    // 무조건, 예상 시간보다 빠르게 만들어졌다고 해서 -> 난이도를 높이지 않음. 
+                    // 예상보다 2배 정도 빠르게 캤을 때 -> 비로소, 난이도를 높임. 
 
             // 생성시간이 더 걸렸다면 , 난이도 감소
                 // 총걸린시간 > 목표시간 * 2 = 이전 블록 난이도 -1;
