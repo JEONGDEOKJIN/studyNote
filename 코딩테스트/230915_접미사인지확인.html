@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+
+<script>
+
+
+function solution(my_string, is_suffix) {
+    
+    // console.log(my_string.length)
+
+    // console.log(my_string.indexOf(is_suffix))
+
+    // console.log((my_string.indexOf(is_suffix) + is_suffix.length) + 1 == my_string.length)
+    
+    // console.log(my_string.indexOf(is_suffix))
+    // console.log(my_string.length-1)
+    // console.log(is_suffix.length-1)
+    
+    console.log(my_string.length - is_suffix.length)
+
+    console.log((my_string.indexOf(is_suffix , my_string.length - is_suffix.length)) !== -1 ? "됨" : "안됨")
+
+    
+    // console.log(my_string.indexOf(is_suffix , -is_suffix.length)? 1: 0)
+// 
+    // console.log(result)
+}
+
+// solution( "banana"	, 'ana' )
+solution( "banana"	, 'nan' )
+
+</script>
+
+</html>

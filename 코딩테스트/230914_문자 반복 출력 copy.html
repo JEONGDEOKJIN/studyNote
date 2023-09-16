@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+
+<script>
+
+
+function solution(my_string, n) {
+    
+    var arr = my_string;
+    var str = [...arr]
+    var arrResult = [];
+    
+    str.map((item, index) => {
+        for (let i = 0; i < n; i++){
+            arrResult.push(item)
+        }
+    })
+    console.log(arrResult)
+    console.log(arrResult.join(''))
+    return arrResult;
+}
+
+solution("hello" , 3)
+
+
+
+</script>
+
+</html>

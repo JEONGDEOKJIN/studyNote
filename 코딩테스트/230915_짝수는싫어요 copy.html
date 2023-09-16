@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+
+<script>
+
+
+function solution(n) {
+    return new Array(n+1).fill()
+                    .map((value, index) => {return value = index})
+                    .filter(value => value % 2 !== 0)
+}
+
+solution(10)
+
+</script>
+
+</html>

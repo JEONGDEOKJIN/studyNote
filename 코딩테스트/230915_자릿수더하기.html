@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+
+<script>
+
+
+// function solution(s1, s2) {
+//     let result = 0;
+
+//     s1.map( (s1_item) => {
+//         s2.map( (s2_item) => {
+//             if(s1_item === s2_item) 
+//             result++;
+//             console.log(s1_item , s2_item, result)
+//         } )
+//     } )
+//     console.log(result)
+//     return result;
+// }
+
+
+// filter 로 써보기
+    function solution(s1, s2) {
+        let result = s1.filter(s1_item => s2.includes(s1_item))
+        console.log(result.length)
+
+        return result.length
+
+        // filter 메소드를 확실히 익히는게 중요 ⭐⭐⭐
+
+        // 이 개수를 어떻게 셀 수 있지? 
+            // 1) 배열에 담고 -> count? 
+            // 2) 
+    }
+
+    solution(["a", "b", "c"], ["com", "b", "d", "p", "c"]	)
+
+
+
+</script>
+
+</html>

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+
+<script>
+
+
+function solution(sides) {
+    let answer;
+    let sortedSides = sides.sort((a,b) => b - a );
+    sortedSides[0] < (sortedSides[1] + sortedSides[2])? answer = 1 : answer = 2
+    return answer
+}
+
+solution([1, 2, 3])
+
+
+
+</script>
+
+</html>

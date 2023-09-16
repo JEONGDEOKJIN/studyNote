@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+
+<script>
+
+
+function solution(num_list) {
+
+    var answer = [];
+    var lastIndx = num_list.length - 1
+    console.log(lastIndx)
+    console.log(num_list[lastIndx])
+    
+    for (let i = lastIndx; i >= 0; i--) {
+        answer.push(num_list[i])
+    }
+
+    // for(let i = 10; i < 1; i--){
+    //     console.log("1")
+    //     // console.log("num_list[i]" , num_list[i])
+    // }
+
+    // console.log(answer)
+    return answer;
+}
+
+solution([1, 2, 3, 4, 5])
+// solution([13, 22, 53, 24, 15, 6])
+
+
+</script>
+
+</html>

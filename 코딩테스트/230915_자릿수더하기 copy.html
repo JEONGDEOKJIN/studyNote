@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+
+<script>
+
+
+// function solution(s1, s2) {
+//     let result = 0;
+
+//     s1.map( (s1_item) => {
+//         s2.map( (s2_item) => {
+//             if(s1_item === s2_item) 
+//             result++;
+//             console.log(s1_item , s2_item, result)
+//         } )
+//     } )
+//     console.log(result)
+//     return result;
+// }
+
+
+function solution(n) {
+    
+    let strArr = Array.from(n.toString()) 
+    console.log(strArr)
+    
+
+    let numArr = strArr.map((value, index) => {
+        console.log(value)
+        return value = Number(value)
+        console.log(value)
+        // value = parseInt(value)
+        // console.log(Number('123'))
+
+    })
+    console.log("🐣🐣" , numArr)
+
+    let result = numArr.reduce( (acc, curr) => acc + curr , 0 )
+    console.log(result)
+    return result
+    
+}
+
+solution(1234)
+
+
+</script>
+
+</html>

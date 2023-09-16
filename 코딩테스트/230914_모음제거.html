@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+
+<script>
+
+
+function solution(my_string) {
+        
+        let arr = [...my_string]
+        let collections = ["a" , "e" , "i" , "o" , "u"]
+
+        let result =  arr.filter( item => !collections.includes(item) )
+        
+        // arr.map((item, index) => {
+        //     if(!arr.includes(item)) 
+        //     result.push(item) 
+        //     console.log(item)
+        //     console.log(result)
+        // })
+        console.log(result.join(''))
+
+        // console.log(arr.filter((item) => collections.map((item) => {
+        //     arr.includes(item)
+        // })))
+
+
+
+
+        
+        // return result;
+
+    }
+
+solution("abc de f")
+
+
+
+</script>
+
+</html>

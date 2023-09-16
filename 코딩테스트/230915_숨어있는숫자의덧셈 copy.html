@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+
+<script>
+
+
+function solution(my_string) {
+    let numArr = [];
+    
+    my_string.split('').map((value, index) => {
+        if( !isNaN(Number(value)) )
+            numArr.push(Number(value))
+    })
+        
+    return numArr.reduce( (acc , curr) => acc + curr , 0 )
+
+}
+
+solution("aAb1B2cC34oOp")
+
+
+</script>
+
+</html>
