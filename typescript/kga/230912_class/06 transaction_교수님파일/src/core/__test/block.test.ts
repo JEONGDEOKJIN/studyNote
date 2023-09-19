@@ -292,6 +292,9 @@ describe("지갑 만들기", () => {
     const addres = pubKey.slice(26).toString();
     console.log("계정 : " + `0x${addres}`);
   });
+
+
+
   // 동일한 내용을 "transaction data"이 값으로 해시값을 만들어서 검증에 사용한것이기 때문에
   // 검증에 성공한것 true반환
 

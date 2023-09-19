@@ -49,7 +49,6 @@ import {WebSocket , WebSocketServer} from "ws"
         // 메시지에 대한 값, 데이터 를 받는 payload 
         payload : any;  // 뭐든 받을 수 있음. 
             // 여기에 this.get() 으로 chain 이 들어가야 함 
-
     }
 
 
