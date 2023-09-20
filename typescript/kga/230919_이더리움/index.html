@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    
+    <!-- web3.js 설치  -->
+    <script src="https://cdn.jsdelivr.net/npm/web3@1.10.0/dist/web3.min.js"></script>
+
+</head>
+<body>
+    
+</body>
+
+<script>
+
+    // web 3.0 라이브러리 맛보기 사용 
+
+    /* web3.js 를 CDN 으로 설치 | 왜냐면, 지금, HTML 이니까. | 간단히 맛보기*/
+
+
+    // 이더리움 개발 테스트를 해볼거임 -> Ganache 사용, 가상 테스트 환경이 열려 있음.
+        // 설치 
+            // npm install -g ganache-cli
+        // 실행 
+            // npx ganache-cli
+
+            // npx ganache-cli -h 0.0.0.0
+
+    // 이 네트워크와 상호작용하기 위해 이 라이브러리! 
+
+    // web3 로, 어떤 네트워크로 요청할 건지, 지정 해주기. 
+    const web3 = new Web3("http://127.0.0.1:8545")
+        // 로컬에 있는 테스트 환경을 연결
+
+    web3.eth.getAccounts().then(console.log)
+        // then 에서 나온 반환값이 console.log 로 들어가게 됨. 
+        // web3 네트워크에 요청해서, 값을 보여준 것 임. 
+
+    // 해당 계정의 잔액 가져와보기 
+        web3.eth.getBalance("0x952954AF8C8DBf6F8a4A7b0498D3524f4255C62c").then((data) => {
+            // 네트워크 상 
+                // RPC 통신 : 메서드를 실행하라고 하고 함. 
+                // 여기에서 RPC 개념이 추가됨 ⭐⭐
+
+            // wei 단위로 뜨는데, 10의 18승 으로 측정이 된다. 
+            // 이 '단위' 가 있는 이유는 가스비 연산에 사용하기 위해서
+            console.log(data)
+
+            // 이 데이터를 이더 단위로 뽑고 싶으면
+            console.log(data)
+            // 단위 변환
+            const value = web3.utils.fromWei(data);
+            console.log("단위변환" , value)
+        })
+            // 계정 지갑을 getBalance 에 넣기 
+
+
+        // 지금 이 순간 WEB3 네트워크와 통신! ⭐⭐⭐ 하는 거 였음 
+        
+
+</script>
+
+
+</html>
