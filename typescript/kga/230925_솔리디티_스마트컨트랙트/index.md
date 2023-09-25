@@ -1,12 +1,13 @@
 # contract 실행 
+    - 블록에 저장하면, 컨트랙트에 저장할 수 있는 영역 데이터를 영구적으로 저장할 수 있다. 
+    - contract storage에 데이터를 저장한다. 
+    - CA 에서 storage root 를 봤음 
+    - storage 에서 '상태를 유지' 시킬 수 있다. ⭐⭐⭐ 
+        - 블록체인 스마트 컨트랙트에서 상태 관리가 핵심 
+        - 상태를 저장해서 관리 -> 상태를 다시 조회 할 수 있음 
+        - 스마트 컨트랙트에는 저장 공간이 있고 -> 그 저장 공간은 영구적이다. ⭐⭐⭐ 
 
-- 블록에 저장하면, 컨트랙트에 저장할 수 있는 영역 데이터를 영구적으로 저장할 수 있다. 
-- contract storage에 데이터를 저장한다. 
-- CA 에서 storage root 를 봤음 
-- storage 에서 '상태를 유지' 시킬 수 있다. ⭐⭐⭐ 
-    - 블록체인 스마트 컨트랙트에서 상태 관리가 핵심 
-    - 상태를 저장해서 관리 -> 상태를 다시 조회 할 수 있음 
-    - 스마트 컨트랙트에는 저장 공간이 있고 -> 그 저장 공간은 영구적이다. ⭐⭐⭐ 
+
 
 # 지난주 code 작성 (js class 문법과 비슷)
 
@@ -23,16 +24,20 @@ class Counter {
 
 }
 
-const _counter2 = new Counter();
+const _counter= new Counter();
 {value : 1}
 
-const _counter1 = new Counter();
+const _counter2 = new Counter();
 {value : 1}
 
 _counter.sevValue(2)
 👉 이렇게 하면, counter2 만 바뀜. 다른 counter 는 안 바뀜. 
+👉 {value : 2} 
 
-_counter
+_counter2 의 value 를 보면, 여전히 1 이 됨 
+👉 {value : 1}
+
+그 이유는 인스턴스화 하면 -> 다른 주소에 저장되고 -> 가져온건 주소별로 다르게 가져왔기 때문에 
 
 ```
 
@@ -73,7 +78,6 @@ contract Counter {
 
 ```
 
-
 - javascript 클래스는 인스턴스를 생성하는 과정에서 new 키워드를 사용
 - new 키워드를 통해 생성된 인스턴스들은, 다른 메모리 주소를 참조 하고 있기에, 동일한 객체가 아니다. 
 
@@ -88,7 +92,7 @@ contract Counter {
 
 
 
-- 스마트 컨트랙트 프로세스 
+# 스마트 컨트랙트 프로세스 
 
 1. 컨트랙트 코드를 작성 
 
@@ -125,3 +129,17 @@ contract Counter {
 
 - 연산을 하는 과정에서, 코드의 무한 루프를 연산하게 되면, 과도한 가스비가 발생될 수 있음. 과도한 가스비 방지하기 위해 gasLimit 가 설정되고, gasLimit 가 초과되면 트랜잭션이 블록에 담기지 않는다.  
 
+
+
+# 개발 환경 구축 
+
+``` bash
+# 버전 맞춰서 solc 설치
+npm i solc@0.8.13 
+    # 왜냐면, 위에서 설치할 때 그걸 쓴다고 했음 
+
+# 가나쉬 설치 
+npm i ganache-cli
+    # 전역으로 설치한 경우 필요는 없음 
+
+```
