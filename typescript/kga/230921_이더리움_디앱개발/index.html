@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <!-- web 3 라이브러리 -->
+    <script src="https://cdn.jsdelivr.net/npm/web3@1.10.0/dist/web3.min.js"></script>
+
+
+</head>
+<body>
+    
+</body>
+
+<script>
+
+    // RPC 통신을 편하게 사용할 수 있게 도와주는 web3 라이브러리! 
+        // 이더리움 재단에서 지원함. 
+        // web3 를 알고 싶으면? -> 직접 만든 사람에게 물어보는게 best 임. -> so, 공식문서로 고고
+        // https://web3js.readthedocs.io/en/v1.10.0/
+    const web3 = new Web3("http://127.0.0.1:8545");
+
+    // 계정에 있는 잔액 확인 
+    web3.eth.getBalance("0x33A58FBba6ec416aAe34c8A8962BaDd748CA431E").then( (data)=>{
+        console.log(data)
+
+        // 이더 단위로 변경해서 보기 
+        const value = web3.utils.fromWei(data)
+        console.log("wei to 이더" , value)
+
+    })
+
+    // web3.eth.sendTransaction({
+    //     from : "0x33A58FBba6ec416aAe34c8A8962BaDd748CA431E", 
+    //     to : "0xd956f2daF656EA2C0ae00683715fCC486d4fC1Aa", 
+    //     value : web3.utils.toWei("10" , "ether"),   // 10 ether를 wei 로 변경 
+    // }).then(console.log);
+
+/*
+Available Accounts
+==================
+(0) 0x957102b46B2Eba2015E3708766ae46451Df6Bf0A (100 ETH)
+(1) 0xc521971a31001B93250E46dE620AB22C43330F0b (100 ETH)
+(2) 0xbA383d9CCE8E74450b46FbeA8fbdCe17Ca39030D (100 ETH)
+(3) 0x4d083f238b7f9C9aBd5443792b17C797854D4E40 (100 ETH)
+(4) 0x432a39d42F968D9263FC2340d3e47cd3453C1af3 (100 ETH)
+(5) 0x99e3a80fd3C520D2ab2e34FC872123138f54c5e4 (100 ETH)
+(6) 0x1Fd3dfAA8Ba065BAf3B4Ad13Ab7dC25F07704D8C (100 ETH)
+(7) 0x1d2098B748fEF856c28428d68046d173327149af (100 ETH)
+(8) 0x73ee1f0d44568AC6C5f5e5551b50766B0ECCf331 (100 ETH)
+(9) 0x5F689aE056ee3E1c1f0d0b60DcDe99c774242c00 (100 ETH)
+*/
+
+    // CA 생성 
+        // 솔리디티로 작성한 코드를 스마트컨트랙트 배포 
+    web3.eth.sendTransaction({
+        from : "0x3e52f10A08B40Ed1e78279a44e30a6a14A631D8c" , 
+        gas : "1000000", 
+        data : "60806040523480156100115760006000fd5b505b5b610019565b61016b806100286000396000f3fe60806040523480156100115760006000fd5b506004361061003b5760003560e01c80632096525514610041578063552410771461005f5761003b565b60006000fd5b61004961007b565b60405161005691906100f2565b60405180910390f35b610079600480360381019061007491906100b7565b61008d565b005b6000600060005054905061008a565b90565b8060006000508190909055505b5056610134565b6000813590506100b081610119565b5b92915050565b6000602082840312156100ca5760006000fd5b60006100d8848285016100a1565b9150505b92915050565b6100eb8161010e565b82525b5050565b600060208201905061010760008301846100e2565b5b92915050565b60008190505b919050565b6101228161010e565b811415156101305760006000fd5b5b50565bfea26469706673582212200c3a7d2a3eca34de5804e8d513b51edba0bd619b3672e281a7a96684a3cb828164736f6c63430008000033"   // 여기에 bin 폴더에 있는 바이트 코드 내용이 들어가고 -> 이게 블록에 기록
+    }).then(console.log)
+
+    // contractAddress : ""0xCbB3Bf40bbCbAA001963b7b94C38b8654444E0B1"
+        // CA 와 매핑 되어 있는 코드가 활성화 되고, 컨트랙트 코드가 실행된다. 
+            // 여기에 나오는 contractAddress 가  CA 임. 
+            // 이 주소로 보내면, 00 실행되고, 활성화 된다. 
+
+            
+    // call 과 send
+        // 원격 프로시저 에서 부를 때, 
+
+    // 트랜잭션을 발생시킬 때 send 
+    // 그냥 조회를 할 때는 call 로 값을 조회 
+
+
+    /*
+    1) 송금하고 
+    2) bin 뽑고, 
+    3) ca 하고 
+
+    */
+</script>
+
+
+
+
+</html>

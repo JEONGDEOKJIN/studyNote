@@ -152,7 +152,7 @@ import Chain from '@core/chain/chain'
     // 개인키 생성 위해 필요한 랜덤값 생성 메소드
     import {randomBytes} from "crypto"
 
-    // '타운 곡선 알고리즘' 사용할 수 있게 라이브러리에서 가져오기
+    // '타원 곡선 알고리즘' 사용할 수 있게 라이브러리에서 가져오기
     import elliptic  from "elliptic"
 
     // 해시화 하게 하는 SHA256 
@@ -214,7 +214,7 @@ import Chain from '@core/chain/chain'
             
         
         it("공개키 생성" , () => {
-            // 공개키 생성 | 타운 곡선 사용할 수 있는 라이브러리 가져와서 사용
+            // 공개키 생성 | 타원 곡선 사용할 수 있는 라이브러리 가져와서 사용 | keyPair 안에 '공개키' + '개인키' 모두 포함
             const keyPair = ec.keyFromPrivate(privKey);
             
             // hex 로 변환 | 개인키로 공개키를 생성!
@@ -228,8 +228,10 @@ import Chain from '@core/chain/chain'
 
 
         it("서명 만들기" , () => {
-            // 타원 곡선 사용할 수 있는 라이브러리 가져와서 사용
+            // 타원 곡선 라이브러리 가져와서, 개인키로, 공개키와 쌍인 keyPair 만듦
             const keyPair = ec.keyFromPrivate(privKey);
+                // 개인키를 기반으로 'key pair' 를 생성
+                // 이 안에 개인키 + 공개키 가 모두 포함 
 
             // 트랜잭션이 없기 때문에, 임시의 문자열을 암호화해서 사용할 것 임
             const hash = SHA256("임시로 넣는 transaction data").toString();     // 임시 트랜잭션 내용
@@ -366,6 +368,14 @@ import Transaction from "@core/transaction/transaction";
 
 describe("Transaction", ()=>{
   let transaction : Transaction;
+    /*  Transaction 인스턴스 = {
+            // 멤버 변수는 현재 private 처리 되어 있어서 -> 인스턴스화 할 때, 안 보임
+            // 이러한 멤버 함수들이 담김 👇👇
+            getPool, 
+            create, createInput, createOutPut, creaetCoinbase, createRow, createTxIn, createTxOut, sync,
+            serializeTxOut, serializeTxIn, serializeTx, serializeRow, }*/
+
+
 
   // 테스트 케이스 실행 전에 실행되는 코드
   beforeEach(()=>{
@@ -387,8 +397,6 @@ describe("Transaction", ()=>{
       expect(txout.amount).toBe(amount);
     })
   })
-
-
-
-
 })
+
+

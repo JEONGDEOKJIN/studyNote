@@ -15,6 +15,7 @@ import {TransactionData , TransactionPool , TransactionRow , TxIn , TxOut , Unsp
 
     }
 
+
 // 영주증
     // 누가 누구에게 보냈는지에 대한 내용이 들어있는 객체
     class Receipt {
@@ -235,7 +236,7 @@ import {TransactionData , TransactionPool , TransactionRow , TxIn , TxOut , Unsp
                 return transactionRow;
             }
 
-    
+
             createTxIn(txOutIndex : number, 
                 txOutId? : string,
                 signature? : SignatureInput
@@ -247,7 +248,6 @@ import {TransactionData , TransactionPool , TransactionRow , TxIn , TxOut , Unsp
                     txIn.signature = signature;
 
                     return txIn     // 누구에게 보내준게 아니니까 txIn 을 만듦
-
                 } 
 
             createTxOut (account : string , amount : number) : TxOut {

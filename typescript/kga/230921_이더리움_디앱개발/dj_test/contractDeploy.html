@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- web 3 라이브러리 -->
+    <script src="https://cdn.jsdelivr.net/npm/web3@1.10.0/dist/web3.min.js"></script>
+</head>
+<body>
+</body>
+<script>
+
+    // web3 라이브러리 8545 port 로 연결
+    const web3 = new Web3("http://127.0.0.1:8545")
+
+    // 계정에 있는 잔액 확인 
+    web3.eth.getBalance("0xdFCA7c620659842598eC6b4BB0c790d67ffAdef4").then(( data ) => {
+        // 0xdFCA7c620659842598eC6b4BB0c790d67ffAdef4 
+            // 이건, ganache 실행을 통해 얻은 account
+        
+        // 잔액확인 | wei 단위
+        console.log(data)
+
+        // ether 단위로 변경해서 보기 
+        const value = web3.utils.fromWei(data)
+        console.log("from Wei to ether" , value)
+    })
+
+    // CA 생성 
+        // 솔리디티로 작성한 코드를 스마트 컨트랙트에 배포 
+    web3.eth.sendTransaction({
+        from : "0xdFCA7c620659842598eC6b4BB0c790d67ffAdef4" , 
+        gas : "700000" , 
+
+        // 컴파일 완료된 bin 파일 넣기 👇👇👇
+        data : "60806040523480156100115760006000fd5b505b5b610019565b61016b806100286000396000f3fe60806040523480156100115760006000fd5b506004361061003b5760003560e01c80632096525514610041578063552410771461005f5761003b565b60006000fd5b61004961007b565b60405161005691906100f2565b60405180910390f35b610079600480360381019061007491906100b7565b61008d565b005b6000600060005054905061008a565b90565b8060006000508190909055505b5056610134565b6000813590506100b081610119565b5b92915050565b6000602082840312156100ca5760006000fd5b60006100d8848285016100a1565b9150505b92915050565b6100eb8161010e565b82525b5050565b600060208201905061010760008301846100e2565b5b92915050565b60008190505b919050565b6101228161010e565b811415156101305760006000fd5b5b50565bfea2646970667358221220dc857c05e66bc902c852543e6f8b6abe1ca1e6135ef62eed801835bf6302bc4b64736f6c63430008000033"
+    }).then(console.log)
+
+    /* 
+        ✅ 여기에 있는 contractAdress 가 CA 임. 
+
+        - 정상적으로 배포되면 이러한 값이 찍힘 👇👇 
+        {
+            blockHash : ""
+            blockNumber : "" 
+            contractAddress : "0xe15ABa86eB02054b909d95d5e65fC3647b0e7b3E" | 이게 CA 임 ⭐⭐ 
+            cumulativeGasUsed : "" 등등
+        }
+    */
+</script>
+</html>

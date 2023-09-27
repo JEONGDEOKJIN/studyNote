@@ -19,7 +19,7 @@ import {TransactionData , TransactionRow, TxIn , TxOut , UnspentTxOut, UnspentTx
     // UTXO 에 결과로 생성된 잔액과 주소를 포함한 객체를 추가 
 
 
-class Unspent {
+export class Unspent {
     // UTXO 객체 목록
     // 누가 얼마를 갖고 있는지에 대한 내용이 배열로 담겨 있다. 
         // 미사용 객체들이 여기에 담겨 있을 것 임. 

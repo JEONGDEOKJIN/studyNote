@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "jest"
+    "test": "jest transaction.0927.test.ts"
   },
   "keywords": [],
   "author": "",

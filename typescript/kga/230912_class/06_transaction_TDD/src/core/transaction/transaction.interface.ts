@@ -7,10 +7,12 @@
 
 // 트랜잭션 입력 구조 정의
     export class TxIn {
-        txOutId ? : string  // 이전 트랜잭션의 ID(해시값)
-        txOutIndex : number     // 이전 트랜잭션의 출력 인덱스 
+        txOutId ? : string  // 이전 트랜잭션의 ID(해시값), 이는 UTXO 를 지정하는데 사용
+        txOutIndex : number     // 이전 트랜잭션의 출력 인덱스 , 이는 UTXO 를 지정하는데 사용
         
-        signature? : SignatureInput     // 트랜잭션의 입력 서명
+        signature? : SignatureInput     
+            // 트랜잭션의 입력 서명
+            // 이건, 지금 입력하는 정보에 대한 서명 인거지? ❓❓❓ 
     }
 
 // 트랜잭션 출력 구조 정의 
@@ -49,7 +51,6 @@ export class UnspentTxOut {
     
     account : string;       // UTXO 소유 계정
     amount : number;        // 잔액
-
 }
 
 // 트랜잭션 데이터 타입 정의
