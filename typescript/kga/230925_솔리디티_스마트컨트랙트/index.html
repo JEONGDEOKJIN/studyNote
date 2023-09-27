@@ -19,17 +19,18 @@
 
     <!-- 수수료를 지불할 계정 -->
     <div>
-        <label for=""> use Account </label> <br>
+        <label for=""> use Account | ganache 실행시켜서 -> Available Accounts 중 하나 넣어야 함 </label> <br>
         <input type="text" id="useAccount"> <br>
 
         <label for=""> use contract | 바이트 코드로 컴파일된 bin 파일을 복사해서, 여기에 붙여 넣어야 함 </label> <br>
         <textarea name="" id="contract" cols="30" rows="10"></textarea> <br>
 
-        <button id="sendTransactionBtn"> 컨트랙트 배포 </button>
+        <button id="sendTransactionBtn"> 컨트랙트 배포 클릭 -> 콘솔창에 CA 주소 나옴 -> 그 주소를 HTML 내에서 CA 에 넣고 -> 증가 , 감소 누르기 </button>
+        <p> 다른 Available Accounts 를 useAccount 에 넣고 -> 컨트랙트 배포해서 CA 받고 -> 다시 useAccount + 바이트 코드 넣어서 + 증감 누르면 -> 해당 계정의 이더리움 네트워크 내에 있는 상태변수 변경 됨. </p>
 
         <!-- 계정을 누르면 -> 이 계정이 배포 하게 됨 -> 글면, 어떤 내용? -> bin 파일 내용을 직접 입력 ⭐⭐⭐⭐⭐⭐ -->
 
-        <div>카운트 앱</div>
+        <div>카운트 앱 | value 변수에 저장된 상태 변수 값을 가져오고, 변경하기 </div>
         
         <div id="counterValue" >  </div>
 
@@ -39,15 +40,13 @@
 
         <button id="sendMinusBtn"> 감소 </button>
 
-
     </div>
-
 
 </body>
 
 <script>
 
-    // 네트워크 연결 ⭐
+    // web3 라이브러리 이용해서 이더리움 네트워크와 연결 ⭐
     const web3 = new Web3("http://127.0.0.1:8545")
         /*  [포인트]
             - (전제) web3 로 RPC 통신을 할 때, '원격(다른 노드)' 으로 접속해서, 해당 노드에서 이미 정의되어 있는 걸 쓴다고 했음. 
@@ -193,9 +192,9 @@
             console.log("abi[1] 인 getValue 함수를 hash 화 시키기 : " , getCodeHash)
 
 
-            // 2. hash 화 된 getValue 함수를 web3 라이브러리를 통해 EVM 으로 넘겨서 value 값 가져오기
+            // 2. hash 화 된 getValue 함수를 web3 라이브러리를 통해 EVM 으로 넘겨서 '상태변수인 value' 값 가져오기
             const data = await web3.eth.call({
-                to : "0x1fF0d88C60Ba1CC740162F69c2E5D4E97152F41d",  // 아까 받아온 ca
+                to : "0xC789f9a0843bEd290F927154BC9f52198BCD2A6c",  // 아까 받아온 ca
                 data : getCodeHash, // 16진수로 변화된 값이 넘어옴
             })
                 // call() : 원격 프로세저에서 '값을 받아올 때', '값을 조회' | 가스비 발생 안 함 -> so, from 이 없음 ⭐⭐⭐, to 만 있음. 
@@ -216,8 +215,6 @@
             return parseInt(result);
         };
 
-
-
         // 상태 변수를 조회함 
         getValue()
             // 이거 하니까 0 이 나옴 
@@ -225,12 +222,11 @@
         callBtn.onclick = getValue;
 
 
-
-        // 7. setValue 로 상태 변수 변경 
+        // 7. setValue 로, 이더리움 네트워크에 저장되어 있는 상태 변수 변경 
             // 이때는 가스비 발생! 함 
         const setValue  = async() => {
 
-            // 1) 현재 상태변수 value 에 있는 값 가져오기 
+            // 1) 현재 상태변수(이더리움 storage) 에 있는 값 가져오기
             const _getValue = await getValue()
 
             // 2) solidity 파일에 적은 setValue 함수를 hash 화 시키기             
@@ -247,10 +243,10 @@
             if(!useAccount.value) return alert("Account 입력 하셈")
 
 
-            // 4) 트랜잭션 | '누가, 누구에게, 얼마를, '
+            // 4) 트랜잭션 | '누가, 누구에게, 얼마를, ' | storage 데이터를 어떻게 변경할지
             const tx = {
                 from : useAccount.value,    // 트랜잭션을 발생시키는 계정
-                to : "0x1fF0d88C60Ba1CC740162F69c2E5D4E97152F41d",   // 누가 받았냐, CA계정 주소 
+                to : "0xC789f9a0843bEd290F927154BC9f52198BCD2A6c",   // 누가 받았냐, CA계정 주소 
                 data : setCodeHash,     // solidity 파일에 적은, hash화된, setValue 함수,
                 gas : 500000,       // gas 총량
                 gasPrice : 200000000,       // gas 당 가격
