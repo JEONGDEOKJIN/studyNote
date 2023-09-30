@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+
+<script>
+
+
+
+function solution(start_num, end_num) {
+    
+
+    console.log( Array(end_num - start_num + 1).fill(start_num).map((value, index) => value + index ) )
+    // numArr = Array.from(end_num+1).map( ( item , index) => item = index )
+    // console.log(numArr.filter(value => value >= start_num))
+    // console.log(numArr.filter(value => value >= start_num))
+    // return numArr.filter( value => value <= start_num )
+}
+console.log(solution( 3, 10	 ))
+
+
+
+</script>
+
+</html>
