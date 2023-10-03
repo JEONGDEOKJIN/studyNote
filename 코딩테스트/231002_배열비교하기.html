@@ -12,8 +12,21 @@
 <script>
 
 function solution(arr1, arr2) {
-    var answer = 0;
-    return answer;
+    
+    let lengthArr1 = arr1.length;
+    let lengthArr2 = arr2.length;
+    let sumArr1 = arr1.reduce( (acc , curr) => acc + curr , 0)
+    let sumArr2 = arr2.reduce( (acc , curr) => acc + curr , 0)
+    
+    if(lengthArr1 == lengthArr2){
+        if(sumArr1 == sumArr2){
+            return 0
+        } else {
+          return sumArr1 > sumArr2 ? 1 : -1
+        }
+    } else {
+        return lengthArr1 > lengthArr2 ? 1 : -1
+    }  
 }
 
 </script>
