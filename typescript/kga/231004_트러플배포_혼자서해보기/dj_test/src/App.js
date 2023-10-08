@@ -2,7 +2,6 @@ import {useEffect , useState} from 'react';
 import useWeb3 from './hooks/web3.hook';
 import abi from "./abi/Counter.json"
 
-
 const App = () => {
 
   const { user, web3 } = useWeb3();
@@ -46,7 +45,7 @@ const App = () => {
   
     // 원격 프로시저 호출  😥😥😥 
     web3.eth.call({
-      to : "0x469FbC41736952356A81f6B9F9d65248204CE2E3",  // npx truffle migrate 로 나오는 ca 값 입력
+      to : "0x3a1904a63b22D74BFaE32Bb982295Bff599BFEDa",  // ✅ npx truffle migrate 로 나오는 ca 값 입력
       data    // 쓰고 싶은 메소드 ✅ 여기로 getValue 함수가 들어감. 
     })  
     .then( (data) => {
@@ -67,31 +66,66 @@ const App = () => {
   // 상태변경 함수 : increment
   const increment = async() => {
 
-    // abi 에서 name 이 increment 인 메소드를 가져와서 incrementData 에 담기
-    const incrementData = abi.find( (data) => data.name === 'increment' );
+    console.log("증가 찍힘")
 
-    // abi 객체를, 이더리움 네트워크에 올릴 수 있게, 인코딩 해서 data 변수에 담기 
-    const encodedData = web3.eth.abi.encodeFunctionCall(incrementData, []);
-
-    // 유저의 지갑 정보
-    const fromUserAccount = user.account;
-    console.log("user.account" , user.account)
-
-    const _data = await web3.eth.sendTransaction({
-      from : fromUserAccount, 
-      to : "0x469FbC41736952356A81f6B9F9d65248204CE2E3", 
-      encodedData
-    })
-    /* sendTransaction 이거랑 send 랑 다른 점이 뭐였지❓❓❓  */
-    /* 뭘 변경해줘! 라는 말이 안 적혀 있는데, 어떻게 된거지❓❓❓ 
-      👉 아, 이건, 이미 solidity 에 적혀 있어서, 이미 반영 되었을 것. 
-    */
     
-    console.log(_data)
-    getCount()
+    // 유저의 지갑 정보
+    // const fromUserAccount = user.account;
+    // console.log("user.account" , user.account)
+    
+    if(user && user.account){
+      // abi 에서 name 이 increment 인 메소드를 가져와서 incrementData 에 담기
+      const incrementData = abi.find( (data) => data.name === 'increment' );
+  
+      // abi 객체를, 이더리움 네트워크에 올릴 수 있게, 인코딩 해서 data 변수에 담기 
+      const encodedData = web3.eth.abi.encodeFunctionCall(incrementData, []);
 
+      const fromUserAccount = user.account;
+      console.log("user.account" , user.account)
+      console.log("user.account" , fromUserAccount)
+      
+      const _data = await web3.eth.sendTransaction({
+        from : fromUserAccount, 
+        to : "0x3a1904a63b22D74BFaE32Bb982295Bff599BFEDa",  // ✅ npx truffle migrate 로 나오는 ca 값 입력
+        data : encodedData    
+      })
+
+      console.log(_data)
+      getCount()
+    }
+
+      /* sendTransaction 이거랑 send 랑 다른 점이 뭐였지❓❓❓  */
+      /* 뭘 변경해줘! 라는 말이 안 적혀 있는데, 어떻게 된거지❓❓❓ 
+        👉 아, 이건, 이미 solidity 에 적혀 있어서, 이미 반영 되었을 것. 
+      */
   }
 
+  // 상태변경 함수 : decrement
+  const decrement = async() => {
+
+    console.log("감소 찍힘")
+    
+    if(user && user.account){
+      // abi 에서 name 이 increment 인 메소드를 가져와서 incrementData 에 담기
+      const decrementData = abi.find( (data) => data.name === 'decrement' );
+  
+      // abi 객체를, 이더리움 네트워크에 올릴 수 있게, 인코딩 해서 data 변수에 담기 
+      const encodedData = web3.eth.abi.encodeFunctionCall(decrementData, []);
+
+      const fromUserAccount = user.account;
+      console.log("user.account" , user.account)
+      console.log("user.account" , fromUserAccount)
+      
+      const _data = await web3.eth.sendTransaction({
+        from : fromUserAccount, 
+        to : "0x3a1904a63b22D74BFaE32Bb982295Bff599BFEDa",  // ✅ npx truffle migrate 로 나오는 ca 값 입력
+        data : encodedData    
+      })
+
+      console.log(_data)
+      getCount()
+    }
+  }
 
   useEffect( () => {
     // 최초값 조회
@@ -99,11 +133,14 @@ const App = () => {
   } , [web3]);
 
 
-  // if(user.account === "") return "지갑 로그인 하셈";
-  
   return (
     <>
+      {/* 현재 메타마스크에 로그인한 유저의 지갑 주소 */}
+      <p> 지갑 주소 : {user.account} </p>   
+
+      <p> 카운트 : {count} </p>
       <button onClick={increment} > 증가 </button>
+      <button onClick={decrement} > 감소 </button>
     </>
   )
 }
