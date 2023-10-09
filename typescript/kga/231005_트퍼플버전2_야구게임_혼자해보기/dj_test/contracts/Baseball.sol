@@ -28,7 +28,7 @@ contract Baseball {
     address private owner;
 
     // 게임 횟수 
-    uint256 private constant GAME_OVERCOUNT = 5;
+    uint256 private constant GAMEOVER_COUNT = 5;
         // const : 변수를 const 로 하는 것과 비슷 | 이 구문을 추가하면, 상태를 변경하지 않을 상태 변수! 라는 말 
 
     // ticket : 게임을 하고 싶으면 지불해야 하는 이더(ether)
@@ -100,8 +100,8 @@ contract Baseball {
     function gameStart(uint256 _value) public payable {
         
         // '게임 진행 조건 1 : 몇 판 했니?' 확인
-        require(progress < GAME_OVERCOUNT , "Game Over");
-            // [해석] 현재 진행 정도가, GAME_OVERCOUNT 보다 적으면 -> 게임 진행 | 넘으면, GAME OVER 띄우기
+        require(progress < GAMEOVER_COUNT , "Game Over");
+            // [해석] 현재 진행 정도가, GAMEOVER_COUNT 보다 적으면 -> 게임 진행 | 넘으면, GAME OVER 띄우기
 
         // '게임 진행 조건 2 : 티겟, 구매할 만큼, 이더리움 있니?' 확인
         require( msg.value == ticket , "ticket amount error (give me 5 ether)" );
@@ -204,13 +204,10 @@ contract Baseball {
         // 게임이 진행되고 있는 상수값이 0 
         uint256 Playing = 0;
 
-        if( (GameStatus != GameStatus.Playing) || (progress == GAME_OVERCOUNT) ) {
+        if( (gameStatus != GameStatus.Playing) || (progress == GAMEOVER_COUNT) ) {
             // 게임 끝났다 
             Playing = 1;
         }
         return Playing;
     }
-
-
-
 }
