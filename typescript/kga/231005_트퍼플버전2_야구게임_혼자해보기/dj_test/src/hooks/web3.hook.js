@@ -14,29 +14,44 @@ const useWeb3 = () => {
     const [web3, setWeb3] = useState(null);
 
     useEffect( () => {
-        if(window.ethereum){
-            // 메타마스크 있으면 -> 메타마스크에 요청한다.
-            window.ethereum
-                .request({
-                // 지갑 정보를 요청하는 메소드
-                method : "eth_requestAccounts"
-                })
-                .then( async ([walletAddress]) => {
+        const fetchAccounts = async() => {
+
+            console.log("window.ethereum" , window.ethereum)
+
+            if(window.ethereum){
+                try {
+                    // 메타마스크 있으면 -> 메타마스크에 요청한다.
+                    const [data] = await window.ethereum.request({
+                        // 지갑 정보를 요청하는 메소드
+                        method : "eth_requestAccounts", 
+                        })
+
                     // web3 라이브러리 인스턴스 생성
-                    const web3Provider = new Web3(window.ethereum)
+                    let web3Provider = new Web3(window.ethereum)
+                    console.log("web3Provider" , web3Provider)
+
+                    let balance = web3Provider.utils.fromWei(await web3Provider.eth.getBalance(data) , "ether");
+
+
+                    // 유저의 계정 및 잔액 설정 
+                    setUser({
+                        account : data, 
+                        balance : balance
                     
+                    })
+
                     // set 메소드에 넣기
                     setWeb3(web3Provider)
                     
-                    // 유저의 계정 및 잔액 설정 
-                    setUser({
-                        account : walletAddress, 
-                        balance : web3Provider.utils.toWei(await web3Provider.eth.getBalance(walletAddress) , "ether")
-                    })
-                } )
-        } else {
-            alert ("메타 마스크 설치 하셈")
+                } catch (error) {
+                    console.log(" useWeb3 에러 ",error)
+                }
+            } else {
+                alert ("메타 마스크 설치 하셈")
+            }
         }
+
+        fetchAccounts();
     } , [])
 
     return {

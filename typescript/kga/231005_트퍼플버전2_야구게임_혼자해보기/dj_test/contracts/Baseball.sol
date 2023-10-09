@@ -157,6 +157,17 @@ contract Baseball {
                 // 정답을 못 맞췄으면, 리워드를 쌓는다. 
                 reward += msg.value;
                     // [궁금증] reward 변수에, 현재 플레이어의 값을 넣는건가❓❓❓ 
+                        // msg : solidity 에서 제공하는 전역 변수 | 현재 호출하는 트랜잭션에 대한 정보가 있음 
+                        // msg.value : 함수를 호출할 때 전송한 값 
+                        /*  지금 코드에서는, 여기에서 전송한 ether 5 을 의미 👇👇👇 
+                            await baseballContract.methods.gameStart(Number(value)).send({
+                                from: user.account,
+                                value: web3.utils.toWei("5", "ether"),
+                            });
+
+                        */
+
+                    // value 는 숫자를 찍은 값인데, reward 에는 다른 값이 들어가야 하는거 아니야❓❓❓ 
             }
     }
         /* [해석]

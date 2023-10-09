@@ -25,6 +25,10 @@ const App = () => {
   // 게임 끝났는지 여부를 표시하기 위한 것 | 솔리디티의 msg 아님 |
   const [message, setMessage] = useState("");
 
+
+  const [baseballContract, setBaseballContract] = useState(null);
+
+
   useEffect(() => {
 
     console.log("web3 @ app2" , web3)
@@ -36,7 +40,7 @@ const App = () => {
         const Baseball = new web3.eth.Contract(
           abi,
           "0xDE634082941D0EF00C5EF80F13e99D6434e3e32b",
-          { data: "", from: "" }
+          { data: ""}
         );
 
         setBaseballContract(Baseball);
