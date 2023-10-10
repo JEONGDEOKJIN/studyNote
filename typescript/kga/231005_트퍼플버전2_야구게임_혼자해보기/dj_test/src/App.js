@@ -177,7 +177,6 @@ const App = () => {
 
   return (
     <>
-      
       <div> 유저의 계좌 account : {user? user.account : "User 정보 로딩중"} </div>
       <div> 티겟 가격 : {ticket && ticket} </div>
       <div> 현재 게임 진행도 : {progress && progress} </div>
