@@ -12,9 +12,33 @@
 <script>
 
 function solution(myString) {
-    var answer = '';
-    return answer;
+    
+    const _index = myString.indexOf('a')
+    console.log(_index)
+
+
+    const _originStr = myString.slice(0, _index).split('')
+    const _slicedStr = myString.slice(_index).split('')
+    // console.log(_slicedStr.split(''))
+    console.log("_originStr" , _originStr)
+    console.log("_slicedStr" , _slicedStr)
+
+    const transfer = _slicedStr.map( (item) => {
+        return item == 'a' ? item = 'A' : item = item.toLowerCase()
+    } )
+    console.log("result.join('')" , transfer.join(''))
+
+    console.log("합쳐진 것" , _originStr.join('') + transfer.join(''))
+
+    const result = _originStr.join('') + transfer.join('')
+
+    console.log("result" , result)
+
 }
+
+// solution("abstract algebra"	)
+solution("PrOgRaMmErS")
+
 
 </script>
 

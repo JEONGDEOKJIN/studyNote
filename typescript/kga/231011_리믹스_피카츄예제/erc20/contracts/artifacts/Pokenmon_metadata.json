@@ -347,11 +347,11 @@
 	},
 	"sources": {
 		"contracts/ERC20.sol": {
-			"keccak256": "0x4b09cad28705afb89e2b5f3331e25de91988b1e1f0c1fd9a7397f281ee11e152",
+			"keccak256": "0xbd289c9339e5b36344585fc07af44fa22ab6159e1e1fa8b2b0bac4ada3dee6ec",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://6bb89ff06c306560a2b69a6d373a09c2bc7abafebaf39946c1351cf64ab5e6c8",
-				"dweb:/ipfs/QmZiMQFgMynZdsTCJdgRDs4qNz84daTtr1SKQMxmeCJF2T"
+				"bzz-raw://627463040fc192d511b6211d8f935ce6de0b8f9126a32f3efce1780c84c6d31c",
+				"dweb:/ipfs/QmNLobFU8zgFCq2kTgLqKThLGi8RQDs1BeQrqfARPjyPn7"
 			]
 		},
 		"contracts/IERC20.sol": {
@@ -363,11 +363,11 @@
 			]
 		},
 		"contracts/Pokenmon.sol": {
-			"keccak256": "0x1245d3774b615106d3fa6d3cceb519734cec72e22a824650bd22bff90a17100c",
+			"keccak256": "0xcb284f4a44376ba795e5f116fa445f84460c595f6da0d4e19b6cc15007ce5c3c",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://eb355c3e1655853efe5fc8cacf21694c99a30e8121f4095433563c4f205720d8",
-				"dweb:/ipfs/QmQ32434pJiMkqcA32vmvuym6XmaNbLdZ8GLsJSZukUcih"
+				"bzz-raw://02053486754a88f847def0e5cf83ec77f9ea1b976c6be472d6953be92d3ba497",
+				"dweb:/ipfs/Qmcs6rC3JT8uSYMiJaxHmePzmCy34CxdgkKQpchB8CMogj"
 			]
 		}
 	},

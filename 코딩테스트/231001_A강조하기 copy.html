@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+
+<script>
+
+function solution(myString) {
+
+    const result = myString.split('').map( ( item ) => 
+        item == 'a' ? item = 'A' : item = item.toLowerCase()
+    )
+
+    console.log(result.join(''))
+
+}
+
+// solution("abstract algebra"	)
+solution("PrOgRaMmErS")
+
+
+</script>
+
+
+</html>

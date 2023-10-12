@@ -26,7 +26,8 @@ contract ERC20 is IERC20 {
     mapping( address => uint ) public balances;
     // {
     //     "0x123123123123(주소)" : 1000 개
-    // }
+    // },
+    
 
     // 위임 받을 때 
     mapping( address => mapping(address => uint)) public override allowance;
@@ -66,9 +67,6 @@ contract ERC20 is IERC20 {
                 // 보낸 것 만큼 민트 실행
                 // 부족하면, 또 이제, 토큰을 발행
         }
-
-
-
     }
 
 

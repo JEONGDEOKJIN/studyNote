@@ -68,6 +68,11 @@ contract Pokenmon is ERC20 {
             return users;
         }
 
+
+        // function buyEth(uint256 amount) public{
+            
+        // }
+
         function buyPokenmon() public {
             // 빵 살만 돈 있는지 확인 
             require(balances[msg.sender] >= tokenPrice );
@@ -111,7 +116,6 @@ contract Pokenmon is ERC20 {
                     // Users(msg.sender) : 구초체를 만들어서, 주소는 msg.sender 로 추가 📛📛📛📛📛📛
                 }
 
-            return 
         }
 
         /*

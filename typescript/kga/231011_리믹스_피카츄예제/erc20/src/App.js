@@ -6,6 +6,7 @@ const App = () => {
   const { user, web3 } = useWeb3();
   const [contract, setContract] = useState(null);
   const [token, setToken] = useState("0");
+  const [pokenmonUsers, setPokenmonUsers] = useState([]);
 
   // 화면에 뿌려줄 배열
   const [accounts, setAccounts] = useState([]);
@@ -15,7 +16,7 @@ const App = () => {
       if (contract) return;
       const pokenmon = new web3.eth.Contract(
         abi,
-        "0x84c7a7807F1E67F75B041f165E01D389b0C86222", // ✅ CA
+        "0x61137e432b92ad18bb61407e25C0DbD09D004b16", // ✅ CA
         { data: "" }
       );
 
@@ -33,7 +34,7 @@ const App = () => {
     });
     // 누가 실행 시키는지 알아야
 
-    console.log(" getPokenmon ", result);
+    // console.log(" getPokenmon ", result);
 
     return result;
   };
@@ -43,12 +44,12 @@ const App = () => {
     if (!contract) return;
 
     let result = web3.utils
-      .toBigInt(await contract.methods.balanceOf(account).call())
+      .toBigInt(await contract.methods.balanceOf(account).call()) // 이건 토큰 가져오는 거 wei 단위로 넘어
       .toString(10);
-    
+
     result = await web3.utils.fromWei(result, "ether");
-    
-      return result;
+
+    return result;
   };
 
   // 포켓몬 구입
@@ -56,20 +57,27 @@ const App = () => {
     // if(contract == null) return;
 
     try {
-      console.log("🙆‍♂️🙆‍♂️🙆‍♂️ 1")
       let buyResult = await contract.methods.buyPokenmon().send({
-        from : user.account,    // 그냥 account 랑 비교 
-      })
-      console.log("🌴🌴🌴 2")
+        from: user.account,
+        // ✅ 'account'를 onclick 에서 buyPokenmon(account)넣으려 했는데, 안 됨.
+        // 이 방법을 쓰려면, return 에서 account 를 어떻게든, 넣었어야 함. 이 방법은 나중에 좀 더 생각
+      });
       console.log("buyResult", buyResult);
-      return buyResult
 
+      getAccounts(); // ⭐⭐⭐ 바로 업데이트 될 수 있으려면, 여기를 잡아야 해
+
+      return buyResult;
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
-    
-
   };
+
+  // // 이더로 포켓몬 구입
+  // const buyEth = async ()=>{
+  //   const amount = web3.utils.getBalance()
+
+  //   await contract.methods.buyEth(amount)
+  // }
 
   // 메타 마스크 계정들 조회 | account 조회 하는 함수
   const getAccounts = async () => {
@@ -90,12 +98,69 @@ const App = () => {
       })
     );
 
+    console.log(" _accounts ", _accounts);
     setAccounts(_accounts);
+
+    transferPokemon(_accounts);
+  };
+
+  // 현재 포켓몬 산 유저들 가져오기
+  const getPokenmonUsers = async () => {
+    // 포켓몬 구매한 모든 유저들 가져오기
+    const result = await contract.methods.getPokenmonUsers().call();
+
+    setPokenmonUsers(result);
+    // console.log("getPokenmonUsers" , result)
+
+    return result;
+  };
+
+  // 계정 넣으면, 그림 그리기
+  const getPokenmonImg = async (userAccount) => {
+    {
+      accounts.map((item) =>
+        item.account == userAccount ? (
+          <img width={"100px"} src={item.pokenmon[0].url} />
+        ) : (
+          console.log("그림 없음")
+        )
+      );
+    }
+  };
+
+  const transferPokemon = async (accounts, fromAccount, toAccount) => {
+    // 0. 어떤 포켓몬인데?
+
+
+    // accounts[1] 의 첫 번째 포켓몬(인덱스 1)를 제거하려면:
+    console.log(accounts[1])
+    const deletedPokenmon = accounts[1].pokenmon.filter((_, index) => index !== 0);
+    const pokenmonToUpdate = accounts[1].pokenmon.filter((_, index) => index === 0);
+
+
+      accounts[1] = {
+        ...accounts[1],
+        pokenmon: deletedPokenmon
+      };
+
+      console.log(accounts[1])
+      console.log("pokenmonToUpdate" , pokenmonToUpdate)
+
+
+    // 2. 받은 계정으로, 해당 포켓몬 넣어주기
+
+
+
+    
   };
 
   useEffect(() => {
     if (!contract) return;
+
     getAccounts();
+
+    getPokenmonUsers(); // 포켓몬 유저 가져오기
+    console.log("pokenmonUsers👏👏", pokenmonUsers);
   }, [contract]);
 
   if (user.account === null) return "지갑 연결 하세요";
@@ -107,11 +172,11 @@ const App = () => {
       </div>
 
       <div>
-        토큰 보유량 : {token}
-        {/* key = {index} ❓❓❓❓❓ */}
+        {" "}
+        현재 로그인 계정 토큰 보유량 : {token}
         {accounts.map((item, index) => (
           <div key={index}>
-            계정 {item.account} : 토큰 값 : {item.token}
+            계정 {item.account} : PTK 토큰 값 : {item.token}
             <div style={{ display: "flex" }}>
               포켓몬들 <br />
               {item.pokenmon.map((item, index) => (
@@ -123,6 +188,22 @@ const App = () => {
           </div>
         ))}
       </div>
+
+      <br />
+      <br />
+
+      {/* 포켓몬 구매한 유저들 */}
+      <div>
+        <h3> 포켓몬 구매 유저들 </h3>
+        {pokenmonUsers.map((item, index) => (
+          <div>
+            {index + 1} 번째 유저: {item.account} <br />
+            {/* 이 포켓몬 유저가 갖고 있는 사진까지 같이 보여주기 */}
+          </div>
+        ))}
+      </div>
+
+      {/* 포켓몬 전송해주기  */}
     </>
   );
 };
