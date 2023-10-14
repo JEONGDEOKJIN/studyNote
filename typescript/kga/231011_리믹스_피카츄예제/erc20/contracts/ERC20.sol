@@ -70,7 +70,7 @@ contract ERC20 is IERC20 {
     }
 
 
-    // 컨트랙트 생성자 
+    // 컨트랙트 생성자 | 이걸 실행하면, 포켓몬 토큰이 생성됨 
     constructor(string memory _name, string memory _symbol, uint256 _amount ){
         
         owner = msg.sender;
