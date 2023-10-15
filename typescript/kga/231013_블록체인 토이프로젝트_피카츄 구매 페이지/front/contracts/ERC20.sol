@@ -91,7 +91,7 @@ contract ERC20 is IERC20 {
         symbol = _symbol;
 
         // 민트를 실행하고, 소수점 단위에 맞춰서 끊어준다? | 그러면, 소수점 단위가 18개 붙을 것
-        mint(_amount * (10 ** uint256(decimals)) )
+        mint(_amount * (10 ** uint256(decimals)) );
 
     }
         /* [해석]
@@ -113,7 +113,7 @@ contract ERC20 is IERC20 {
 
     // 남은 토큰을 확인하는 함수 
     function balanceOf( address account) external view override returns(uint) {
-        return balances[account]
+        return balances[account];
     }
 
     // 누군가에게, 내가 갖고 있는 토큰을 전송 하기 
