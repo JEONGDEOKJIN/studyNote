@@ -61,7 +61,7 @@ contract ERC20 is IERC20 {
         balances[owner] -= amount;
 
         // '보낸 주소' 에서, '신청한 코인' 만큼, 더해서 받는다. 
-        balances[msg.sender] -= amount;
+        balances[msg.sender] += amount;
 
         // mint 조건 | 아직 이해를 다 못 함 #📛
         if(msg.sender == owner) {

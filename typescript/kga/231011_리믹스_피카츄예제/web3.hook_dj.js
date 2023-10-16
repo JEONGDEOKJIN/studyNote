@@ -19,6 +19,7 @@ const useWeb3 = () => {
           method: "eth_requestAccounts",
         })
         .then(async ([data]) => {
+          console.log( " 방금 로그인한 메타마스크 유저의 account" , data )
           const web3Provider = new Web3(window.ethereum);
 
           setUser({
