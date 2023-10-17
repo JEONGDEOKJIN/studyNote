@@ -131,27 +131,24 @@ const App = () => {
   const transferPokemon = async (accounts, fromAccount, toAccount) => {
     // 0. 어떤 포켓몬인데?
 
-
     // accounts[1] 의 첫 번째 포켓몬(인덱스 1)를 제거하려면:
-    console.log(accounts[1])
-    const deletedPokenmon = accounts[1].pokenmon.filter((_, index) => index !== 0);
-    const pokenmonToUpdate = accounts[1].pokenmon.filter((_, index) => index === 0);
+    console.log(accounts[1]);
+    const deletedPokenmon = accounts[1].pokenmon.filter(
+      (_, index) => index !== 0
+    );
+    const pokenmonToUpdate = accounts[1].pokenmon.filter(
+      (_, index) => index === 0
+    );
 
+    accounts[1] = {
+      ...accounts[1],
+      pokenmon: deletedPokenmon,
+    };
 
-      accounts[1] = {
-        ...accounts[1],
-        pokenmon: deletedPokenmon
-      };
-
-      console.log(accounts[1])
-      console.log("pokenmonToUpdate" , pokenmonToUpdate)
-
+    console.log(accounts[1]);
+    console.log("pokenmonToUpdate", pokenmonToUpdate);
 
     // 2. 받은 계정으로, 해당 포켓몬 넣어주기
-
-
-
-    
   };
 
   useEffect(() => {

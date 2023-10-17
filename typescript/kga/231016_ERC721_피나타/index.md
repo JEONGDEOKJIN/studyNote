@@ -227,3 +227,10 @@ abstract contract ERC721 is Context, ERC165, IERC721, IERC721Metadata, IERC721Er
 remixd -s.
 
 ```
+
+
+---
+---
+
+
+# 추가 개념 설명 | NFT 마켓 | 

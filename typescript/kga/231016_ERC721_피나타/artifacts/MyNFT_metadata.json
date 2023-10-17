@@ -379,6 +379,29 @@
 				"inputs": [
 					{
 						"internalType": "address",
+						"name": "owner",
+						"type": "address"
+					},
+					{
+						"internalType": "address",
+						"name": "operator",
+						"type": "address"
+					},
+					{
+						"internalType": "bool",
+						"name": "approved",
+						"type": "bool"
+					}
+				],
+				"name": "setAppAll",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
 						"name": "operator",
 						"type": "address"
 					},
@@ -389,6 +412,24 @@
 					}
 				],
 				"name": "setApprovalForAll",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "_tokenId",
+						"type": "uint256"
+					},
+					{
+						"internalType": "string",
+						"name": "uri",
+						"type": "string"
+					}
+				],
+				"name": "setTokenURI",
 				"outputs": [],
 				"stateMutability": "nonpayable",
 				"type": "function"
@@ -613,11 +654,11 @@
 	},
 	"sources": {
 		"myNFT.sol": {
-			"keccak256": "0x9523ee5fa179bcecc9887b95ead0b1c5dae89c75b6234a0cbf7a00fa94c2f644",
+			"keccak256": "0x4ada6124cd2ef80aebfc99ea4fc44b951e0c33345c2e1ee1c53d5a9a4ade788a",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://05f3a7fad2bfc8766ad32475846a06c7f3f3288051b1ebe99cfede000ada2855",
-				"dweb:/ipfs/QmR2vfv29SArV2TPcRJJxFAmhqSNhKMjDdV4oMdS2S4Ngz"
+				"bzz-raw://7b77f44aa2628f40565d3c56c64fb77ce75bf983e563bc0dde66250a8bbb73e2",
+				"dweb:/ipfs/QmQuLbGXx5wy2TpFVwthRhicTohhVxEJtodq7WJqz8MS6t"
 			]
 		},
 		"node_modules/@openzeppelin/contracts/interfaces/draft-IERC6093.sol": {
@@ -629,11 +670,11 @@
 			]
 		},
 		"node_modules/@openzeppelin/contracts/token/ERC721/ERC721.sol": {
-			"keccak256": "0x7f8e42089f4506ba1c9e9b6e58a253b5544ce1fbb3c0bc67021dc136c5d5d180",
+			"keccak256": "0x8935712533f4b620530e004ae0eb5ba0353c0d21f26206f1a27ffcd41914d03a",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://a49a321a377610067e7b5deaa7f74dad643fc25ddde05508981d6b058df94382",
-				"dweb:/ipfs/QmTckm2kpSJxqZ75hnXvYzumnna4UvVjbW4bri2yYLkyyz"
+				"bzz-raw://22b55db271c7564809bbd79fcf54ba220c073cb768f42088e1e66dc6f4568445",
+				"dweb:/ipfs/QmeErKLekgde53gKCeJKL8WcJNLwBDpmmXLZXo1GMKooJV"
 			]
 		},
 		"node_modules/@openzeppelin/contracts/token/ERC721/IERC721.sol": {
