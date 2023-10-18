@@ -82,10 +82,8 @@ const App = () => {
     try {
       console.log("metaDataJson 🙌🙌", metaDataJson);
       console.log("💎💎" , typeof(metaDataJson))
-      
       // const strMetadataJson = JSON.stringify(metaDataJson);
       // console.log("strMetadataJson⭐⭐", strMetadataJson);
-      
       // const parsedMetadataJson = JSON.parse(strMetadataJson);
       console.log("parsedMetadataJson 🙌🙌", metaDataJson);
       // console.log("💎💎" , typeof(parsedMetadataJson))
