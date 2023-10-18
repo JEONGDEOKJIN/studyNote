@@ -1,0 +1,11 @@
+{
+  "pinataContent": {
+    "somekey": "somevalue"
+  },
+  "pinataOptions": {
+    "cidVersion": 1
+  },
+  "pinataMetadata": {
+    "name": "DJNFT_image.json"
+  }
+}

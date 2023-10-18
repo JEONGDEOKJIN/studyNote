@@ -282,9 +282,9 @@
 			{
 				"inputs": [
 					{
-						"internalType": "uint256",
-						"name": "_tokenId",
-						"type": "uint256"
+						"internalType": "string",
+						"name": "_tokenURI",
+						"type": "string"
 					}
 				],
 				"name": "minting",
@@ -412,24 +412,6 @@
 					}
 				],
 				"name": "setApprovalForAll",
-				"outputs": [],
-				"stateMutability": "nonpayable",
-				"type": "function"
-			},
-			{
-				"inputs": [
-					{
-						"internalType": "uint256",
-						"name": "_tokenId",
-						"type": "uint256"
-					},
-					{
-						"internalType": "string",
-						"name": "uri",
-						"type": "string"
-					}
-				],
-				"name": "setTokenURI",
 				"outputs": [],
 				"stateMutability": "nonpayable",
 				"type": "function"
@@ -654,11 +636,11 @@
 	},
 	"sources": {
 		"myNFT.sol": {
-			"keccak256": "0x4ada6124cd2ef80aebfc99ea4fc44b951e0c33345c2e1ee1c53d5a9a4ade788a",
+			"keccak256": "0xd47b6a801127d5b5ced3e93c7d50fd9a2459ca4c3bed40b532bc5bacb9b96b7a",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://7b77f44aa2628f40565d3c56c64fb77ce75bf983e563bc0dde66250a8bbb73e2",
-				"dweb:/ipfs/QmQuLbGXx5wy2TpFVwthRhicTohhVxEJtodq7WJqz8MS6t"
+				"bzz-raw://a5bc6d1a02829c960b03a032ebfe00e351637ea6197e9909152ce7bb566a40fc",
+				"dweb:/ipfs/QmUzpEhovEkgLECn9c288jrCP6WGzYaEogoKnTJxcYw7Zo"
 			]
 		},
 		"node_modules/@openzeppelin/contracts/interfaces/draft-IERC6093.sol": {

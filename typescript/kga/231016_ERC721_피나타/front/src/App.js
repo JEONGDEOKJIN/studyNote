@@ -6,19 +6,39 @@ import abi from "./abi/myNFT.json"; // ✅ 배포 후, artifacts 안에 있는 m
 import useWeb3 from "./hooks/web3.hook";
 
 const App = () => {
+  const [tempCA, setTempCA] = useState(
+    "0x6888769AE309e725fA4bE5A0CDd72B26934D9Ec1"
+  ); // ✅ CA 하드코딩
+  // ✅ 추가로, abi 하드 코딩 하다가 -> udataABI 기능을 NFT controller 에 만듦
+
   const [file, setFile] = useState(null);
 
   const { user, web3 } = useWeb3();
   const [contract, setContract] = useState(null);
   const [hash, setHash] = useState(null);
   const [test, setTest] = useState(null);
+
+  // abi 업데이트
+  useEffect(() => {
+    updateABI();
+  }, [tempCA]);
+
+  // abi 업데이트
+  const updateABI = async () => {
+    const response = await axios.get("http://localhost:7000/nft/updateABI", {
+      withCredentials: true,
+    });
+    console.log("abi 업데이트", response);
+  };
+
+  // contract 상태변수 저장(set) 하기
   useEffect(() => {
     if (web3 != null) {
       if (contract) return;
 
       const DJ_NFT = new web3.eth.Contract(
         abi,
-        "0x74c3309CD93952B7A98e94486B6FdB9846B3116b", // ✅ 배포된 CA 주소
+        tempCA, // ✅ 배포된 CA 주소
         { data: "" }
       );
 
@@ -26,97 +46,76 @@ const App = () => {
     }
   }, [web3]);
 
-  const saveImageHashOnNFTjson = async (responseFromPinata) => {
+  // 이미지 파일 보내고 -> 이미지에 대한 jsonHash 값 받기
+  const saveImageJSON = async (imageJSON) => {
     try {
-      console.log("😸responseFromPinata", responseFromPinata);
-      const formData = { IpfsHash: responseFromPinata.data.IpfsHash };
+      console.log("imageHash", imageJSON.data.IpfsHash);
+
+      const formData = { IpfsHash: imageJSON.data.IpfsHash };
       console.log("formData", formData);
 
-      const result = await axios.post(
-        "http://localhost:7000/nft/ipfsHashUpdate",
+      // 이미지 파일 보내고 -> 이미지에 대한 jsonHash 값 받기
+      const _metadataJson = await axios.post(
+        // "http://localhost:7000/nft/ipfsHashUpdate",
+        "http://localhost:7000/nft/saveImageJSON",
         formData,
         {
           withCredentials: true,
         }
       );
-      console.log("🙌🙌", result.data.updatedData);
-      const temp = JSON.stringify(result.data.updatedData);
+      console.log("imageHash🙌🙌", _metadataJson.data.updatedData);
 
-      let nft = {
-        pinataContent: {
-          // "name" : result.data.updatedData.name
-          temp,
-        },
-        pinataMetadata: {
-          name: "pinnie.json",
-        },
-      };
-
-      result.data.success
+      _metadataJson.data.success
         ? alert("이미지 파일 해시를, NFT json 에 저장 성공")
         : alert("이미지 파일 해시를, NFT json 에 저장 실패");
 
-      // 서버에서 변경된 JSON 을 받아서, return
-      setHash(result.data.updatedData);
-      return result.data.updatedData;
+      const metadataJson = _metadataJson.data.updatedData;
+
+      return metadataJson;
     } catch (error) {
       console.log(error);
     }
   };
 
-  const sendNftJsonToPinata = async (updatedNftJson) => {
-    // const fileData = new FormData();
-    // FormData : 웹 API 의 한 부분 | 서버로 전송하기 위해, Key - value 쌍의 형태로 데이터를 쉽게 생성할 수 있게 해줌
-
-    // updatedNftJson 을 file 형식으로 변환하기
-    // const jsonString = JSON.stringify(updatedNftJson);
-
-    // 문자열 데이터를 'Blob' 으로 변환 | Blob (바이너리 형식의 객체)
-    // const jsonBlob = new Blob([jsonString], { type: "application/json" });
-
-    // Blob을 fileData 에 추가하기 | 파일 이름 = "DJ_NFT.json"
-    // fileData.append("file", jsonBlob, "DJ_NFT.json");
-
+  // 메타데이터를 피나타로 전송
+  const sendMetadataToPinata = async (metaDataJson) => {
     try {
-      // console.log("updatedData", FormData);
-      const parseHash = JSON.parse(hash);
-      console.log(parseHash);
-      const nftJsonHashFromPinata = await axios.post(
-        "https://api.pinata.cloud/pinning/pinJSONToIPFSs",
-        parseHash,
+      console.log("metaDataJson 🙌🙌", metaDataJson);
+      console.log("💎💎" , typeof(metaDataJson))
+      
+      // const strMetadataJson = JSON.stringify(metaDataJson);
+      // console.log("strMetadataJson⭐⭐", strMetadataJson);
+      
+      // const parsedMetadataJson = JSON.parse(strMetadataJson);
+      console.log("parsedMetadataJson 🙌🙌", metaDataJson);
+      // console.log("💎💎" , typeof(parsedMetadataJson))
+
+
+      const _metadataHash = await axios.post(
+        "https://api.pinata.cloud/pinning/pinJSONToIPFS",
+        metaDataJson, // #❓ 이걸 바로 넘겨도 되나?
         {
           headers: {
             "Content-Type": "application/json",
-            pinata_api_key: "b8e7bb04e0fb15447f49",
+            pinata_api_key: "3fa874b39e5e7eaf8ec5",
             pinata_secret_api_key:
-              "1416afc9a4221c05aa9b112f77b8ee2444c8497f30bb596058201132085902f5",
+              "48546889d754d9dabdf61a749d0b89b54aef072d51892041ce57afd10e5be902",
           },
         }
       );
+      console.log("_metadataHash", _metadataHash);
+      const metadataHash = _metadataHash.data.IpfsHash;
 
-      console.log("nftJsonHashFromPinata", nftJsonHashFromPinata);
-
-      return nftJsonHashFromPinata;
+      return metadataHash;
     } catch (error) {
       console.log(error);
     }
   };
 
-  const mappingTokenIdHashUri = async (nftJsonHashFromPinata) => {
-    const uri = `"${nftJsonHashFromPinata.data.IpfsHash}"`;
-    console.log(typeof uri);
-    console.log("uri", uri);
-    const _tokenId = 77; // ✅ check
-
-    await contract.methods.setTokenURI(_tokenId, uri).send({
-      from: user.account, // ❓이걸 꼭 써야 하나?
-    });
-  };
-
-  const minting = async (nftJsonHashFromPinata) => {
-    console.log("실행되니?");
-    const _tokenId = 77; // ✅ 응? 토큰 id 를 하드코딩? ❓❓❓❓❓ | 교수님 코드는?
-    await contract.methods.minting(_tokenId).send({
+  const minting = async (metadataHash) => {
+    console.log("@minting | metadataHash 찍히니?", metadataHash);
+    // const _tokenId = tempTokenId; // ✅ 응? 토큰 id 를 하드코딩? ❓❓❓❓❓ | 교수님 코드는?
+    await contract.methods.minting(metadataHash).send({
       from: user.account, // msg.sender 값이 from 으로부터 나옴
     });
   };
@@ -126,52 +125,36 @@ const App = () => {
 
     // input 태그에 넣은 파일
     fileData.append("file", file);
+    console.log("fileData", fileData);
 
     try {
-      const responseFromPinata = await axios.post(
+      const imageJSON = await axios.post(
         "https://api.pinata.cloud/pinning/pinFileToIPFS",
         fileData,
         {
           // [url 주소👉] https://docs.pinata.cloud/reference/post_pinning-pinfiletoipfs
-
           // 옵션값 | 헤더 내용 | 업로드에 대한 권하니 있는지 확인 | 파일 내용이 form 데이터 라는 걸 알려주고
           // 데이터 형식을 알려줘서, 뭔가 처리할 수 있게
           headers: {
             "Content-Type": "multipart/form-data",
-            pinata_api_key: "b8e7bb04e0fb15447f49",
+            pinata_api_key: "3fa874b39e5e7eaf8ec5",
             pinata_secret_api_key:
-              "1416afc9a4221c05aa9b112f77b8ee2444c8497f30bb596058201132085902f5",
+              "48546889d754d9dabdf61a749d0b89b54aef072d51892041ce57afd10e5be902",
           },
         }
       );
-      // console.log("IpfsHash" , responseFromPinata.data.IpfsHash);  // 값 확인 ✅
+      console.log("imageJSON", imageJSON); // 값 확인 ✅
 
-      const updatedNftJson = await saveImageHashOnNFTjson(responseFromPinata);
-      console.log("updatedNftJson ✅✅", updatedNftJson);
+      const metadataJson = await saveImageJSON(imageJSON);
+      console.log("metadataJson ✅✅", metadataJson);
 
-      const nftJsonHashFromPinata = await sendNftJsonToPinata(updatedNftJson);
+      const metadataHash = await sendMetadataToPinata(metadataJson);
+      console.log("metadataJSON", metadataHash);
 
-      await mappingTokenIdHashUri(nftJsonHashFromPinata);
-
-      await minting();
+      await minting(metadataHash);
     } catch (error) {
       console.log(error);
     }
-  };
-
-  useEffect(() => {
-    tc();
-  }, []);
-  const tc = () => {
-    ta();
-    tb();
-  };
-  const ta = () => {
-    setTest("123");
-  };
-
-  const tb = () => {
-    console.log("tets--------------------", test);
   };
 
   return (

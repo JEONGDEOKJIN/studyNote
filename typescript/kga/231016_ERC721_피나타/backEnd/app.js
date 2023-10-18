@@ -15,6 +15,10 @@ app.use(cors({
 }));
 
 
+
+
+
+
 // 백에서, 파싱된 값 가져오게 하려면 
 app.use(express.json());
 

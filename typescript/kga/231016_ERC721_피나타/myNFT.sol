@@ -20,29 +20,30 @@ contract MyNFT is ERC721 {
     // 메타데이터 내용 확정하기 
         // tokenId 랑, URI 를 mapping 할  _tokenURIs
         mapping(uint256 tokenId => string tokenURI) private _tokenURIs;
+        uint256 totalSupply = 777;
 
-        // 특정 tokenId 에 URI 설정하기 
-        function setTokenURI( uint256 _tokenId ,  string memory uri) public { 
-            _tokenURIs[_tokenId] = uri;
+        // 민팅 | 'ERC721 토큰' 과 '구매자 msg.sender' 를 연결
+        function minting(string memory _tokenURI) public {
+            _tokenURIs[totalSupply] = _tokenURI;
+            _mint(msg.sender, totalSupply);  // 이 순간 tokenId 지정 ⭐⭐
+            totalSupply += 1;   
         }
 
         // url 값을 읽어서 - nft 내용을 띄워준다. 
             // 내용이 이미 있는 
             // tokenURI 에 있는 함수 내용을 '수정(덮어쓰기)' 한 것 ⭐⭐⭐⭐⭐ 
         function tokenURI( uint256 _tokenId) public view override returns(string memory){
-            return _tokenURIs[_tokenId];     
-                // json 을 피나타에 올려서 -> 해시 값을 여기에 넣어야 함 ex) "QmVWKyvPRDTteewR2A4KDeXhBUsDo1HJhUCXksTEJXFHik"
+            // return _tokenURIs[_tokenId];     
+            return _tokenURIs[_tokenId];     // 여기에서는 mint 함수에서 정한 tokenId 를 사용 ⭐⭐ 
+                // [원래 하드코딩으로 할 때 버전] json 을 피나타에 올려서 -> 해시 값을 여기에 넣어야 함 ex) "QmVWKyvPRDTteewR2A4KDeXhBUsDo1HJhUCXksTEJXFHik"
         }
 
         function _baseURI() internal view override returns(string memory) {
-            return "https://coffee-managing-crow-891.mypinata.cloud/ipfs/";  // 베이스 url 값을 따로 지정 
+            return "https://ipfs.io/ipfs/";  // 베이스 url 값을 따로 지정 
         }
 
 
-    // 민팅 | 'ERC721 토큰' 과 '구매자 msg.sender' 를 연결
-        function minting(uint256 _tokenId) public {
-            _mint(msg.sender, _tokenId);
-        }
+
 
     // nft 관련 메서드는 여기에 ⭐⭐⭐ 에 작성
     // 여기에서 판매 관련 적고 
