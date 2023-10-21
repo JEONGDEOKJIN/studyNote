@@ -52,6 +52,8 @@ const App = () => {
     return result;
   };
 
+
+  
   // 포켓몬 구입
   const buyPokenmon = async () => {
     // if(contract == null) return;
@@ -78,6 +80,7 @@ const App = () => {
 
   //   await contract.methods.buyEth(amount)
   // }
+
 
   // 메타 마스크 계정들 조회 | account 조회 하는 함수
   const getAccounts = async () => {

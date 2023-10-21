@@ -2,11 +2,11 @@
 
 pragma solidity ^0.8.20;
 
-// MyNFT 를 가져와서 인스턴스를 생성할 예정
 import "./myNFT.sol";
 
 
 contract SaleNFT {
+    // 교수님이 올려주신 파일 버전이 있음 ⭐⭐⭐ | 꼭 확인 ⭐⭐⭐ 
 
     // SaleNFT 이게 왜 있어야 해? 
         // 누가 판매 등록을 한 nft 들이 보여야 함 
@@ -14,12 +14,12 @@ contract SaleNFT {
         // myNFT 는 권한만 관리 
         // SaleNFT 는 객체, 판매 관리, 금액 등 에서 다룬다. 
 
-
-    // 상호작용할 CA 의 주소가 필요 | MyNFT sol 파일에서 기능을 가져와, MyNFT() 실행해서, _nft 인스턴스를 생성 예정  
+    
+    // 상호작용할 CA 의 주소가 필요 
     MyNFT public _nft; 
 
 
-    // 상호작용할 컨트랙트를 담을 상태 변수 | MyNFT 를 가져와서, 인스턴스를 생성 -> SaleNFT 에서 MyNFT 에 접근할 수 있게 됨
+    // 상호작용할 컨트랙트를 담을 상태 변수
     constructor(address _nftCA) {
         // 상호작용할 ca 인스턴스 생성 ⭐⭐⭐⭐⭐⭐⭐⭐ 
             // 상태 변수에 담아놓는다.| 이미 배포된 ca 주소 담겨 있는거 
@@ -51,6 +51,7 @@ contract SaleNFT {
     function salesNFT() public view returns (bool) {
         return _nft.isApprovedForAll(msg.sender , address(this));
         // ERC721 에서, isApproval뭐시기 메소드 -> 이걸 확인하면, 매핑 객체 안에, 또 매핑 객체가 있음. 주인, 위임 받은 사람, 에 대한 true false 나 나옴  
+    
     }   
 
 

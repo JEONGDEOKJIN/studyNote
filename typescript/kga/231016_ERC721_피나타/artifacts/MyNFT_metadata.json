@@ -261,6 +261,44 @@
 						"internalType": "address",
 						"name": "owner",
 						"type": "address"
+					}
+				],
+				"name": "getOwnerURIs",
+				"outputs": [
+					{
+						"internalType": "string[]",
+						"name": "",
+						"type": "string[]"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "tokenId",
+						"type": "uint256"
+					}
+				],
+				"name": "getTokenURI",
+				"outputs": [
+					{
+						"internalType": "string",
+						"name": "",
+						"type": "string"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "owner",
+						"type": "address"
 					},
 					{
 						"internalType": "address",
@@ -288,7 +326,13 @@
 					}
 				],
 				"name": "minting",
-				"outputs": [],
+				"outputs": [
+					{
+						"internalType": "string",
+						"name": "",
+						"type": "string"
+					}
+				],
 				"stateMutability": "nonpayable",
 				"type": "function"
 			},
@@ -371,29 +415,6 @@
 					}
 				],
 				"name": "safeTransferFrom",
-				"outputs": [],
-				"stateMutability": "nonpayable",
-				"type": "function"
-			},
-			{
-				"inputs": [
-					{
-						"internalType": "address",
-						"name": "owner",
-						"type": "address"
-					},
-					{
-						"internalType": "address",
-						"name": "operator",
-						"type": "address"
-					},
-					{
-						"internalType": "bool",
-						"name": "approved",
-						"type": "bool"
-					}
-				],
-				"name": "setAppAll",
 				"outputs": [],
 				"stateMutability": "nonpayable",
 				"type": "function"
@@ -636,11 +657,11 @@
 	},
 	"sources": {
 		"myNFT.sol": {
-			"keccak256": "0xd47b6a801127d5b5ced3e93c7d50fd9a2459ca4c3bed40b532bc5bacb9b96b7a",
+			"keccak256": "0x9f4d53a3e8c5579ace3c7c51094f3b3f4bd22a3564e3f475a3f6667c90084d40",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://a5bc6d1a02829c960b03a032ebfe00e351637ea6197e9909152ce7bb566a40fc",
-				"dweb:/ipfs/QmUzpEhovEkgLECn9c288jrCP6WGzYaEogoKnTJxcYw7Zo"
+				"bzz-raw://99fa94442a88093761dfdc9ae1b4317a907b9bf39435ccaf389a5052e5ea1c77",
+				"dweb:/ipfs/QmRjMLyreYyugzZbHgfR7oo1HwUjSz4KYtPmTk6zfjpVY6"
 			]
 		},
 		"node_modules/@openzeppelin/contracts/interfaces/draft-IERC6093.sol": {
