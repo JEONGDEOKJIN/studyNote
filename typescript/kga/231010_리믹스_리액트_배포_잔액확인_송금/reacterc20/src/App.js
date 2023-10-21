@@ -44,7 +44,7 @@ const App = () => {
 
 
   useEffect( () => {
-    // 이벤트 등록 | 네트워크가 변경되면, 발생하는 이벤트 등록 | 이벤트가 변경되면 -> 메타마스크 가 호출 
+    // 이벤트 등록 | 네트워크가 변경되면, 발생하는 이벤트 등록 | 이벤트가 변경되면 -> 메타마스크 가 호출 | chainId 는 window.ethereum 이 자동으로 채움
     window.ethereum.on("chainChanged" , (chainId) => {
       console.log("네트워크가 변경 되었음!" , chainId)
 

@@ -131,6 +131,7 @@ exports.saveMetaDataJSON = async (req, res) => {
           // 피나타 api 에 따라, imageJson 의 파일 이름을 저장 ✅ | https://docs.pinata.cloud/reference/post_pinning-pinjsontoipfs
           metadataJson.pinataContent.image = `https://ipfs.io/ipfs/${imageJson.image}`;
           metadataJson.pinataContent.description = `${req.body.description}`;
+          metadataJson.pinataContent.ranking = `${req.body.description}`; // ❓❓❓ solidity pure 에서 어떻게? 
           metadataJson.pinataMetadata.name = "DJNFT_metadata1020.json"; // ✅ image 파일 수정
           // metadataJson.pinataOptions.cidVersion = 1; // [📛주의] cidVersion = 1 이면, openSea 에서 처리를 안 해줌. ⭐⭐
 

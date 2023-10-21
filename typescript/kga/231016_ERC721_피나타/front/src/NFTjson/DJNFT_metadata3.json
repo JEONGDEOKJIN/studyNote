@@ -1,7 +1,8 @@
 {
   "pinataContent": {
     "image": "https://ipfs.io/ipfs/QmWGS3ALyLutiMJBWBbbA7eX3NZovs7voP16QA8CRiQ6FC",
-    "description": "빵"
+    "description": "빵", 
+    "ranking" : ""
   },
   "pinataMetadata": {
     "name": "DJNFT_metadata1020.json"

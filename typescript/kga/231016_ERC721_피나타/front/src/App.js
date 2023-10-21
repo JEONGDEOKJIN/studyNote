@@ -7,7 +7,7 @@ import useWeb3 from "./hooks/web3.hook";
 
 const App = () => {
   const [tempCA, setTempCA] = useState(
-    "0xa522e95c69D3ED740c4cec4Fe8e8c0F85B6dAEBd"
+    "0xd9145CCE52D386f254917e481eB44e9943F39138"
   ); // ✅ CA 하드코딩
   // ✅ 추가로, abi 하드 코딩 하다가 -> udataABI 기능을 NFT controller 에 만듦
 
@@ -24,6 +24,10 @@ const App = () => {
   const [loginUserAccount, setLoginUserAccount] = useState();
 
   const [ metaDataDescription , setMetaDataDescription] = useState()
+
+  const [network, setNetwork] = useState(null);
+  const [accounts , setAccounts] = useState();
+  const [currentAccount , setCurrentAccount] = useState();
 
   // abi 상태 관리 | 📛📛 여기에 좀 문제가 있음 
       // abi 상태 업데이트 요청 #📛📛📛 수정중
@@ -48,76 +52,145 @@ const App = () => {
         // };
 
 
-  // 🔹 로그인 기능 
+    // 🔹 로그인 환경(메타마스크 & 세폴리아) 체크 👉 accounts 가져오고 👉 network, accounts 상태 업데이트  
     useEffect( () => {
+      checkConfigNgetAccounts()
+    } , [network])    
 
-      window.ethereum.on( "accountsChanged" , (accounts) => {
-        // 로그인 안 한 경우
-        if(accounts.length === 0){
-          alert("메타마스크 로그인 하세요")
-        } 
+    // 🔹 [업데이트 된 상태 사용] 현재 current account 추출
+    useEffect( () => {
+      getCurrnetAccount()
+    } , [accounts]) // 이 순간 살짝 input, output 느낌
 
-        // 로그인 한 경우 : 현재 접속 유저 설정
-        setCurrentAccount(accounts[0])
+        // 로그인 환경(메타마스크 & 세폴리아) 체크 👉 accounts 가져오고 👉 network, accounts 상태 업데이트 정의
+        const checkConfigNgetAccounts = async () => {
+            // 메타마스크 설치 및 네트워크 확인  👉 network 상태 업데이트 
+            await checkConfig()
+            // 현재 이더리움 내 계좌 주소들(accounts) 가져와서 👉 allAccounts 상태 업데이트 
+            await getAccounts()
+        }
 
-      } )
-    } , [])
+        // 메타마스크 설치 여부 👉 세폴리아 네트워크 여부 확인 👉 network 상태 업데이트  
+        const checkConfig = async () => {
 
+          try {
+            // 자격 요건 확인 
+                // 메타마스크 설치 여부 확인 : 미설치시, 메타마스크 설치 유도 (eth_requestAccounts 메소드에 의해 : 이건, getAccounts 에 있음. ) 
+                if(!window.ethereum){
+                  alert("메타마스크 설치 하세요~🙌")     
+                } 
 
-    // 현재 accounts 들 가져와서 -> accounts 관련 상태 업데이트
-    const getAccounts = async () => {
+                // if(!window.ethereum.on){
+                //   alert("메타마스크 로그인 하세요")
+                // }
 
-      // 이더리움에 접속한 모든 계정들 가져오기
-      const accounts = await window.ethereum.request({
-        method : "eth_requestAccounts"
-      });
-
-      // '모든 계정' 이 갖고 있는 
-      const getAccountsInfo = await Promise.all(
-        accounts.map( async(account) => {
-          // 순회하고 있는 계정에 있는 토큰 가져오기
-          const token = await getToken(account)
-          const ETHtoken = await getETHToken(account)
-          return {account , token , ETHtoken}
-        } )
-      )
-
-      // setToken(await getToken(getAccountsInfo[0]) )  // ERC20 토큰 잔액
-      // setETHToken(await getETHToken(getAccountsInfo[0]) )  // 이더리움 잔액
-      setAccountsInfo(getAccountsInfo)
-            // getAccountsInfo = [ { account : "0x12312312312" , token: 1000, ETHtoken : 1000 } , { } ... ]     
-
-    }
-
-
-
-
-
-
-  // 🔹 contract 상태변수 저장(set) 하기
-      useEffect(() => {
-
-        const getContract = async () => {
-          if (web3 != null && !contract) {
-            if (contract) return;
-  
-            const DJ_NFT = await new web3.eth.Contract(
-              abi,
-              tempCA, // ✅ 배포된 CA 주소
-              { data: "" }
-            );
-  
-            setContract(DJ_NFT);
+                // 로그인 네트워크 확인 : 세폴리아 여부 확인 후, 세폴리아로 변경 요청
+                if(window.ethereum.on){
+                  window.ethereum.on("chainChanged" , (chainId) => {
+                    console.log("chainChanged | 어떤 네트워크로 접속했는지 확인!" , chainId)
+                    
+                    // 세폴리아 네트워크가 아닐 경우, 변경 요청
+                    if(chainId !== '0xaa36a7'){
+                        // [참고] 0x539 ( 0x539 == 가나쉬 네트워크 체인 id 임. 왜냐면, 가나쉬에 접속할 때, npx ganache-cli --chain.chainId 1337 --chain.networkId 1337 로 터미널에 입력하는데, 여기에서 1337 == 0x539 이기 때문) 
+                        // 세폴리아 chainId (11155111 == 0xaa36a7 | 출처 : https://chainlist.org/chain/11155111)
+                        
+                        switchNet()
+                    }
+                  })
+                }
+            
+          } catch (error) {
+            console.log(error)
           }
         }
 
-        getContract()
+        // CF. 세폴리아 네트워크로 변경요청하는 기능 | checkConfig 에서 사용 
+        const switchNet = async () => {
+          try {
+            // 메타마스크에 해당 네트워크로 변경해달라고 요청 | ⭐ 성공적으로 변경하면 null 을 반환하게 됨 ⭐
+            const net = await window.ethereum.request({ 
+              jsonrpc : "2.0" , 
+              method : "wallet_switchEthereumChain",    // wallet_switchEthereumChain : 'params 에 넣은 네트워크로, 변경을 요청' 하게 하는 메소드
+              params : [{chainId : "0xaa36a7"}]    // 
+            })
+      
+            // net 값이, 정상적으로 없으면(null 이면), 해당 네트워크에, 있다는 뜻! 
+            setNetwork(net || true);    
+              // [의미] net 값이 있으면 그 값인 null을 사용하고, 없으면 true를 사용하라 | 한번 네트워크 검사하기 위한 것 ✅✅     
+            
+          } catch (error) {
+            console.log(error)
+          }
+        };
 
-      }, [web3]);
+        // 현재 이더리움 내 계좌 주소들(accounts) 가져오기 👉 accounts 상태 업데이트 
+        const getAccounts = async () => {
+
+            try {
+              if(window.ethereum.request){
+                // 이더리움에 접속한 모든 계정 주소 반환
+                    const eth_accounts = await window.ethereum.request({
+                      method : "eth_requestAccounts"
+                    });
+        
+                    setAccounts(eth_accounts)
+              }
+                  
+            } catch (error) {
+                console.log(error)
+            }
+        }
+
+        // 현재 current account 추출 함수 
+        const getCurrnetAccount = () => {
+          if(accounts){
+            setCurrentAccount (accounts[0])
+          }
+        }
+        
 
 
 
-  //🔹'로그인 유저 account' 상태 업데이트 후 👉 "renderMetaData"
+      // // '모든 계정' 이 갖고 있는 
+      // const getAccountsInfo = await Promise.all(
+      //   accounts.map( async(account) => {
+      //     // 순회하고 있는 계정에 있는 토큰 가져오기
+      //     const token = await getToken(account)
+      //     const ETHtoken = await getETHToken(account)
+      //     return {account , token , ETHtoken}
+      //   } )
+      // )
+
+      // // setToken(await getToken(getAccountsInfo[0]) )  // ERC20 토큰 잔액
+      // // setETHToken(await getETHToken(getAccountsInfo[0]) )  // 이더리움 잔액
+      // setAccountsInfo(getAccountsInfo)
+      //       // getAccountsInfo = [ { account : "0x12312312312" , token: 1000, ETHtoken : 1000 } , { } ... ]     
+
+
+
+  // 🔹 abi, CA 주소 가져와서 👉 contract 상태변수 업데이트 하기
+  useEffect(() => {
+    const getContract = async () => {
+      if (web3 != null && !contract) {
+        if (contract) return;
+
+        const DJ_NFT = await new web3.eth.Contract(
+          abi,
+          tempCA, // ✅ 배포된 CA 주소
+          { data: "" }
+        );
+
+        setContract(DJ_NFT);
+      }
+    }
+    
+    getContract()
+
+  }, [web3]);
+
+
+
+  //🔹'로그인 유저 account' 상태 업데이트 후 👉 "renderMetaData" 상태 업데이트 하기 | 렌더 되는 요소인 imageHash, metaDataDescription 상태 업데이트 
       // '로그인 유저 account' 상태 업데이트 요청
       useEffect(() => {
         const updateLoginUserAccount = async () => {
@@ -130,7 +203,7 @@ const App = () => {
       }, []);
 
 
-      // '로그인 유저 account' 상태 업데이트 완료 후 로직 : URIs 가져오기 | 요청하고, 기다렸다가, 사용하는 방식
+      // '로그인 유저 account' 상태 업데이트 완료 후 로직 : loginUserAccount 의 URIs 가져와서 👉 렌더 되는 요소인 imageHash, metaDataDescription 상태 업데이트 
       useEffect(() => {
         const renderMetaData = async (loginUserAccount) => {
           console.log("loginUserAccount 🏷🏷 " , loginUserAccount)
@@ -154,7 +227,7 @@ const App = () => {
 
       }, [loginUserAccount]);
 
-
+      // mintImageHash 가 잘 나오는지 체크 
       useEffect( () => {
         console.log("mintImageHash👉👉" , mintImageHash)
       } , [mintImageHash])
@@ -385,7 +458,7 @@ const App = () => {
       </div>
     </>
   );
-};
+}
 
 export default App;
 

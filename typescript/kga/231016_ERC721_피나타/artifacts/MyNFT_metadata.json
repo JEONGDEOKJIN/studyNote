@@ -657,11 +657,11 @@
 	},
 	"sources": {
 		"myNFT.sol": {
-			"keccak256": "0x9f4d53a3e8c5579ace3c7c51094f3b3f4bd22a3564e3f475a3f6667c90084d40",
+			"keccak256": "0x5632e54605b65d1969754ee793bc16f0305547aa99d1042abb5f5263a11f77ea",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://99fa94442a88093761dfdc9ae1b4317a907b9bf39435ccaf389a5052e5ea1c77",
-				"dweb:/ipfs/QmRjMLyreYyugzZbHgfR7oo1HwUjSz4KYtPmTk6zfjpVY6"
+				"bzz-raw://6515e3aeb8e6a4c57fd46e4053e6be9860c721211faff31baeea00a2160367a3",
+				"dweb:/ipfs/Qmd9WHCchdJsVBLnoRREwUf7ovZw5gYnbMqpq8akfuGgFR"
 			]
 		},
 		"node_modules/@openzeppelin/contracts/interfaces/draft-IERC6093.sol": {
