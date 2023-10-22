@@ -234,3 +234,34 @@ remixd -s.
 
 
 # 추가 개념 설명 | NFT 마켓 | 
+
+
+
+
+
+# 내가 따로 만든 abi 자동으로 가져오는 파일, 아직 작동은 안 됨 
+
+``` js
+  // abi 상태 관리 | 📛📛 여기에 좀 문제가 있음 
+      // abi 상태 업데이트 요청 #📛📛📛 수정중
+      // useEffect(() => {
+      //   updateABI(ABIdata);
+      // }, []);
+
+      // 현재값과 이전값을 비교해서, 상태 업데이트 요청 하기 #📛📛📛
+        // const updateABI = async (ABIdata) => {
+        //   try {
+        //     const newABI = await axios.get("http://localhost:7000/nft/updateABI", {
+        //       withCredentials: true,
+        //     });
+        //     console.log("abi 업데이트", newABI.data);
+
+        //     if (ABIdata !== newABI.data) {
+        //       setABIdata(newABI.data);
+        //     }
+        //   } catch (error) {
+        //     console.log(error);
+        //   }
+        // };
+
+```

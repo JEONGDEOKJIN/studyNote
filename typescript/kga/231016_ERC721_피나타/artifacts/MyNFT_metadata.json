@@ -263,12 +263,74 @@
 						"type": "address"
 					}
 				],
+				"name": "getOwnerTokenMetaData",
+				"outputs": [
+					{
+						"components": [
+							{
+								"internalType": "uint256",
+								"name": "tokenId",
+								"type": "uint256"
+							},
+							{
+								"components": [
+									{
+										"internalType": "string",
+										"name": "tokenURI",
+										"type": "string"
+									},
+									{
+										"internalType": "uint256",
+										"name": "ranking",
+										"type": "uint256"
+									}
+								],
+								"internalType": "struct MyNFT.TokenMetaData",
+								"name": "metaData",
+								"type": "tuple"
+							}
+						],
+						"internalType": "struct MyNFT.TokenIdMetaDataWrapper[]",
+						"name": "",
+						"type": "tuple[]"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "owner",
+						"type": "address"
+					}
+				],
 				"name": "getOwnerURIs",
 				"outputs": [
 					{
 						"internalType": "string[]",
 						"name": "",
 						"type": "string[]"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "tokenId",
+						"type": "uint256"
+					}
+				],
+				"name": "getTokenRanking",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "ranking",
+						"type": "uint256"
 					}
 				],
 				"stateMutability": "view",
@@ -321,7 +383,31 @@
 				"inputs": [
 					{
 						"internalType": "string",
+						"name": "seed",
+						"type": "string"
+					}
+				],
+				"name": "makeRandom",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "pure",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "string",
 						"name": "_tokenURI",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "seed",
 						"type": "string"
 					}
 				],
@@ -657,11 +743,11 @@
 	},
 	"sources": {
 		"myNFT.sol": {
-			"keccak256": "0x5632e54605b65d1969754ee793bc16f0305547aa99d1042abb5f5263a11f77ea",
+			"keccak256": "0x362dee3290fdfe0c68d017b75c3bc03415ff90117a3e70ce20fd79e6b2a3b4a3",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://6515e3aeb8e6a4c57fd46e4053e6be9860c721211faff31baeea00a2160367a3",
-				"dweb:/ipfs/Qmd9WHCchdJsVBLnoRREwUf7ovZw5gYnbMqpq8akfuGgFR"
+				"bzz-raw://0cc4915cb2faa53f248929f64b3bf9e94d5c6d19c7ae0951c2464576a8c13f83",
+				"dweb:/ipfs/QmQupkRmnhuj3WVZVuzMcC4g3TxDA6yJXfqkviAj1171jg"
 			]
 		},
 		"node_modules/@openzeppelin/contracts/interfaces/draft-IERC6093.sol": {

@@ -88,10 +88,42 @@ exports.saveMetaDataJSON = async (req, res) => {
   const path = require("path");
 
   try {
-    console.log("req.body.ipfsHash", req.body);
-    console.log("req.body.ipfsHash", req.body.IpfsHash);
 
+    // // 🔹 ranking 데이터 가져오기 
+    // console.log("loginUserAccount" , req.body.loginUserAccount)
+    // const getOwnerTokenMetaData = async (loginUserAccount , contract) => {
+
+
+    //   try {
+
+    //     console.log("🐣🐣loginUserAccount" , loginUserAccount)
+    //     console.log("🙆‍♂️🙆‍♂️" , contract)
+    //     if (loginUserAccount && contract && contract.methods) {
+    //       const ownersMetaData = await contract.methods
+    //         .getOwnerTokenMetaData(loginUserAccount)
+    //         .call();
+    //       console.log("✍✍current 지갑 주소의 메타데이터(URIs) ownersMetaData", ownersMetaData);
+          
+    //       if(ownersMetaData) {
+    //         const latestToken = ownersMetaData[ownersMetaData.length -1]
+    //         console.log( "latestToken.metaData.ranking" , latestToken.metaData.ranking) 
+            
+    //         return latestToken.metaData.ranking
+    //       }
+    //     }
+        
+    //   } catch (error) {
+    //     console.log(error)
+    //   }
+    // };
+    // await getOwnerTokenMetaData(req.body.loginUserAccount , req.body.contract)
+
+
+    
     // 1️⃣ image json 처리
+          console.log("req.body.ipfsHash", req.body);
+          console.log("req.body.ipfsHash", req.body.IpfsHash);
+      
       // 해당 경로에 가서 파일 들고오기
       const pathToImgJson = path.join(
         __dirname, "..", "..", "front", "src", "NFTjson",
@@ -127,15 +159,15 @@ exports.saveMetaDataJSON = async (req, res) => {
       console.log("metadataJson 읽기", metadataJson);
 
       // pinataMetadata 키의 값인 하위 객체의 key 값인 name에 DJNFT_image.json 내용 저장
-        if (metadataJson.pinataMetadata && metadataJson.pinataMetadata.name) {
+        if (metadataJson.pinataMetadata) {
           // 피나타 api 에 따라, imageJson 의 파일 이름을 저장 ✅ | https://docs.pinata.cloud/reference/post_pinning-pinjsontoipfs
           metadataJson.pinataContent.image = `https://ipfs.io/ipfs/${imageJson.image}`;
           metadataJson.pinataContent.description = `${req.body.description}`;
-          metadataJson.pinataContent.ranking = `${req.body.description}`; // ❓❓❓ solidity pure 에서 어떻게? 
+          metadataJson.pinataContent.ranking = `${req.body.ranking}`; // ❓❓❓ solidity pure 에서 어떻게? 
           metadataJson.pinataMetadata.name = "DJNFT_metadata1020.json"; // ✅ image 파일 수정
           // metadataJson.pinataOptions.cidVersion = 1; // [📛주의] cidVersion = 1 이면, openSea 에서 처리를 안 해줌. ⭐⭐
 
-        
+
         // DJNFT_metadata.json 에 변경된 내용 저장
         await fs.writeFileSync(
           pathToMetadata,

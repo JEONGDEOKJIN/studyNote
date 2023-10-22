@@ -7,10 +7,11 @@ import useWeb3 from "./hooks/web3.hook";
 
 const App = () => {
   const [tempCA, setTempCA] = useState(
-    "0xd9145CCE52D386f254917e481eB44e9943F39138"
+    "0x605c5A3CC81C75FB952cF54c9d3DebA38406D054"
   ); // ✅ CA 하드코딩
   // ✅ 추가로, abi 하드 코딩 하다가 -> udataABI 기능을 NFT controller 에 만듦
 
+  
   const [file, setFile] = useState(null);
   const [NFTDescription, setNFTDescription] = useState()
 
@@ -24,32 +25,18 @@ const App = () => {
   const [loginUserAccount, setLoginUserAccount] = useState();
 
   const [ metaDataDescription , setMetaDataDescription] = useState()
+  const [ metaDataRanking , setMetaDataRanking] = useState()
 
   const [network, setNetwork] = useState(null);
   const [accounts , setAccounts] = useState();
+
   const [currentAccount , setCurrentAccount] = useState();
 
-  // abi 상태 관리 | 📛📛 여기에 좀 문제가 있음 
-      // abi 상태 업데이트 요청 #📛📛📛 수정중
-      // useEffect(() => {
-      //   updateABI(ABIdata);
-      // }, []);
+  const [mintingState , setMintingState] = useState(false)
 
-      // 현재값과 이전값을 비교해서, 상태 업데이트 요청 하기 #📛📛📛
-        // const updateABI = async (ABIdata) => {
-        //   try {
-        //     const newABI = await axios.get("http://localhost:7000/nft/updateABI", {
-        //       withCredentials: true,
-        //     });
-        //     console.log("abi 업데이트", newABI.data);
-
-        //     if (ABIdata !== newABI.data) {
-        //       setABIdata(newABI.data);
-        //     }
-        //   } catch (error) {
-        //     console.log(error);
-        //   }
-        // };
+  // 여기가 중복 📛📛 | 리팩토링 필요 
+  const [tokenRanking , setTokenRanking] = useState();    // ifps 에서 가져온 데이터로 렌더하기 위한 것 | 렌더는 ipfs 에 저장된걸 해야 하니까! 필요 
+  const [latestTokenRanking , setLatestTokenRanking] = useState()   // json 에 저장하기 위한 것 | 이건 solidity 에서 받아온 걸 -> backend 로 전달해서 -> ipfs 에 올라갈 json 수정해야 하니까, 필요
 
 
     // 🔹 로그인 환경(메타마스크 & 세폴리아) 체크 👉 accounts 가져오고 👉 network, accounts 상태 업데이트  
@@ -189,7 +176,6 @@ const App = () => {
   }, [web3]);
 
 
-
   //🔹'로그인 유저 account' 상태 업데이트 후 👉 "renderMetaData" 상태 업데이트 하기 | 렌더 되는 요소인 imageHash, metaDataDescription 상태 업데이트 
       // '로그인 유저 account' 상태 업데이트 요청
       useEffect(() => {
@@ -203,35 +189,54 @@ const App = () => {
       }, []);
 
 
-      // '로그인 유저 account' 상태 업데이트 완료 후 로직 : loginUserAccount 의 URIs 가져와서 👉 렌더 되는 요소인 imageHash, metaDataDescription 상태 업데이트 
+      // '로그인 유저 account' 상태 업데이트 완료 후 로직 : loginUserAccount 의 URIs 가져와서 👉 렌더 되는 요소인 ranking, imageHash, metaDataDescription 상태 업데이트 
       useEffect(() => {
         const renderMetaData = async (loginUserAccount) => {
-          console.log("loginUserAccount 🏷🏷 " , loginUserAccount)
-          const ownersURIs = await getOwnerURIs(loginUserAccount);
-          console.log("ownersURIs 🌴🌴" , ownersURIs)
+          console.log("loginUserAccount 🏷🏷 " , loginUserAccount);
+          
+          // const ownersURIs = await getOwnerURIs(loginUserAccount);
+          const ownersMetaData = await getOwnerTokenMetaData(loginUserAccount);
 
-          // currentUserMetaDataJSON 는 , 현재, 방금 올린 NFT 만 반환
-          const currentUserMetaDataJSON = await getCurrentUserMetaData(ownersURIs)
-          console.log("currentUserMetaDataJSON📌" , currentUserMetaDataJSON)
+          // 방금 올린 NFT | 최신 NFT
+          if(ownersMetaData){
+            const latestToken = ownersMetaData[ownersMetaData.length -1] 
+            setLatestTokenRanking(latestToken.metaData.ranking)
 
-          if(currentUserMetaDataJSON && currentUserMetaDataJSON.image){
-            setMintImageHash(currentUserMetaDataJSON.image)
+
+            // console.log("ownersMetaData 🌴🌴" , ownersMetaData)
+            // console.log("latestToken 🌴🌴" , latestToken)
+            console.log("latestToken.metaData.tokenURI 🌴🌴" , latestToken.metaData.tokenURI)
+            console.log("latestToken.metaData.ranking 🌴🌴" , latestToken.metaData.ranking)
+            
+            // currentUserMetaDataJSON 는 , 현재, 방금 올린 NFT 만 반환 | ipfs 통해 render 해주기
+            const currentUserMetaDataJSON = await getCurrentUserMetaData(latestToken.metaData.tokenURI)
+            console.log("currentUserMetaDataJSON📌" , currentUserMetaDataJSON)
+
+
+            if(currentUserMetaDataJSON && currentUserMetaDataJSON.image){
+              setMintImageHash(currentUserMetaDataJSON.image)
+            }
+
+            if(currentUserMetaDataJSON && currentUserMetaDataJSON.description){
+              setMetaDataDescription(currentUserMetaDataJSON.description)
+            }
+            
+            if(currentUserMetaDataJSON && currentUserMetaDataJSON.ranking){
+              setMetaDataRanking(currentUserMetaDataJSON.ranking)
+            }
           }
 
-          if(currentUserMetaDataJSON && currentUserMetaDataJSON.description){
-            setMetaDataDescription(currentUserMetaDataJSON.description)
-          }
         }
-
         renderMetaData(loginUserAccount);
 
-      }, [loginUserAccount]);
+      }, [loginUserAccount , mintingState]);
 
       // mintImageHash 가 잘 나오는지 체크 
       useEffect( () => {
         console.log("mintImageHash👉👉" , mintImageHash)
       } , [mintImageHash])
 
+      
 
           // 현재 로그인 계정 조회
           const getLoginUserAccount = async () => {
@@ -270,20 +275,38 @@ const App = () => {
             }
 
           };
+          
 
-          // 현재 로그인 유저의 metaData json 가져오기
-          const getCurrentUserMetaData = async (ownersURIs) => {
+          const getOwnerTokenMetaData = async (loginUserAccount) => {
 
             try {
-              console.log("ownersURIs 🤸‍♂️🤸‍♂️" , ownersURIs)
-              const tempLength = ownersURIs.length;
-              // console.log("현재 로그인 지갑 주소의 메타데이터(URIs)", ownersURIs);
+              console.log("🐣🐣loginUserAccount" , loginUserAccount)
+              console.log("🙆‍♂️🙆‍♂️" , contract)
+              if (loginUserAccount && contract && contract.methods) {
+                const ownersURIs = await contract.methods
+                  .getOwnerTokenMetaData(loginUserAccount)
+                  .call();
+                console.log("✍✍current 지갑 주소의 메타데이터(URIs) ownersURIs", ownersURIs);
+                return ownersURIs
+              }
+              
+            } catch (error) {
+              console.log(error)
+            }
+          };
+          // 현재 로그인 유저의 metaData json 가져오기
+          const getCurrentUserMetaData = async (_tokenURI) => {
+
+            try {
+              console.log("_tokenURI 🤸‍♂️🤸‍♂️" , _tokenURI)
+              // const tempLength = _tokenURI.length;
+              // console.log("현재 로그인 지갑 주소의 메타데이터(URIs)", _tokenURI);
               // console.log("tempLength", tempLength);
               
             // 여기에 해당 url 에 접근해서, json 객체 가져와서, image 키에 있는 값 보여주는 코드
-            if(ownersURIs){
+            if(_tokenURI){
               const metaData = await axios.get(
-                `https://ipfs.io/ipfs/${ownersURIs[tempLength - 1]}` // tempLength - 1 : 가장 최신 ERC721 토큰
+                `https://ipfs.io/ipfs/${_tokenURI}` // tempLength - 1 : 가장 최신 ERC721 토큰
               );
               console.log("metaData", metaData);
     
@@ -301,15 +324,21 @@ const App = () => {
 
 
 
+
   // 🔹 이미지 + 텍스트 민팅 하기 
       // 이미지 파일 보내고 -> 이미지에 대한 jsonHash 값 받기
-      const saveMetaDataJSON = async (imageJSON) => {
+      const saveMetaDataJSON = async (imageJSON , randomRanking) => {
         try {
           console.log("imageHash", imageJSON.data.IpfsHash);
+          console.log("randomRanking", randomRanking);
+
 
           const formData = { 
+            // contract : contract,
+            // loginUserAccount : loginUserAccount,
             IpfsHash: imageJSON.data.IpfsHash,
-            description : NFTDescription
+            description : NFTDescription,
+            ranking : randomRanking,
           };
           console.log("formData", formData);
 
@@ -362,6 +391,8 @@ const App = () => {
           console.log("_metadataHash", _metadataHash);
           const metadataHash = _metadataHash.data.IpfsHash;
           
+
+
           return metadataHash;
         } catch (error) {
           console.log(error);
@@ -370,14 +401,41 @@ const App = () => {
 
 
       // 민팅
-      const minting = async (metadataHash) => {
+      const minting = async (metadataHash , seed) => {
         console.log("@minting | metadataHash 찍히니?", metadataHash);
-        const resultMint = await contract.methods.minting(metadataHash).send({
+        const resultMint = await contract.methods.minting(metadataHash , seed).send({
           from: user.account, // msg.sender 값이 from 으로부터 나옴
         });
 
         return resultMint;
       };
+
+      // 시드값 얻기 
+      function getSeed(length = 32) {
+        const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+        let result = '';
+        for (let i = 0; i < length; i++) {
+            result += chars.charAt(Math.floor(Math.random() * chars.length));
+        }
+        return result;
+    }
+
+      // image 의 hash 값으로, 랜덤값 얻기 
+      const makeRandom = async (seed) => {
+        try {
+          if (loginUserAccount && contract && contract.methods) {
+            const getRandom = await contract.methods
+              .makeRandom(seed)
+              .call();
+            console.log("👐👐 getRandom", getRandom);
+
+            return getRandom
+          }
+        } catch (error) {
+          console.log(error)
+        }
+
+      }
 
       // 이미지 업로드
       const upload = async () => {
@@ -404,23 +462,59 @@ const App = () => {
               },
             }
           );
-          console.log("imageJSON", imageJSON); // 값 확인 ✅
+          console.log("imageJSON", imageJSON.data.IpfsHash); // 값 확인 ✅
+          
+          // 여기서 랜덤수 뽑는거 간단히 하나 해줘 
+          const seed = await getSeed()
+          console.log("seed👉👉 " , seed)
 
-          const metadataJson = await saveMetaDataJSON(imageJSON);
+          // solidity 의 makeRandom 는 pure 하기 때문에, 동일한 imageHash 값을 넣으면, 동일한 결과가 나올 것 임 
+          const randomRanking = Number(await makeRandom(seed))
+          
+          console.log("randomRanking" , randomRanking)
+
+          const metadataJson = await saveMetaDataJSON(imageJSON, randomRanking);
           console.log("metadataJson ✅✅", metadataJson);
 
           const metadataHash = await sendMetadataToPinata(metadataJson);
           console.log("metadataJSON", metadataHash);
 
-          const resultMint = await minting(metadataHash);
+
+          const resultMint = await minting(metadataHash , seed );
+            // 랜덤수를 imageJSON.data.IpfsHash 에 기반해서 뽑게 될 것 | 이것은 makeRandom 함수의 결과와
           console.log("resultMint 민팅 완료 결과 ", resultMint);
           console.log("resultMint 민팅 완료 : blockHash ", resultMint.blockHash);
+          
+          // 민팅되고 바로 보여주기 위한 상태관리
+          if(resultMint){
+            setMintingState(!mintingState)
+          }
+
 
           // await getOwnerURIs(loginUserAccount)
         } catch (error) {
           console.log(error);
         }
       };
+
+
+
+
+      // ✍ ranking 타입 
+      // const getTokenRanking = async (tokenId) => {
+
+      //   try {
+          
+      //     if(contract && contract.methods){
+      //         const tokenRanking = await contract.methods.getTokenRanking(tokenId).call();
+          
+      //         setTokenRanking(tokenRanking);
+      //     }
+      //   } catch (error) {
+      //     console.log(error)
+      //   }
+      // }
+
 
 
 
@@ -454,11 +548,17 @@ const App = () => {
           style={{ width: "300px", height: "auto" }}
         />
         <p> NFT description : {`${metaDataDescription}`} </p>
+        <p> NFT ranking ipfs 에서 받아옴 metaDataRanking : {`${metaDataRanking}`} </p>
+        <p> NFT ranking solidity 상태변수 에서 받아옴 latestTokenRanking : {`${latestTokenRanking}`} </p>
+        {/* <button onClick={getTokenRanking(tokenId)} >  토큰 랭킹 확인 </button> <p> {{tokenRanking}} </p> */}
+
 
       </div>
     </>
   );
 }
+
+
 
 export default App;
 
