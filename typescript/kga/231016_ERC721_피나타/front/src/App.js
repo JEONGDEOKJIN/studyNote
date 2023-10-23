@@ -7,13 +7,16 @@ import useWeb3 from "./hooks/web3.hook";
 
 const App = () => {
   const [tempCA, setTempCA] = useState(
-    "0x605c5A3CC81C75FB952cF54c9d3DebA38406D054"
+    "0x70FDa7142b7030B1268B748cfcCEbB3AD8392ED0"
   ); // ✅ CA 하드코딩
   // ✅ 추가로, abi 하드 코딩 하다가 -> udataABI 기능을 NFT controller 에 만듦
 
-  
+  const [tempSaleNFTCA , setTempSaleNFTCA ] = useState("0xfA9e913Ca32e8e1179e663FBD88eFc634110Ad60")
+    // ✅ saleNFT 발행할 때, myNFT 의 CA 를 넣어줘야 함. 
+
   const [file, setFile] = useState(null);
   const [NFTDescription, setNFTDescription] = useState()
+  const [NFTPrice, setNFTPrice] = useState()
 
   const [ABIdata, setABIdata] = useState();
 
@@ -26,6 +29,7 @@ const App = () => {
 
   const [ metaDataDescription , setMetaDataDescription] = useState()
   const [ metaDataRanking , setMetaDataRanking] = useState()
+  const [ metaDataPrice , setMetaDataPrice] = useState()
 
   const [network, setNetwork] = useState(null);
   const [accounts , setAccounts] = useState();
@@ -33,6 +37,9 @@ const App = () => {
   const [currentAccount , setCurrentAccount] = useState();
 
   const [mintingState , setMintingState] = useState(false)
+
+  const [saleList , setSaleList] = useState();
+
 
   // 여기가 중복 📛📛 | 리팩토링 필요 
   const [tokenRanking , setTokenRanking] = useState();    // ifps 에서 가져온 데이터로 렌더하기 위한 것 | 렌더는 ipfs 에 저장된걸 해야 하니까! 필요 
@@ -220,6 +227,10 @@ const App = () => {
             if(currentUserMetaDataJSON && currentUserMetaDataJSON.description){
               setMetaDataDescription(currentUserMetaDataJSON.description)
             }
+
+            if(currentUserMetaDataJSON && currentUserMetaDataJSON.price){
+              setMetaDataPrice(currentUserMetaDataJSON.price)
+            }
             
             if(currentUserMetaDataJSON && currentUserMetaDataJSON.ranking){
               setMetaDataRanking(currentUserMetaDataJSON.ranking)
@@ -241,10 +252,27 @@ const App = () => {
           // 현재 로그인 계정 조회
           const getLoginUserAccount = async () => {
             try {
-              // 현재 메타마스크 로그인한 계정
+              // 현재 메타마스크 로그인한 계정 확인
               const accounts = await window.ethereum.request({
                 method: "eth_requestAccounts", // 메타마스크에 연결된 계정 조회
               });
+
+              //  // 계정들의 잔액 정보 가져오기  | 여러가지 요청을 보내니까, 모든 요청을 기다릴 것 임 ⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐
+              //   const _accounts = await Promise.all(
+              //     accounts.map(async (account) => {
+              //       const token = await getToken(account);
+
+              //       // 추가로, 포켓몬들! 도! 어떤 포켓몬을 가지고 있는지, 추가할 부분!
+              //       // const pokenmon = await getPokenmon(account); // 없으면 안 뜰거야
+              //         // 이건 getNFT 로 하면 되지 않을까? 
+
+                  
+              //       return { account, token, pokenmon }; // 반환되는 객체에는 1) 주소 2) 그 주소의 토큰 3) 그 주소의 포켓몬 들이 뜸
+              //     })
+              //   );
+
+
+    
   
               // 현재 로그인 계정 = accounts[0] = accounts 중 첫 번째
               const loginUserAccount = accounts[0];
@@ -275,7 +303,6 @@ const App = () => {
             }
 
           };
-          
 
           const getOwnerTokenMetaData = async (loginUserAccount) => {
 
@@ -294,6 +321,7 @@ const App = () => {
               console.log(error)
             }
           };
+
           // 현재 로그인 유저의 metaData json 가져오기
           const getCurrentUserMetaData = async (_tokenURI) => {
 
@@ -322,6 +350,24 @@ const App = () => {
 
           }
 
+          // // Ether 단위, account의 토큰 잔액 얻기 
+          // const getToken = async (account) => {
+          //   if (!contract) return;
+
+          //   try {
+          //     let tokenWeiUnit = web3.utils
+          //       .toBigInt(await contract.methods.balanceOf(account).call()) // 이건 토큰 가져오는 거 wei 단위로 넘어
+          //       .toString(10);
+          
+          //       tokenEtherUnit = await web3.utils.fromWei(tokenWeiUnit, "ether");
+          
+          //     return tokenEtherUnit;
+              
+          //   } catch (error) {
+          //     console.log(error)
+          //   }
+
+          // }
 
 
 
@@ -338,6 +384,7 @@ const App = () => {
             // loginUserAccount : loginUserAccount,
             IpfsHash: imageJSON.data.IpfsHash,
             description : NFTDescription,
+            price : NFTPrice,
             ranking : randomRanking,
           };
           console.log("formData", formData);
@@ -391,8 +438,6 @@ const App = () => {
           console.log("_metadataHash", _metadataHash);
           const metadataHash = _metadataHash.data.IpfsHash;
           
-
-
           return metadataHash;
         } catch (error) {
           console.log(error);
@@ -402,12 +447,22 @@ const App = () => {
 
       // 민팅
       const minting = async (metadataHash , seed) => {
-        console.log("@minting | metadataHash 찍히니?", metadataHash);
-        const resultMint = await contract.methods.minting(metadataHash , seed).send({
-          from: user.account, // msg.sender 값이 from 으로부터 나옴
-        });
 
-        return resultMint;
+        try {
+          if(contract && contract.methods && contract.methods.minting){
+            console.log("@minting | metadataHash 찍히니?", metadataHash);
+            const resultMint = await contract.methods.minting(metadataHash , seed).send({
+              from: user.account, // msg.sender 값이 from 으로부터 나옴
+            });
+    
+            return resultMint;
+          }
+
+        } catch (error) {
+          console.log(error)
+        }
+
+
       };
 
       // 시드값 얻기 
@@ -489,8 +544,6 @@ const App = () => {
           if(resultMint){
             setMintingState(!mintingState)
           }
-
-
           // await getOwnerURIs(loginUserAccount)
         } catch (error) {
           console.log(error);
@@ -499,22 +552,72 @@ const App = () => {
 
 
 
+  // 🔹 판매 할 수 있는 list 만들기 | Sale List |    
+      // myNFT 판매 등록 하기
+      const registerSaleList = async (loginUserAccount , tempSaleNFTCA) => {
+        try {
 
-      // ✍ ranking 타입 
-      // const getTokenRanking = async (tokenId) => {
+          console.log("loginUserAccount , tempSaleNFTCA" , loginUserAccount , tempSaleNFTCA)
 
-      //   try {
-          
-      //     if(contract && contract.methods){
-      //         const tokenRanking = await contract.methods.getTokenRanking(tokenId).call();
-          
-      //         setTokenRanking(tokenRanking);
-      //     }
-      //   } catch (error) {
-      //     console.log(error)
-      //   }
-      // }
+          if(contract && contract.methods){
+            await contract.methods.
+            setAppAll(loginUserAccount , tempSaleNFTCA, true)
+            .send({
+              from : loginUserAccount
+            })
+          }
+        } catch (error) {
+          console.log(error)
+        }
+      }
 
+      // myNFT 판매 등록 되었는지 확인 | 
+      const checkIsResgitered = async (loginUserAccount , tempSaleNFTCA) => {
+
+        try {
+          const approved = await contract.methods
+          .isApprovedForAll(loginUserAccount, tempSaleNFTCA)
+          .call();
+
+          if(approved){
+            console.log("등록됨!")
+          } else { 
+            console.log("아직, 등록 안 돼! 미등록됨!")
+          }
+
+        } catch (error) {
+          console.log(error)
+        }
+      }
+
+      // 현재 판매 가능 리스트 
+      const showSaleList = async () => {
+
+      }
+
+      // NFT 구매 
+      const buyNFT = async (tokenId) => {
+
+        // ✅ tokenId 를 어떻게 가져오지
+
+        // 1 ether 를 wei 로 변환 | ✅ 여기에 제품 가격이 와야 함 
+        const amountInWei = web3.utils.toWei('1', 'ether');
+
+        try {
+          if(contract && contract.methods){
+            await contract.methods.
+            buyNFT(tokenId)
+            .send({
+              from : loginUserAccount, 
+              value : amountInWei
+            })
+          }
+
+        } catch (error) {
+          console.log(error)
+        }
+
+      }
 
 
 
@@ -540,7 +643,17 @@ const App = () => {
       >
       </input>
 
-      <button onClick={upload}> 파일 업로드 </button>
+      <label> 희망 NFT 가격 </label>
+      <input 
+        type="number"
+        onChange={ (e) => {
+          setNFTPrice(e.target.value)
+        } }
+      >
+      
+      </input>
+
+      <button onClick={ upload }> 파일 업로드 </button>
 
       <div>
         <img
@@ -548,14 +661,20 @@ const App = () => {
           style={{ width: "300px", height: "auto" }}
         />
         <p> NFT description : {`${metaDataDescription}`} </p>
+        <p> NFT metaDataPrice : {`${metaDataPrice}`} </p>
         <p> NFT ranking ipfs 에서 받아옴 metaDataRanking : {`${metaDataRanking}`} </p>
         <p> NFT ranking solidity 상태변수 에서 받아옴 latestTokenRanking : {`${latestTokenRanking}`} </p>
         {/* <button onClick={getTokenRanking(tokenId)} >  토큰 랭킹 확인 </button> <p> {{tokenRanking}} </p> */}
 
+        <button  onClick={ () => {registerSaleList(loginUserAccount , tempSaleNFTCA)} } > 이 NFT 판매 하고 싶어요. 판매등록요🙆‍♂️ </button>
+        <button  onClick={ () => {checkIsResgitered(loginUserAccount , tempSaleNFTCA)} } > 판매등록 확인 🚀 </button>
+        {/* <button  onClick={ () => { buyNFT(tokenId) } } > 오캐이, 이거 구매! 👐 </button> */}
+        
 
       </div>
     </>
   );
+
 }
 
 

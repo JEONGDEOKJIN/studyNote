@@ -27,11 +27,12 @@ contract SaleNFT {
             // [해석] 이렇게 MyNFT 인스턴스를 생성하면, SaleNFT 안에서, 인스턴스를 통해, MyNFT 컨트랙트의 내부 함수를 사용할 수 있게 됨. ⭐⭐  
     }
 
+    
 
     // 이렇게 담긴 것 사용하기 | ca 와 ca 간 ⭐⭐⭐⭐⭐ 
-    function _saleNFTmint(string url) public  {
+    function _saleNFTmint(string memory url , string memory seed) public  {
         // ca 에서 ca 로 메시지 전송 | 메서드 실행 | 민팅 함수를 sale nft 에서 실행할 수 잇음. 
-        _nft.minting(url);
+        _nft.minting(url , seed);
     }
 
     // 판매에 대한 함수를 작성하고 - nft 관련 메서드는 myNFT.sol 에 작성

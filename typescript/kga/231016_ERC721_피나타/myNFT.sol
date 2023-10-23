@@ -29,6 +29,20 @@ contract MyNFT is ERC721 {
     TokenMetaData metaData;
     }
 
+    // nft 판매에 필요한 요소 리스팅
+    struct Listing {
+        uint256 tokenId;
+        address seller;
+        uint256 price;
+    }
+
+
+    // 테스트    
+        // mapping (uint256 tokenId => uint256) tokensprice;
+
+        // function test(uint256 tokenId , uint256 price)(){
+        //     tokensprice[tokenId] = price;
+        // }
 
     // tokenId 를 넣으면 => TokenMetaData 가 나오는 _tokenMetaData 매핑 객체 
     mapping(uint256 => TokenMetaData) private _tokenMetaData;
@@ -55,11 +69,34 @@ contract MyNFT is ERC721 {
         // tokenId 가 될 totalSupply
         uint256 totalSupply = 0;
 
+    // '지갑이 소유한 NFT 가 몇개 있는지' 내용을 담을 mapping 객체 
+    // 0x1231254 이 지갑이 소유하고 있는 NFT 가 몇개 있는지! 
+    mapping(uint256 tokenId => address) private _owners;
+        /* _owners = {
+            tokenId : "0x123232"
+        }
+        */
+
+
     // '유저의 주소' 를 넣으면 -> tokenId 를 알 수 있고 -> 메타데이터(_tokenURIs) 알 수 있게 하기 
-        mapping(address => uint256[]) private addressIDs;
-            /* addressIDs = {
-                '0x123' : [7, 10, 15]
-            } */
+    mapping(address => uint256[]) private addressIDs;
+        /* addressIDs = {
+            '0x123' : [7, 10, 15]
+        } */
+
+
+    // tokenId 넣으면 -> 토큰 판매 관련 정보 나오게 하기 
+    mapping(uint256 => Listing) public listings;
+    /* 
+        listings = {
+            tokenId(1) : {
+                tokenId : "", 
+                address : "0x123", 
+                price : "123"
+        }, ... }
+    */
+
+
 
     // 1 ~ 10 랜덤 난수 생성 | pure 는 '상태변수를 읽거나, 변경하지 않음!' 이 특징 ⭐⭐ 
     function makeRandom(string memory seed) public pure returns (uint256) {
@@ -72,6 +109,25 @@ contract MyNFT is ERC721 {
     // function setRanking(uint256 tokenId , uint256 ranking) public {
     //     _tokenRanking[tokenId] = ranking;
     // }
+
+
+    // // owner 설정하기 => mint 가 하기 때문에 필요 없음
+    // function setOwnerOf(uint256 tokenId, address owner) internal {
+    //     _owners[tokenId] = owner;
+    // }
+    //     /* _owners = {
+    //             tokenId : "0x123232(이더리움 계좌주소)"
+    //         }
+    //     */
+
+    // 해당 토큰의 주소 확인하기
+    function _ownerOf(uint256 tokenId) internal view virtual returns (address) {
+        return _owners[tokenId];
+    }
+        /* _owners = {
+                tokenId : "0x123232(이더리움 계좌주소)"
+            }
+        */
 
 
 
@@ -90,6 +146,9 @@ contract MyNFT is ERC721 {
             _mint(msg.sender, totalSupply);  // 이 순간 tokenId 지정 ⭐⭐
 
             addressIDs[msg.sender].push(totalSupply); // 해당 주소의 토큰 목록에 tokeId(totalSupply) 를 추가 ⭐⭐ 
+
+                // owner 설정하기
+            setOwnerOf(totalSupply, msg.sender);
 
             totalSupply += 1;   
 
@@ -181,7 +240,6 @@ contract MyNFT is ERC721 {
     }
 
 
-
         // url 값을 읽어서 - nft 내용을 띄워준다. 
             // 내용이 이미 있는 
             // tokenURI 에 있는 함수 내용을 '수정(덮어쓰기)' 한 것 ⭐⭐⭐⭐⭐ 
@@ -195,13 +253,6 @@ contract MyNFT is ERC721 {
             return "https://ipfs.io/ipfs/";  // 베이스 url 값을 따로 지정 
         }
 
-}
-
-
-
-
-
-
     // nft 관련 메서드는 여기에 ⭐⭐⭐ 에 작성
     // 여기에서 판매 관련 적고 
     
@@ -209,16 +260,56 @@ contract MyNFT is ERC721 {
     // SO, 여기에서 위임된 내용을 갖고 있음. 왜냐면, ERC721 을 상속했으니까, 
 
     // 이걸 실행시키는 곳은 판매 컨트랙트! saleNFT!
-    // function setAppAll(address owner, address operator, bool approved) public {
-    //     _setApprovalForAll(owner, operator, approved);  // erc721 안에 있는 함수 임 
-    //     // 이걸 실행하면? 
-    //         // 매핑 객체에, 위임받은 사람, 위임 사람, 안에 넣는 것 
-    //         // 매핑의 키에 매핑이 잇는데, 그 안에 주소랑 true, false  수정 
-    //         // 그 안에 있는 걸 비교 하는 것. 
-    //         // 값 변경에 대한 함수 
-    //         // 매핑 안에 있는 매핑 객체를 수정하는 함수 
-    //     // 판매 컨트랙트로 판매 등록을 할 수 있게 
+    function setAppAll(address owner, address operator, bool approved) public {
+        // address owner : NFT 소유자의 이더리움 주소 
+        // address operator : NFT 판매 권한을 받을 saleNFT
+        // bool approved : true 로 해야, 권한이 넘어감
+        // ApprovalForAll : 권한 위임 완료되면, ApprovalForAll 이벤트 발생
 
-    // }
+        setApprovalForAll(operator, approved);  // erc721 안에 있는 함수 임 
+        // 이걸 실행하면? 
+            // 매핑 객체에, 위임받은 사람, 위임 사람, 안에 넣는 것 
+            // 매핑의 키에 매핑이 있는데, 그 안에 주소랑 true, false  수정 
+            // 그 안에 있는 걸 비교 하는 것. 
+            // 값 변경에 대한 함수 
+            // 매핑 안에 있는 매핑 객체를 수정하는 함수 
+        // 판매 컨트랙트로 판매 등록을 할 수 있게 
+    }
 
-    // nft 소유 권한에 대한 내용 
+
+    // 토큰 정보 리스팅 하기 
+    function listingTokenInfo(uint256 tokenId , uint256 price) public { 
+
+    require(ownerOf(tokenId) == msg.sender , "토큰 오너가 아닌데?");
+    require(price > 0 , "가격 설정은 0 이더 or 웨이 이상");
+
+    listings[tokenId] = Listing({
+        tokenId : tokenId, 
+        seller : msg.sender, 
+        price : price
+    });
+
+    }
+
+
+
+    function buyNFT(uint256 tokenId) public payable  {
+        
+        // listings 중 tokenId 에 해당하는 값 가져오기
+        Listing memory targetNFT = listings[tokenId]
+
+        require(msg.value == targetNFT.price , "정확한 Ether 로 구매해야 하는데, 지금 부정확해!");
+
+        // 판매자 승인
+        require(condition);
+
+
+
+    }
+
+
+
+}
+
+
+

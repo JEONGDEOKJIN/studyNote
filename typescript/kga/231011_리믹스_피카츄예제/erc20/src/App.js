@@ -30,7 +30,7 @@ const App = () => {
 
     // 지갑에 있는 포켓몬 가져오기
     const result = contract.methods.getPokenmon().call({
-      from: account, // 이 사람이 실행한 | 다른 사람것도 뿌려주고 싶으면 account? ❓❓❓❓❓
+      from : account, // 이 사람이 실행한 | 다른 사람것도 뿌려주고 싶으면 account? ❓❓❓❓❓
     });
     // 누가 실행 시키는지 알아야
 
