@@ -40,6 +40,9 @@ const App = () => {
 
   const [saleList , setSaleList] = useState();
 
+  // ✅ 현재 tokenId 는 최근의 것만 들어가고 있음! 참고! 
+  const [tokenId, setTokenId] = useState();
+
 
   // 여기가 중복 📛📛 | 리팩토링 필요 
   const [tokenRanking , setTokenRanking] = useState();    // ifps 에서 가져온 데이터로 렌더하기 위한 것 | 렌더는 ipfs 에 저장된걸 해야 하니까! 필요 
@@ -193,7 +196,7 @@ const App = () => {
           setLoginUserAccount(loginUserAccount);
         };
         updateLoginUserAccount();
-      }, []);
+      }, [loginUserAccount]);
 
 
       // '로그인 유저 account' 상태 업데이트 완료 후 로직 : loginUserAccount 의 URIs 가져와서 👉 렌더 되는 요소인 ranking, imageHash, metaDataDescription 상태 업데이트 
@@ -214,6 +217,8 @@ const App = () => {
             // console.log("latestToken 🌴🌴" , latestToken)
             console.log("latestToken.metaData.tokenURI 🌴🌴" , latestToken.metaData.tokenURI)
             console.log("latestToken.metaData.ranking 🌴🌴" , latestToken.metaData.ranking)
+            console.log("latestToken.metaData.tokenId 🌴🌴" , latestToken.metaData.tokenId)
+            console.log("latestToken.tokenId 🌴🌴" , latestToken.tokenId)
             
             // currentUserMetaDataJSON 는 , 현재, 방금 올린 NFT 만 반환 | ipfs 통해 render 해주기
             const currentUserMetaDataJSON = await getCurrentUserMetaData(latestToken.metaData.tokenURI)
@@ -235,6 +240,11 @@ const App = () => {
             if(currentUserMetaDataJSON && currentUserMetaDataJSON.ranking){
               setMetaDataRanking(currentUserMetaDataJSON.ranking)
             }
+            
+            if(latestToken){
+              setTokenId(latestToken.tokenId)
+            }
+          
           }
 
         }
@@ -595,13 +605,21 @@ const App = () => {
 
       }
 
+
       // NFT 구매 
-      const buyNFT = async (tokenId) => {
+      const buyNFT = async (tokenId , paidInEther) => {
 
         // ✅ tokenId 를 어떻게 가져오지
+          // 1) 현재 프론트에서 tokenId 를 확인할 수 있나 
+            // ipfs 에서 가져올 수도 있고, 바로, 솔리디티에서 가져올 수도 있고 
+            // 현재 ipfs 에는 없으니, 
+            // 
+          // 2) 이걸 어떻게 가져오나 
+
+
 
         // 1 ether 를 wei 로 변환 | ✅ 여기에 제품 가격이 와야 함 
-        const amountInWei = web3.utils.toWei('1', 'ether');
+        const paidInWei = web3.utils.toWei(`${paidInEther}`, 'ether');
 
         try {
           if(contract && contract.methods){
@@ -609,16 +627,33 @@ const App = () => {
             buyNFT(tokenId)
             .send({
               from : loginUserAccount, 
-              value : amountInWei
+              value : paidInWei
             })
           }
 
         } catch (error) {
           console.log(error)
         }
-
       }
 
+
+      // 판매 승인 여부 변경 
+      const setIsApprovedForSale = async (tokenId) => {
+
+        try {
+          
+          if(contract && contract.methods){
+            await contract.methods
+            .setIsApprovedForSale(tokenId , true)
+            .send({
+              from : loginUserAccount,
+            })
+          }
+
+        } catch (error) {
+          console.log(error)
+        }
+      }
 
 
   return (
@@ -643,14 +678,14 @@ const App = () => {
       >
       </input>
 
-      <label> 희망 NFT 가격 </label>
+      <label> 희망 NFT 가격 : 0.01 이더로 고정 </label>
       <input 
         type="number"
         onChange={ (e) => {
           setNFTPrice(e.target.value)
         } }
       >
-      
+
       </input>
 
       <button onClick={ upload }> 파일 업로드 </button>
@@ -662,22 +697,21 @@ const App = () => {
         />
         <p> NFT description : {`${metaDataDescription}`} </p>
         <p> NFT metaDataPrice : {`${metaDataPrice}`} </p>
+        <p> NFT tokenId : {`${tokenId}`} </p>
         <p> NFT ranking ipfs 에서 받아옴 metaDataRanking : {`${metaDataRanking}`} </p>
         <p> NFT ranking solidity 상태변수 에서 받아옴 latestTokenRanking : {`${latestTokenRanking}`} </p>
         {/* <button onClick={getTokenRanking(tokenId)} >  토큰 랭킹 확인 </button> <p> {{tokenRanking}} </p> */}
 
-        <button  onClick={ () => {registerSaleList(loginUserAccount , tempSaleNFTCA)} } > 이 NFT 판매 하고 싶어요. 판매등록요🙆‍♂️ </button>
-        <button  onClick={ () => {checkIsResgitered(loginUserAccount , tempSaleNFTCA)} } > 판매등록 확인 🚀 </button>
-        {/* <button  onClick={ () => { buyNFT(tokenId) } } > 오캐이, 이거 구매! 👐 </button> */}
+        <button  onClick={ () => {registerSaleList(loginUserAccount , tempSaleNFTCA)} } > 이 NFT 판매 하고 싶어요. 판매등록요🙆‍♂️ </button> <br></br>
+        <button  onClick={ () => {checkIsResgitered(loginUserAccount , tempSaleNFTCA)} } > 판매등록 확인 🚀 </button> <br></br>
+        <button  onClick={ () => {buyNFT(tokenId , 0.01) } } > 오캐이, 이거 구매할 사람 눌러~ 👐 | To 제3의 유저 | </button> <br></br>
+        <button  onClick={ () => {setIsApprovedForSale(tokenId)} } > 최종 판매 할거면 눌러~ 👐 | To 판매자 |  </button> <br></br>
         
-
       </div>
     </>
   );
 
 }
-
-
 
 export default App;
 

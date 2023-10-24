@@ -32,7 +32,7 @@ contract MyNFT is ERC721 {
     // nft 판매에 필요한 요소 리스팅
     struct Listing {
         uint256 tokenId;
-        address seller;
+        address owner;
         uint256 price;
     }
 
@@ -89,12 +89,19 @@ contract MyNFT is ERC721 {
     mapping(uint256 => Listing) public listings;
     /* 
         listings = {
-            tokenId(1) : {
+            tokenId(1) : {listings
                 tokenId : "", 
-                address : "0x123", 
+                owner : "0x123", 
                 price : "123"
         }, ... }
     */
+
+    // 최종 판매 의사 결정 
+    mapping( uint256 tokenId => bool ) public isApprovedForSale;
+        /* {
+                tokenId (1) : true, false, ... 
+            }
+        */
 
 
 
@@ -280,30 +287,56 @@ contract MyNFT is ERC721 {
     // 토큰 정보 리스팅 하기 
     function listingTokenInfo(uint256 tokenId , uint256 price) public { 
 
-    require(ownerOf(tokenId) == msg.sender , "토큰 오너가 아닌데?");
-    require(price > 0 , "가격 설정은 0 이더 or 웨이 이상");
+    require(ownerOf(tokenId) == msg.sender , "Token owner mismatch");
+    require(price > 0 , "Over 0 ether or wei");
 
     listings[tokenId] = Listing({
         tokenId : tokenId, 
-        seller : msg.sender, 
+        owner : msg.sender, 
         price : price
     });
 
     }
 
 
+    // 판매 승인 여부 변경 | isApprovedForSale 변경 | 
+    function setIsApprovedForSale(uint256 tokenId, bool approved) external {
+        require(_ownerOf(tokenId) == msg.sender , "differ owner and sender");
+        isApprovedForSale[tokenId] = approved;
+    }
+
 
     function buyNFT(uint256 tokenId) public payable  {
-        
+
         // listings 중 tokenId 에 해당하는 값 가져오기
-        Listing memory targetNFT = listings[tokenId]
+        Listing memory targetNFT = listings[tokenId];
+            /*  targetNFT : {
+                    tokenId : "", 
+                    owner : "0x123", 
+                    price : "123"
+            } */
 
-        require(msg.value == targetNFT.price , "정확한 Ether 로 구매해야 하는데, 지금 부정확해!");
+        // 정확한 금액을 넣었는지 체크 
+        require(msg.value == targetNFT.price , "price");
+            // require(listing.seller != address(0), "Token not listed"); | 이건 우선 패스
 
-        // 판매자 승인
-        require(condition);
+        // 판매자 승인 받았는지 확인 | 우선 승인 없어도 넘어가게 하기 
+        require(isApprovedForSale[tokenId] == true , "판매자 승인이 아직 안 됨. 확인 필요");
 
+        // 이더를 판매자에게 전송 | 
+        payable(targetNFT.owner).transfer(msg.value);
 
+        // NFT 를 구매자에게 전송
+        _transfer( targetNFT.owner, msg.sender , tokenId )  ;
+            // payable :  Ether를 보내거나 받을 수 있는 주소
+            /* 
+                listings = {
+                    tokenId(1) : {
+                        tokenId : "", 
+                        owner : "0x123", 
+                        price : "123"
+                }, ... }
+            */
 
     }
 
