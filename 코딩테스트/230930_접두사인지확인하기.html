@@ -11,10 +11,20 @@
 
 <script>
 
+
 function solution(my_string, is_prefix) {
-    var answer = 0;
-    return answer;
+
+    const len = is_prefix.length  
+        // 이게 property 라는게 무슨 말 이지? 
+        // 이게 어떻게 돌아가는지 좀 더 딥하게 이해하면서 쓰고 싶어. 
+
+    return my_string.substring(0, len) == is_prefix ? 1 : 0
+        // 여기서 언제 return 을 붙이면 되고, 언제 return 을 붙이면 안 되는 건지도 알고 싶은데 
+
 }
+
+solution("banana" , "ban")
+
 
 </script>
 
