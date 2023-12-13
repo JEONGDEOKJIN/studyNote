@@ -18,12 +18,30 @@ A를 밀어서 B가 될 수 있다면 밀어야 하는 최소 횟수를 return�
 */
 
 function solution(A, B) {
-    var answer = 0;
-    return answer;
-}
+    let len = A.length
+    let num = 0;   
+    
+    if(A === B) return 0
 
-solution("hello", "ohell")
-solution("apple", "elppa")
+    while ( num <= len -1 ) {
+        const arrA = [...A]  
+        const lastLetter = arrA.splice(len-1, 1)  // splice 메소드 📛📛📛
+        arrA.splice(0, 0, lastLetter[0])  // splice 메소드 약함 📛📛
+        const str = arrA.join('')  // join 메소드 약함 📛📛
+        num ++;
+        
+        if(str === B){
+            return num      // return 을 만나면, while 문 자체가 끝나는 줄 알았음 📛📛
+        } 
+        
+        A = str;
+    }
+    
+    return -1
+    
+}
+// solution("hello", "ohell")
+solution("apple", "epppp")
 
 
 
