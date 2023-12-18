@@ -17,15 +17,30 @@
 문자열 my_string이 매개변수로 주어질 때, my_string의 모든 접미사를 사전순으로 정렬한 문자열 배열을 return 하는 solution 함수를 작성해 주세요.
 */
 
-// #include <string>
-// #include <vector>
+// function solution(my_string) {
 
-// using namespace std;
+//     // const arrStr = Array.from(my_string)
+//     // const len = arrStr.length -1 
+//     // const result = []
 
-// vector<string> solution(string my_string) {
-//     vector<string> answer;
-//     return answer;
+//     // for(let i = 0; i <= len; i++) {
+//     //     result.push(arrStr.splice(0,i)).toString
+//     //     console.log(result)
+//     // }
+
 // }
+
+function solution(my_string) {
+
+    const len = my_string.length -1 
+    const result = []
+
+    for(let i = 0; i <= len; i++) {
+        result.push(my_string.substring(i));
+        console.log(result)
+    }
+
+}
 
 solution("banana")
 
