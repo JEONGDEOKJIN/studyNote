@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>tokenizer 예시</h1>
+</body>
+
+<script>
+
+    // tokenizer 예시 코드 :  https://www.youtube.com/watch?v=1aVu1IJSwgQ
+
+    function tokenizer (input) {
+        // 현재 커서가 있는 위치
+        let current = 0;
+
+        let tokens = [];
+
+        while (current < input.length) {
+            // 현재 깜빡이고 있는 커서에서 무엇을 담고 있는가. 
+            let char = input[current];
+
+            if(char === '(' || char === ')'){
+                // '미리 설정된 조건에 만족' 하면, type 과 value 로 구성된, ⭐토큰 객체를 생성⭐.
+                    tokens.push({
+                    type : 'paren', 
+                    value : char
+                })
+
+                // 탐구하는 커서를 하나 옆으로 옮긴다. 
+                current++;
+                // while 문을 끊지 않고 계속 이어간다. 
+                continue;
+
+            }
+            
+            // 공백일 경우
+            let WHITESPACE = /\s/;
+                // [해석] /\s/ == '공백' 을 의미 
+            if(WHITESPACE.test(char)) {      
+                // [해석] WHITESPACE.test(char) : 'input 중 현재 커서가 있는 글자(char)' 가 WHITESPACE 인지 여부
+                current++;
+                continue;
+            }
+                // 공백일 경우, 추가할 토큰 객체는 없으므로 -> 바로 current 올리고, continue 
+
+
+            let NUMBERS = /[0-9]/ ;
+
+            // 현재 커서 안에 있는 글자(char)가, 0-9 사이(NUMBERS)에 있는 경우
+            if(NUMBERS.test(char)){
+                let value = '';
+
+                // 현재 커서 글자(char)가 0~9 사이에 있는 경우(NUMBERS) 라면, 계속해서 value 에 더한다.
+                while(NUMBERS.test(char)){
+                    // 현재 커서 글자를 value 에 추가
+                    value += char;
+
+                    // 한칸 옆으로 이동 해서 char 를 다시 테스트 
+                    char = input[++current]
+                }
+
+                // 더해진 value 를 토큰 객체로 등록한다. 
+                tokens.push({ type: 'number' , value })
+                
+                continue ;
+            }
+
+            if (char == '"') {
+                let value = '';
+                // 작은 따옴표를 만나면, 토큰에 저장하지 않고, 바로 그 다음으로 넘어간다. 
+                char = input[++current];
+
+                while (char!= '"') {
+                    // 현재 커서가 찍혀 있는(들고있는것)을 value 에 더한다. 
+                    value += char;
+
+                    // 하나 더 해서 그 다음 커서로 이동 | 이것으로 인해, 마지막 세미콜론은 무시됨
+                    char = input[++current];
+
+                    // 현재의 value 로 토큰 객체로 등록
+                    tokens.push({type : 'string' , value})
+                    continue;
+
+                }
+            }
+
+            // ⭐문자열도 숫자랑 마찬가지로, 우선, 넣어준다. | 여기서 함수로 나누거나 하지는 않음.  
+            let LETTERS = /[a-z]/i ;
+            if(LETTERS.test(char)){
+                let value = '';
+                
+                // [포인트] 여기에서, '' 이 세미콜론 없는 문장을 분석하기 때문에, 여기에서는 자동적으로, 함수가 나올 수 밖에 없다고 생각.
+
+                while(LETTERS.test(char)){
+                    value += char;
+                    char = input[++current];
+                }
+                tokens.push( {type : 'name' , value} );
+                continue;
+            }
+            
+            
+            // 예외처리
+            throw new TypeError('Character not recognized : ' + char);
+        }
+
+        // 토큰 객체 리턴 
+        return tokens
+
+    }
+
+    console.log(tokenizer('add 2 (subtract 4 2))'))
+
+
+</script>
+
+</html>
