@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+
+<script>
+
+	function foo( ) {
+		console.log("global function foo")
+	} 
+
+	function bar( ) {
+		function foo ( ) {
+			console.log("local function foo")
+		}
+		foo( )  // foo 함수 값을 가져와야 함 -> 현재 참조를 요청한 bar 스코프 안에 있음 -> so, local fucntion foo 출력
+	}
+
+	bar( )
+
+</script>
+
+
+</html>

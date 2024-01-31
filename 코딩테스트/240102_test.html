@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+
+<script>
+
+var x = 1; 
+
+function foo() {
+    var x = 10;
+    bar()   // bar 가 실행된 지금 이 상황에서, 이 스코프 안에서 x 가 뭐야?! 
+}
+
+function bar() {
+    console.log(x)
+}
+
+foo()   // 10
+bar()   // 1 
+
+</script>
+
+
+</html>

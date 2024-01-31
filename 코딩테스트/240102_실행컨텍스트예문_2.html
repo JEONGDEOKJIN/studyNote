@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+
+<script>
+
+// 전역 변수 선언
+var x = 1;
+const y = 2; 
+
+// 함수 정의 
+function foo(a) {
+	// 지역 변수 선언
+	var x = 3;
+	const y = 4;
+
+	function bar (b) {
+		const z = 5;
+		console.log(a + b + x + y + z);
+	}
+	bar(10)
+}
+
+// 함수 호출 
+foo(20);  // 42
+
+</script>
+
+
+</html>

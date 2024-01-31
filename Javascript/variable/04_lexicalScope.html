@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+<script>
+
+    var x = 1; 
+
+    function foo() {
+        var x = 10;
+        bar()
+    }
+
+    function bar() {
+        console.log(x)
+    }
+
+    foo()  // 1
+    bar()  // 1
+
+    /*
+        1. 전역 평가 
+         GLE : { 
+            record : { 
+                x : undefiend, 
+                foo : { 함수 객체 }, 
+                bar : { 함수 객체 }
+            }
+        }
+
+        2. 전역 실행 
+        3. foo () 실행 -> 제어권이 foo 함수로 이동 (❓ 제어권이 foo 함수로 이동 맞나?) -> function 키워드 만났으므로, 별도의 실행 컨텍스트 생성 -> so, 별도의 렉시컬 환경 생성 -> 렉시컬 환경 채우기 위한 평가 시작 
+        4.  foo 함수 내부 평가 
+                foo.l.e = { 
+                    x : undefined
+                }
+        5. bar 함수 실행 -> bar 식별자 검색 > foo lexical environment 안에는 없음 -> 상위 스코프 이동 -> 밖에 있는, bar 정의로 이동 -> bar 실행 (실행 위치는 foo 안에 있긴 함⭐⭐⭐)
+                5.1 x 식별자 검색 ⭐⭐⭐ (실행 위치에서 참고? vs 정의 위치에서 참고? 함수의 상위 스코프는, 함수의 정의 부분이 기억하고 있으니가, 정의에서 참고) : 1) bar function 안에 없음 2) 상위 스코프 이동 -> 전역 스코프에 있음 -> 1 | ⭐⭐⭐ 
+
+        6. 포인트는 
+            1) bar 함수 실행할 때, x 식별자 검색시, '실행 기준으로 상위 스코프' 를 볼 것 이냐, '정의 기준 으로 상위 스코프' 를 볼 것 이냐 이고 
+            2) 이 문제는 '정적' vs '동적' 의 문제임 
+            3) 함수의 상위 스코프는 '평가 시점' 에 '정적' 으로 결정 됨 
+            4) 이러한 비슷한 문제 상황에서, '동적' 으로 결정되는게 있지 않았나? 교수님 예시 중에❓❓❓  
+    */
+
+</script>
+</html>

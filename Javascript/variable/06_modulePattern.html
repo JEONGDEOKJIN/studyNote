@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+<script>
+
+// [즉시 실행함수] 즉각 실행 : 그냥 실행 하려면, () 까지 붙여줘야 함 
+    ( function() {
+        console.log("첫번째 경우")
+    } ) ()
+
+// [즉시 실행함수] 즉각 실행 후 > 결과를 Counter 에 할당 시도 but 실패
+    var Counter = function() {
+        console.log("두번째 경우")
+    }() 
+    console.log(Counter) // undefined
+    
+// [즉시 실행함수] 즉각 실행 후 > 결과를 Counter 에 할당 시도 but 실패
+    var Counter = function() {
+        return console.log("두번째 경우")
+    }() 
+    console.log(Counter) // undefined
+
+// [즉시 실행함수] 즉각 실행 후 > 결과를 Counter 에 할당
+    var Counter = function() {
+        return "두번째 경우"
+    }() 
+    console.log(Counter) // "두번째 경우"
+
+
+// [즉시 실행함수 | 모던 자바스크립트 p206] 즉시 실행함수를 실행하고 -> 괄호로 묶고 -> Counter 변수 안에 집어 넣은 것! 
+    var Counter = ( function() {
+        var num = 0;
+
+        return {
+            // increase 즉시 실행 함수를 return
+            increase() {
+                return ++num
+            }, 
+
+            // decrease 즉시 실행 함수를 return
+            decrease() {
+                return --num
+            }
+        }
+    }())
+
+    // 실행 시켜보기 
+    console.log(Counter.num , "Counter.num")
+
+    console.log(Counter.increase() , "Counter.increase")
+    console.log(Counter.decrease() , "Counter.decrease")
+    console.log(Counter.increase() , "Counter.increase")
+    console.log(Counter.increase() , "Counter.increase")
+    console.log(Counter.increase() , "Counter.increase")
+
+    /* 궁금증 
+        1. 왜 갑자기, Counter.increase() 처럼, 객체 프로퍼티가 등장하게 된거야? 왜 이걸 쓸 수 있게 된거야? 
+        2. Counter.num 은 그러면 왜 안 되는 거야? 
+        3. Counter 안에서, 어떻게 num 변수의 값을 업데이트 되는거야? 
+        4. 왜 이게, 객체 상태를 나타내는 프로퍼티랑, 프로퍼티를 참조하는 동작을 하나로 묶는거야? 
+        5. 이게 왜, 정보 은닉이야? 
+        6. 이걸 대체 어디에 써? 
+
+    */
+
+
+</script>
+</html>
