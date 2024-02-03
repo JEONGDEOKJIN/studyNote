@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+            .grid-container {
+                padding: 10px;
+                background-color: lightgray;
+                display: grid;
+                gap: 1rem;
+
+                grid-template-columns: 1fr 3fr 1fr;
+
+                grid-template-areas: 
+                
+                '......     header  header'
+                    /* ..... 으로 하면, 해당 영역이 빈칸이 됨 | ..... 대신 none 혹은 . 하나로도 가능 ⭐⭐ */
+                'sidebar-a  main    sidebar-b'
+                'footer     footer  footer'
+
+            }
+
+            .grid-item {
+                padding: 10px;
+                border: 3px solid rgb(50, 50, 40);
+                color: white;
+                background: #ff6937;
+            }
+
+            /* 각 클래스가, grid-area 에서 이거다! 라고 연결(매핑) 시켜주기
+                각 클래스에 연결시켜준 grid-area 의 value 로 영역을 지정해주면 됨 ⭐⭐⭐ */
+            .header{grid-area : header;}
+            .sidebar-a {grid-area: sidebar-a;}
+            .sidebar-b {grid-area: sidebar-b;}
+            .main {grid-area: main;}
+            .footer {grid-area: footer;}
+
+        </style>
+    </head>
+
+    <body>
+
+        <div class="grid-container">
+            <div class="header grid-item"> Header </div>
+            <div class="sidebar-a grid-item"> Sidebar A </div>
+            <div class="sidebar-b grid-item"> Sidebar B </div>
+            <div class="main grid-item"> 
+                [Main] Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus enim, expedita placeat rem officiis accusamus molestiae nihil dolorum. Ipsam distinctio laudantium consequatur quae aspernatur nostrum impedit maiores magni architecto labore? 
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus enim, expedita placeat rem officiis accusamus molestiae nihil dolorum. Ipsam distinctio laudantium consequatur quae aspernatur nostrum impedit maiores magni architecto labore? 
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus enim, expedita placeat rem officiis accusamus molestiae nihil dolorum. Ipsam distinctio laudantium consequatur quae aspernatur nostrum impedit maiores magni architecto labore? 
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus enim, expedita placeat rem officiis accusamus molestiae nihil dolorum. Ipsam distinctio laudantium consequatur quae aspernatur nostrum impedit maiores magni architecto labore? 
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus enim, expedita placeat rem officiis accusamus molestiae nihil dolorum. Ipsam distinctio laudantium consequatur quae aspernatur nostrum impedit maiores magni architecto labore? 
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus enim, expedita placeat rem officiis accusamus molestiae nihil dolorum. Ipsam distinctio laudantium consequatur quae aspernatur nostrum impedit maiores magni architecto labore? 
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus enim, expedita placeat rem officiis accusamus molestiae nihil dolorum. Ipsam distinctio laudantium consequatur quae aspernatur nostrum impedit maiores magni architecto labore? 
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus enim, expedita placeat rem officiis accusamus molestiae nihil dolorum. Ipsam distinctio laudantium consequatur quae aspernatur nostrum impedit maiores magni architecto labore? 
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus enim, expedita placeat rem officiis accusamus molestiae nihil dolorum. Ipsam distinctio laudantium consequatur quae aspernatur nostrum impedit maiores magni architecto labore? 
+            </div>
+            
+                <div class="footer grid-item"> Footer </div>
+        </div>
+
+
+
+
+
+    </body>
+
+</html>

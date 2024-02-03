@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+
+        .grid-container {
+            padding: 10px;
+            background-color: lightgray;
+            
+            display: grid;    
+                /* grid-template-columns: repeat(auto-fill, minmax(20%, auto)); */
+                /* [해석]
+                    auto-fill : 개수는 자동으로 채워줘 (아마도, 전체를 20% 로 쪼개서 해달라고 했으니, 5개가 생길 것)
+                    minmax(20%, auto) : 1) 컬럼의 최소너비는 전체 너비의 20% 로 해줘 2) 최대는 자동으로  
+                    
+                    [해결하는 문제]
+                    브라우저의 너비에 따라서 -> 컬럼의 개수는 유지 하면서, 컬럼의 너비를 대응하게 하고 싶을 때 사용 가능                
+                */
+
+            grid-template-columns: repeat(auto-fill, minmax(100px, auto));
+            /* grid-template-columns: repeat(auto-fill, minmax(20%, auto)); */
+            
+            /* grid-template-columns: repeat(auto-fit, minmax(100px, auto)); */
+                /* [해결하고 싶은 문제] 
+                    브라우저 너비가 이동하면, 알아서, 동일한 크기의 column 이, 개수가 줄어들었으면
+
+                    [브라우저 너비 변화 대응]
+                        1. 좁아지는 경우
+                            - 각 column 은, 최소한 200px 의 너비를 확보한다. 
+                            - 남은 공간을 max 계산에 쓴다. -> [⭐contents 대응] 각 content 의 크기별로, width 를 주려고 하는데, 200px 로 남은 나머지를 쓰는 느낌이라, 매우 커지지는 않는 것 같음 
+                            - 변화되는 것은, column 의 개수가 줄어든다. 
+                        2. 넓어지는 경우 
+                            - 주어진 너비에서, 최소한의 200px 을 최대만 많이 확보 
+                            - 그 남은 공간을 contents 의 auto 계산으로 쓴다. (이때, contents 대응⭐ 이 된다.)
+                            - 변화되는 것은, column 의 개수가 늘어난다. 
+                */
+
+            grid-template-rows: repeat(3, minmax(100px, auto))
+            /* [콘텐츠 대응] 
+                1. 글자(content)가, container 보다 작아지는 경우
+                    - content 는 글자, container 는 content 의 부모 요소가 되는 div 라고 가정 
+                    - 설령, 글자 수가 너무 작아도, container 가 따라서, 너무 작아지지 않게! 하고 싶으면 -> minmax 사용 가능 
+                    - 글자수가 작아지면, 작아지는 대로, container 가 따라서 작아지게 하려면 -> auto 로 잡아주면 돼
+                        grid-template-rows: repeat(3, minmax(auto, auto))   
+                
+                2. 글자(content)가, container 보다 커 지는 경우 
+                    - container에 맞추게 하기 
+                        - 점점점 처리 
+                    - content 에 맞춰서 container 가 변하기 
+                        - auto : grid-template-rows: repeat(3, minmax(100px, auto))
+            */
+
+            }
+    
+        .grid-item { 
+            padding: 10px;
+            border: 3px solid rgb(50, 50, 40);
+            color: white;
+            background: #ff6937;
+        }
+
+    </style>
+</head>
+
+<body>
+
+    <div class="grid-container" >
+        <div class="grid-item" > Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat, earum. </div>
+        <div class="grid-item" > B </div>
+        <div class="grid-item" > C </div>
+        <div class="grid-item" > 
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Distinctio dicta, quos molestias maiores natus voluptas quas sed a in voluptate porro autem nisi asperiores eum! Enim laudantium quasi commodi sunt. 
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Distinctio dicta, quos molestias maiores natus voluptas quas sed a in voluptate porro autem nisi asperiores eum! Enim laudantium quasi commodi sunt. 
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Distinctio dicta, quos molestias maiores natus voluptas quas sed a in voluptate porro autem nisi asperiores eum! Enim laudantium quasi commodi sunt. 
+        </div>
+        <div class="grid-item" > E </div>
+        <div class="grid-item" > F </div>
+        <div class="grid-item" > G </div>
+        <div class="grid-item" > H </div>
+        <div class="grid-item" > H </div>
+        <div class="grid-item" > H </div>
+        <div class="grid-item" > H </div>
+        <div class="grid-item" > H </div>
+        <div class="grid-item" > H </div>
+        <div class="grid-item" > H </div>
+        <div class="grid-item" > H </div>
+        <div class="grid-item" > H </div>
+        <div class="grid-item" > H </div>
+        <div class="grid-item" > H </div>
+        <div class="grid-item" > H </div>
+        <div class="grid-item" > H </div>
+        <div class="grid-item" > H </div>
+        <div class="grid-item" > I </div>
+    </div>
+
+
+
+
+
+</body>
+</html>

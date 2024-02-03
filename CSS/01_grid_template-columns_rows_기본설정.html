@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+
+        .grid-container {
+            padding: 10px;
+            background-color: lightgray;
+            
+            display: grid;
+
+            /* columns */
+                /* grid-template-columns: 100px 300px 200px;    */
+                    /*  컬럼의 너비를 100px, 300px, 200px 으로 정함*/
+
+                /* grid-template-columns: 1fr 1fr 1fr; */
+                    /* 3개의 컬럼이, 균등한 비율로 가져감 */
+                    
+                /* grid-template-columns: 1fr 2fr 1fr; */
+                    /* 3개의 컬럼이, 주어진 width를, 1:2:1 의 비율로 가져감 */
+                
+                /* grid-template-columns: 1fr 500px 1fr; */
+                    /* 3개의 컬럼중, 가운데는 500px 로 고정, 나머지는 남은 너비를 1:1 로 나눔 
+                        남은 너비를 나눠먹기 때문에 -> '너비 조정에 대응' 되는 느낌이 남! 
+                    */
+
+                /* grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr; */
+                    /* 주어진 width를, 6개의 컬럼이, 1:1:1:1:1:1 비율로, 나눠먹기 
+                        [문제] 2번째 row 에서 끝까지 안 채워짐. 📛📛📛 
+                    */
+
+                /* grid-template-columns: repeat(6, 1fr); */
+                    /* grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr; 와 동일 */
+                
+                /* grid-template-columns: repeat(3, 1fr 2fr 1fr); */
+                    /* 3개의 컬럼이 1:2:1 로 나뉘어짐 | 3개의 컬럼은 계쏙 반복이 됨 📛📛📛 */
+                    /* 이건 생각보다 조금 다르게 나올 수 있음 📛📛📛 */
+                
+                grid-template-columns: repeat(3, 1fr);
+
+            /* rows */
+                /* grid-template-rows: 200px 200px; */
+                    /* grid-template-rows: 200px 200px auto; 랑 동일 📛📛📛 ⭐⭐⭐ | auto 의 쓰임 */
+                    /* 즉, auto 는 콘텐츠가 가진 크기 만큼만 커짐. 현재는 알파벳 크기 만큼만 커지게 됨 📛📛📛  */
+
+                /* grid-template-rows: repeat(3, 1fr 2fr 1fr); */
+                /* grid-template-rows: 1fr 2fr 1fr; */
+                    /* container 의 heigth 가 정해져 있으면 -> 해당 height 를 3개의 row 가 1:2:1 로 나눠가짐 */
+                
+                grid-template-rows: 1fr 2fr 1fr;
+
+                height: 80vh;
+
+            /* 포인트 
+                1. 부모 container 의 너비(고정 or 가변) 을 '고정, 가변' 중 어떻게 나누어 가질 것 인가! 에 대한 결정 ⭐⭐⭐ 
+
+            */
+            }
+    
+        .grid-item { 
+            padding: 10px;
+            border: 3px solid rgb(50, 50, 40);
+            color: white;
+            background: #ff6937;
+        }
+
+    </style>
+</head>
+
+<body>
+
+    <div class="grid-container" >
+        <div class="grid-item" > A </div>
+        <div class="grid-item" > B </div>
+        <div class="grid-item" > C </div>
+        <div class="grid-item" > D </div>
+        <div class="grid-item" > E </div>
+        <div class="grid-item" > F </div>
+        <div class="grid-item" > G </div>
+        <div class="grid-item" > H </div>
+        <div class="grid-item" > I </div>
+
+    </div>
+
+
+
+
+
+</body>
+</html>

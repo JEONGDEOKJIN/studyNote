@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+        .grid-container {
+            padding: 10px;
+            background-color: lightgray;
+
+            display: grid;
+
+            grid-template-columns: repeat(auto-fit, minmax(210px, auto));
+
+            /* item에 반응해서, 있는 개수대로 맞춰서 셋팅해주기 */
+            grid-auto-rows: minmax(100px, auto);
+        }
+
+        /* 각 grid-item 을 셋팅하고, 남은애들은, 자동적으로, 남은 공간을 배분 */
+        /* 일반형으로 표현 */
+        .grid-item:nth-child(2) {
+            grid-column-start: 2;
+            grid-column-end: 3;
+            grid-row-start: 1;
+            grid-row-end: 3;
+        }
+
+        /* 축약형으로 표현 */
+        .grid-item:nth-child(2) {
+            grid-column: 3/5;
+            grid-row: 1/5;
+        }
+
+        /* 이때, firefox 개발자 도구를 켜서, 정확하게, 라인을 지정해줄 수 있음.  */
+
+        /* span 사용 */
+        .grid-item:nth-child(3) {
+            grid-column: 3/ span 2;
+            /* grid-column: 3/5; 이거랑 동일! 2개까지 늘려주세요! 라는 의미 */
+
+            grid-row: 1/5;
+        }
+
+        /*  */
+
+        .grid-item {
+            padding: 10px;
+            border: 3px solid rgb(50, 50, 40);
+            color: white;
+            background: #ff6937;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="grid-container">
+        <div class="grid-item"> Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat, earum. </div>
+        <div class="grid-item"> B </div>
+        <div class="grid-item"> C </div>
+        <div class="grid-item">
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Distinctio dicta, quos molestias maiores natus
+            voluptas quas sed a in voluptate porro autem nisi asperiores eum! Enim laudantium quasi commodi sunt.
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Distinctio dicta, quos molestias maiores natus
+            voluptas quas sed a in voluptate porro autem nisi asperiores eum! Enim laudantium quasi commodi sunt.
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Distinctio dicta, quos molestias maiores natus
+            voluptas quas sed a in voluptate porro autem nisi asperiores eum! Enim laudantium quasi commodi sunt.
+        </div>
+        <div class="grid-item"> E </div>
+        <div class="grid-item"> E </div>
+        <div class="grid-item"> E </div>
+        <div class="grid-item"> E </div>
+        <div class="grid-item"> E </div>
+        <div class="grid-item"> E </div>
+        <div class="grid-item"> E </div>
+        <div class="grid-item"> E </div>
+        <div class="grid-item"> E </div>
+        <div class="grid-item"> F </div>
+        <div class="grid-item"> G </div>
+        <div class="grid-item"> H </div>
+        <div class="grid-item"> I </div>
+        <div class="grid-item"> I </div>
+    </div>
+
+
+
+
+
+</body>
+
+</html>

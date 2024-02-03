@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+</body>
+
+<script>
+
+    // obj.value 안에 있는, 중요 데이터에 접근하고 싶음. 그런데, function 일반함수로 this 를 호출하면 접근하지 못 함. 
+    const obj = {
+        value: '정말 정말 중요한 데이터',
+        foo() {
+            console.log("foo 함수에서 this 에 접근하면, 중요 데이터가 뽑혀나옴 ", this)     /* {"value": "정말 정말 중요한 데이터"} */
+
+            setTimeout(function () {
+                console.log("setTimout 에서 function 일반함수로 this 를 호출하면, 중요 데이터가 안 뽑힘", this)  // window
+            }, 10)
+        }
+    }
+    obj.foo()
+
+
+    // function 으로 호출해서, window 가 bind 된 상황에서 -> 접근하고 싶은 객체를 that 에 저장해뒀다가, 바인딩해주기  
+    const obj2 = {
+        value: '정말 정말 중요한 데이터',
+        foo() {
+            console.log("foo 함수에서 this 에 접근하면, 중요 데이터가 뽑혀나옴 ", this)     /* {"value": "정말 정말 중요한 데이터"} */
+
+            const that = this // 지금 시점의 this 는 foo() 임. 이걸 that 에 받아둠 
+
+            setTimeout(function () {
+                console.log("that 이 갖고 있는 값을 이용해서, 원하는 중요 데이터에 접근!⭐⭐", that.value)   // "정말 정말 중요한 데이터" 찍혀 나옴 
+            }, 10)
+        }
+    }
+    obj2.foo()
+
+
+    // 화살표 함수는 '자신을 포함하고 있는 외부 함수의 this 를 상속' 하는 특성을 활용 (https://chat.openai.com/share/3e4c71fb-822c-4527-9cd9-6b5aefc03460)
+    const obj3 = {
+        value: '정말 정말 중요한 데이터',
+        foo() {
+            console.log("foo 함수에서 this 에 접근하면, 중요 데이터가 뽑혀나옴 ", this)     /* {"value": "정말 정말 중요한 데이터"} */
+
+            const that = this // 지금 시점의 this 는 foo() 임. 이걸 that 에 받아둠 
+
+            setTimeout(() => {
+                console.log("that 이 갖고 있는 값을 이용해서, 원하는 중요 데이터에 접근!💪💪", this)   // "정말 정말 중요한 데이터" 찍혀 나옴 
+            }, 10)
+        }
+    }
+    obj3.foo()
+
+
+    // function 으로 호출해서, window 가 bind 된 상황에서 -> bind 를 사용해서, 내가 원하는 this 를 넣어줌 
+    const obj5 = {
+        value: '정말 정말 중요한 데이터',
+        foo() {
+            console.log("foo 함수에서 this에 접근하면, 중요 데이터가 뽑혀나옴", this); // {"value": "정말 정말 중요한 데이터"}
+
+            setTimeout(function() {
+                console.log("bind를 사용하여 this 컨텍스트를 유지", this.value); // "정말 정말 중요한 데이터" 찍혀 나옴
+            }.bind(this), 10); // bind를 사용하여 현재 this 컨텍스트를 setTimeout 콜백에 바인딩 ⭐⭐⭐ 그냥, 문법상 그렇다는 거지!
+        }
+    };
+    obj5.foo();
+
+
+    // call 예시 
+
+
+
+
+
+</script>
+
+</html>

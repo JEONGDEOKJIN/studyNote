@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+</body>
+
+<script>
+
+    /* 
+        [문제 상황] 지름을 구하고 싶음
+        [생각해볼 것] 
+            - 객체 처럼 적지 않고 다른 방법들은 없어?
+                - 저장하고, 저장한걸 가져와서, 계산하고
+            - 그래서, 객체 처럼 적으면, 뭐가 좋아? 
+                - 음... 내가 아직 이게 와닿지가 않네 
+    */
+
+    // 객체 패턴으로 구현
+    const circle = {
+        radius: 5,
+        getDiameter() {
+            return 2 * circle.radius
+        }
+    }
+    console.log("객체 구현", circle.getDiameter())
+
+
+    // 함수 패턴으로 구현 
+    function getDiameter() {
+        const radius = 5;
+        return radius * 2
+    }
+    console.log("함수 구현", getDiameter())
+
+
+
+    /* [문제상황2] 쇼핑 웹사이트 구현
+        [구현 목록]
+            - 장바구니에 담으면, 목록으로 가지고 있기 
+            - 총 금액 계산하기
+            - 상품목록 & 금액 계산하기
+    */
+
+    // 1. 객체지향으로 짜보기
+
+    class Product {
+        constructor(name, price) {
+            this.name = name;
+            this.price = price
+        }
+    }
+
+    class ShoppingCart {
+        constructor() {
+            // 쇼핑카트 객체이 products 키 : 클릭한 상품을 담을 것 임. 
+            this.products = []
+
+        }
+
+        // 상품 추가 함수 
+        addProduct(product) {
+            this.products.push(product);
+        }
+
+        // 총 금액 계산 
+        calculateTotal() {
+            return this.products.reduce((total, product) => total + product.price, 0);
+        }
+
+        // 내용 출력 
+        displayCartContents() {
+            console.log("쇼핑 카트에 담긴 상품")
+            this.products.forEach(product => {
+                console.log(`${product.name} : ${product.price}`)
+            })
+        }
+
+    }
+
+    // 상품 생성 
+    let apple = new Product("Apple", 1)
+    let banana = new Product("Banana", 2)
+    let orange = new Product("Orange", 3)
+
+    // 쇼핑 카트 생성
+    let shoppingCart = new ShoppingCart();
+
+    // 쇼핑카트에 상품 추가 
+    shoppingCart.addProduct(apple)
+    shoppingCart.addProduct(banana)
+
+    // 카트 내용 및 총 금액 출력 
+    shoppingCart.displayCartContents()
+    console.log(`총 금액 : ${shoppingCart.calculateTotal()}`)
+
+    /* 느낀점 
+        - 클래스 안에 모든 로직을 구현해놓아야 한다. 즉흥적으로 추가한다는 느낌보다는. 
+        - 클래스로 만들어두면, 가져다 쓴다는 느낌.
+    */
+
+
+    // 2. 함수형으로 짜보기 
+    function createProduct(name, price){
+        return {
+            name : name, 
+            price : price
+        }
+    }
+        // 제품에 대한 정보를 '객체' 로 만들어야 한다는 점에서는 동일할 수 있음. 그리고 여기서는 객체 리터럴을 사용 
+        // 다만, 함수를 사용해서, 객체 리터럴의 반복 사용을 줄임 
+
+
+    function addProductToCart(cart, product){
+        cart.push(product)
+        return cart
+    }
+        // cart 의 경우, 전역 변수 사용이 불가피 한건가 😥😥😥😥😥 
+
+    
+    function calculateCartTotal_2(cart_2){
+        return cart_2.reduce( (total, product) => total + product.price, 0 )
+    }
+
+
+    function displayCartContents_2(cart){
+        console.log("2번째 함수 카트에 담겨진 상품")
+
+        cart.forEach(product => {
+            console.log(`${product.name} : ${product.price}`)
+        })
+    }
+
+    let cart_2 = []
+    let juice = createProduct("juice" , 1);
+    let ice = createProduct("ice" , 2)
+    let water = createProduct("water" , 3)
+
+    // 여기에서 누적으로 이동해야 한다는 점이 좀 별로
+    cart_2 = addProductToCart(cart_2, juice)
+    cart_2 = addProductToCart(cart_2, ice)
+    cart_2 = addProductToCart(cart_2, water)
+
+    displayCartContents_2(cart_2)
+    console.log(`${calculateCartTotal_2(cart_2)}`)
+
+    /* 느낀점 
+        - 어차피, 함수로 미리 정의해서 가져다 쓰는 느낌이랑, 클래스에서 미리 정의해서, 가져다 쓰는 느낌은 비슷하네
+        - 다만, '클래스에서 미리 정의' 하려고 할 때, 프로퍼티를 가져와야 할 텐데, 그걸 가져올 때는 this 가 불가피 할 수도 있겠네. 
+        - 구현 로직은 비슷하나, 포인트가 살짝 다른 
+    */
+
+
+</script>
+
+</html>

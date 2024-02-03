@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .card-item {
+            margin-bottom: 2rem;
+        }
+
+        .card-image {
+
+            /* height: 300px; */
+
+            /* 가로 세로 비율이 유지되는 박스 만들기⭐ : 이걸로 인해, 가로 세로 비율이 유지?  */
+            padding-bottom: 56.25%;
+
+            background-color: lightgray;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="page">
+
+        <!-- header -->
+        <header class="header">
+
+            <h1 class="website-title">DJ코딩</h1>
+
+            <form class="search-form">
+                <input type="search">
+                <input type="submit" value="찾기">
+            </form>
+
+        </header>
+
+        <!-- menu -->
+        <ul class="menu">
+            <li class="menu-list">
+                <a href="#" class="menu-link">Home</a>
+            </li>
+            <li class="menu-list">
+                <a href="#" class="menu-link">About</a>
+            </li>
+            <li class="menu-list">
+                <a href="#" class="menu-link">Product</a>
+            </li>
+            <li class="menu-list">
+                <a href="#" class="menu-link">Contact</a>
+            </li>
+
+        </ul>
+
+        <!-- 기본 콘텐츠 영역 | main | 여기에서는 primary -->
+        <section class="main">
+
+            <ul class="card-list">
+
+                <li class="card-item">
+                    <!-- background 속성이 있는 태그의 width, height 가 있어야 -> 그림이 나옴  -->
+                    <figure class="card-image" style="background-image: url(./images/gradient_large.jpg)">
+
+                    </figure>
+                    <div class="card-desc">
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Suscipit, deleniti.
+                    </div>
+                </li>
+                <li class="card-item">
+                    <!-- background 속성이 있는 태그의 width, height 가 있어야 -> 그림이 나옴  -->
+                    <figure class="card-image" style="background-image: url(./images/gradient_large.jpg)">
+                        <!-- <img src="./images/gradient_large.jpg" alt=""> -->
+                    </figure>
+                    <div class="card-desc">
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Suscipit, deleniti.
+                    </div>
+                </li>
+
+            </ul>
+
+        </section>
+
+        <!-- sidebar-L | 여기에서는 secondary 를 사용 | 
+            ⭐ 포인트 : secondary 클래스 이름을 공통으로 사용해서, 왼쪽, 오른쪽 사이드바를 공통으로 조절한다.⭐⭐
+        -->
+        <aside class="sidebar sidebar-L ">
+
+        </aside>
+
+        <!-- sidebar-R | 여기에서는 secondary 를 사용 | -->
+        <aside class="sidebar sidebar-L ">
+
+        </aside>
+
+        <!-- footer -->
+        <footer class="footer">
+            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Vel cum quam corrupti voluptatem iste ab dolores
+            voluptate doloremque molestiae nisi.
+        </footer>
+
+
+
+    </div>
+
+</body>
+
+</html>
