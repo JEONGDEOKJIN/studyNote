@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>CSS Flex</title>
+    <link rel="stylesheet" href="./default.css">
+    <style>
+        html {
+            background-color: gray;
+        }
+
+        .flex-container {
+            display: flex;
+            border: 10px solid blue;
+            /* width: 500px;/ */
+            /* margin : auto/ */
+        }
+
+        .flex-item {
+            width: 150px;
+        }
+
+        /* ✅ 제일 끝의 요소만, 오른쪽으로 붙이기  */
+        .flex-item:last-child {
+            /* auto 를 사용하면 -> 남은 공간 전부를 먹게 된다. ⭐⭐ */
+            margin-left: auto;
+
+        }
+    </style>
+</head>
+
+<body>
+    <div class="flex-container">
+        <div class="flex-item">
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.
+        </div>
+        <div class="flex-item">BB</div>
+        <div class="flex-item">CCCCCC</div>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>CSS Flex</title>
+    <link rel="stylesheet" href="./default.css">
+    <style>
+        html {
+            background-color: gray;
+        }
+
+        .flex-container {
+            display: flex;
+            border: 10px solid blue;
+        }
+
+        .flex-item:nth-child(1) {
+            /* 컬럼 버티게 하기 */
+                /* flex-shrink = 1 이면, 브라우저 너비가 변경되어 -> 짜그라드는 힘이 가해지면 -> 빠그라든다. (flex-basis 보다 줄어들 수 있게 한다.) */
+                /* flex-shrink = 0 이면, 짜그라 드는 힘이 가해져도(flex basis 보다 줄어들게 해도), '버틴다.'  */
+                flex-shrink: 0; 
+            
+            /* 고정 컬럼 150px 주기 
+                만약, 'flex-shrink=0' 이 없으면, 줄어드는 경우도 있게 된다. 
+                따라서, 안전한 고정폭을 만들려면, 브라우저 너비를 줄였을 때, 고정되어 있는 flex-shrink:0 설정 필요함 
+            */
+            width: 150px;
+        }
+        
+        
+        .flex-item:nth-child(2) {
+            /* 이게 있으면 -> 남아있는 여백을, 두 번째 아이템이 모두 소비!  */
+            flex-grow: 1;
+        }
+        
+        .flex-item:nth-child(3) {
+            /* 컬럼 버티게 하기 */
+                /* flex-shrink = 1 이면, 브라우저 너비가 변경되어 -> 짜그라드는 힘이 가해지면 -> 빠그라든다. (flex-basis 보다 줄어들 수 있게 한다.) */
+                /* flex-shrink = 0 이면, 짜그라 드는 힘이 가해져도(flex basis 보다 줄어들게 해도), '버틴다.'  */
+            flex-shrink: 0;
+
+            /* 고정 컬럼 150px 주기 
+                만약, 'flex-shrink=0' 이 없으면, 줄어드는 경우도 있게 된다. 
+                따라서, 안전한 고정폭을 만들려면, 브라우저 너비를 줄였을 때, 고정되어 있는 flex-shrink:0 설정 필요함 
+            */
+            width: 200px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="flex-container">
+        <div class="flex-item">
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.
+        </div>
+        <div class="flex-item">BB</div>
+        <div class="flex-item">CCCCCC</div>
+    </div>
+</body>
+
+</html>

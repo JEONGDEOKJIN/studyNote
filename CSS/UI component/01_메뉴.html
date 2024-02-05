@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./default.css">
+    <title>Document</title>
+
+    <style>
+        .menu {
+            /* [보완점] 메뉴 전체를 옆으로 늘려줄 때, 나는 부모 container 의 크기를 늘려야 겠다고 생각함 📛 */
+            display: flex;
+        }
+
+        .menu-item {
+            /* [보완점] 메뉴 전체를 옆으로 늘려줄 때, 나는 부모 container 의 크기를 늘려야 겠다고 생각함 📛 
+                그런데, 각 flex-item 의 width 를 늘려주면 되었던 것 임
+            */
+            width: 25%;
+            background-color: gold;
+
+            /* [애니메이션이 일어나는 원리] 
+                1. 'menu-item 요소' 중 '상태가 변화' 되는 부분이 있으면, '0.35초 동안 상태 변화' 를 한다. 라는 의미
+                2. 애니메이션 대상은 1) hover 2) action 3) focus 등으로 다양할 수 있음. 
+            */
+            transition: 0.35s;
+        }
+
+        .menu-item:hover {
+            /* [올리면, 다른 부분들이 알아서 줄어드는 이유] 
+                1. 올리면, 해당 아이템은 35% 가 됨  ⭐⭐⭐⭐⭐
+                2. 그 이후 생기는 '여백' 을 다른 item 이 25% 씩 나눠 가짐 ⭐⭐⭐ 
+                3. 따라서, 괜찮은 UI 가 됨 
+            */
+            width: 35%;
+            background-color: crimson;
+        }
+
+        .menu-link {
+            /* ✅ 옆 부분 까지 클릭될 수 있게 만들기 */
+            display: block;
+
+            padding: 1em;
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #555;
+            text-decoration: none;
+            text-align: center;
+        }
+
+        .menu-link:hover {
+            color: whitesmoke;
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <ui class="menu">
+        <li class="menu-item">
+            <a href="#" class="menu-link">Home</a>
+        </li>
+        <li class="menu-item">
+            <a href="#" class="menu-link">About</a>
+        </li>
+        <li class="menu-item">
+            <a href="#" class="menu-link">Product</a>
+        </li>
+        <li class="menu-item">
+            <a href="#" class="menu-link">Contact</a>
+        </li>
+    </ui>
+
+
+
+</body>
+
+</html>

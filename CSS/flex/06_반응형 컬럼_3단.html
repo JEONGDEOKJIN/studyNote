@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>CSS Flex</title>
+    <link rel="stylesheet" href="./default.css">
+    <style>
+        html {
+            background-color: gray;
+        }
+
+        .flex-container {
+            display: flex;
+
+            /* 방법 1 : direction 이 가로를 보고 있는 걸 -> flex-wrap 한다. */
+            /* flex-wrap: wrap; */
+
+            /* 방법 2 : direction 이 가로를 보고 있는 걸 -> flex-wrap 한다. */
+            flex-direction: column;
+
+            /* [task] flex-item 이 움직일 수 있게 container 확보하기 */
+            /* 🔵 작동함  */
+            min-height: 100vh;
+
+            /* 📛 부족함 : 스크롤을 내리면, 파란색 border 가 끊겨 있음.   */
+            /* height: 100vh; */
+
+            border: 10px solid blue;
+        }
+
+        .flex-item {
+            /* flex-direction 이 column 인 상황에서, 아래쪽 여백으로 늘어나게 하기 */
+            flex: 1 auto;
+            /* 이건, flex : 1(flex grow) 1(flex shrink) auto 랑 같은말 
+                왜냐면, flex shrink 는 기본이 1 이니까 */
+        }
+
+        /* 반응형 2단 컬럼 */
+        @media (min-width: 600px) {
+            .flex-container {
+                /* 콘텐츠가 쌓이는 방향을, 가로축으로 옮겨주기. 그래야 못 들어온 애들이 떨어짐 */
+                flex-direction: row;
+
+                /* 아래로 떨어지게 하기 */
+                flex-wrap: wrap;
+            }
+
+            .flex-item {
+                /* ✅ 2단으로 나누기 */
+                    /* 1. width % : 정확한 컬럼 구준은 width % 가 훨씬 잘 함 */
+                    width: 50%;
+
+                    /* 2. flex-basis : 🔵동작은 함. 다만, 각 item 내부의 콘텐츠가 길어지면 삐져나옴.
+                                왜냐면, flex-basis, flex-grow, flex-shrink 는 '여백' 을 기준으로 작동하기 때문    
+                            */
+                    /* flex-basis: 50%; */
+
+
+                /* ✅ 2단으로 못 들어간 item 다루기 */
+                    /* 1. 빈 공간을 채워서, 옆으로 늘리기*/
+                    flex: 1 auto;   
+
+                    /* 2. 옆으로 퍼지지 않고, item 크기를 유지하면서 있기*/
+                    /* flex: 0 auto; */
+                    /* flex-grow: 0; */
+
+                    /* 3. flex-basis 를 0% 로 하면 안 된다. : 작동 안함📛 | 
+                        왜냐면, flex item 의 기본적인 값이 0 으로 쪼그라들어있는 상태 되고 -> 이 상황에서, 배치를 하게 됨 
+                        flex-basis 가 auto 인 경우 -> width의 값이 주입됨 ⭐⭐⭐ -> so, 차지하는 영역이 있고, 해당 부분 만큼을 반영해서 배치하게 됨
+                    */
+                        /* flex: 1 0; */
+            }
+
+            @media (min-width : 900px) { 
+                .flex-item{
+                    width: 30%;
+                    
+                    /* width: 27%; */
+                    /* ❓ 정확히 33.333% 가 아니라, width: 27%; 을 해도 채워지는 이유 & 10% 로 하면 채워지지 않는 이유 
+                        - 요약하면, width 값이 flex-basis 값으로 들어가고 -> 남은 여백이 flex-grow 에 의해 1:1:1 로 늘어나기 때문에
+                        - 즉, 
+                            1. 위에 flex-grow 가 설정되어 있음. 
+                            2. flex-grow 는, 1) flex-basis 의 크기보다 커서, '여백' 이 있으면, 2) 갖고 있는 비율만큼 늘어남 
+                            3. flex-basis 는 auto 라면, 해당 태그의 width 값을 가져옴 
+                            4. 현재 flex-basis 는 위에 정의한 것에 따르면, flex:1 auto 이므로 -> flex basis 가 auto 이면, 해당 flex-item 의 width 값을 가져옴 
+                            5. 따라서 현재 width : 10% 를 flex-basis 값으로 가져옴 
+                            6. flex-basis : 10% 를 기준으로 볼 때, 여백이 있음 -> so, flex-grow 기준으로 늘어나게 됨                     
+                    */                
+                }
+            }
+
+
+        }
+    </style>
+</head>
+
+<body>
+    <div class="flex-container">
+        <div class="flex-item">
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.
+        </div>
+
+        <div class="flex-item">BB</div>
+        <div class="flex-item">CCCCCC</div>
+        <div class="flex-item">CCCCCC</div>
+        <div class="flex-item">
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.
+        </div>
+
+        <div class="flex-item">BB</div>
+        <div class="flex-item">CCCCCC</div>
+        <div class="flex-item">CCCCCC</div>
+        <div class="flex-item">애매하게 남아있는 공간😥</div>
+    </div>
+</body>
+
+</html>

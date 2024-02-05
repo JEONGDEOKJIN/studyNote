@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>CSS Flex</title>
+    <link rel="stylesheet" href="./default.css">
+    <style>
+        html {
+            background-color: gray;
+        }
+        p {
+            margin : 70px
+        }
+
+        .page {
+            display: flex;
+            flex-direction: column;
+            
+            /* ✅ footer 가 밑으로 가게 하려면, 이동할 수 있는 공간! 이 필요함 
+                ✅ 또한, min-height 로 잡으면, 밑으로 떨어졌을 때, '스크롤' 이 생김
+            */
+            min-height: 100vh;
+        }
+
+        .content {
+
+            /* ✅ footer 를 밑으로 가게 하기 */
+                /* 남아있는 여백을, content 가 다 먹게 해서, footer 를 이동시킨다. */
+                flex-grow: 1;
+
+            padding: 1.5rem;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="page">
+        <header class="header flex-item">
+            header
+        </header>
+
+        <section class="content">
+            <p> lorem </p> <p> lorem </p> <p> lorem </p> <p> lorem </p> <p> lorem </p>
+            <p> lorem </p> <p> lorem </p> <p> lorem </p> <p> lorem </p> <p> lorem </p>
+            <p> lorem </p> <p> lorem </p> <p> lorem </p> <p> lorem </p> <p> lorem </p>
+            
+        </section>
+
+        <footer class="footer flex-item ">
+            footer
+        </footer>
+
+
+
+    </div>
+
+
+</body>
+
+</html>

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>CSS Flex</title>
+    <link rel="stylesheet" href="./default.css">
+    <style>
+        html {
+            background-color: gray;
+        }
+
+        .flex-container {
+            display: flex;
+
+            /* 방법 1 : direction 이 가로를 보고 있는 걸 -> flex-wrap 한다. */
+            /* flex-wrap: wrap; */
+
+            /* 방법 2 : direction 이 가로를 보고 있는 걸 -> flex-wrap 한다. */
+            flex-direction: column;
+
+            /* [task] flex-item 이 움직일 수 있게 container 확보하기 */
+                /* 🔵 작동함  */
+                min-height: 100vh;
+
+                /* 📛 부족함 : 스크롤을 내리면, 파란색 border 가 끊겨 있음.   */
+                /* height: 100vh; */
+
+            border: 10px solid blue;
+        }
+
+        .flex-item {
+            /* flex-direction 이 column 인 상황에서, 아래쪽 여백으로 늘어나게 하기 */
+            flex: 1 auto;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="flex-container">
+        <div class="flex-item">
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.
+        </div>
+
+        <div class="flex-item">BB</div>
+        <div class="flex-item">CCCCCC</div>
+        <div class="flex-item">애매하게 남아있는 공간1😥</div>
+        <div class="flex-item">애매하게 남아있는 공간2😥</div>
+        <div class="flex-item">
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.
+        </div>
+
+        <div class="flex-item">BB</div>
+        <div class="flex-item">CCCCCC</div>
+    </div>
+</body>
+
+</html>

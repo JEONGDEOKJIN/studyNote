@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./default.css">
+
+    <style>
+        html {
+            background-color: gray;
+        }
+
+        .flex-container { 
+            display: flex;
+            flex-wrap:  wrap;
+        }
+
+        .flex-item { 
+            flex-grow: 1;
+            /* flex-basis: 0%; */
+            /* flex-basis: auto */
+            /* flex : 1 1 auto */
+        }
+
+        .flex-item:nth-child(1) { 
+            width: 20%;
+            /* flex-grow: 1; */
+        }
+        
+        .flex-item:nth-child(2) { 
+            width: 30%;
+            /* flex-grow: 2; */
+        }
+        
+        .flex-item:nth-child(3) { 
+            width: 50%;
+            /* flex-grow: 1; */
+        }
+    
+
+
+    </style>
+
+
+
+</head>
+
+<body>
+    
+    <div class="flex-container">
+        <div class="flex-item">AAA</div>
+        <div class="flex-item">BBB</div>
+        <div class="flex-item">CCC</div>
+        <div class="flex-item">DDD</div>
+        <div class="flex-item">EEE</div>
+        <div class="flex-item">EEE</div>
+    </div>
+
+    
+
+
+
+</body>
+</html>
