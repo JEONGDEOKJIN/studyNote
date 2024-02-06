@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./default.css">
+    <title>Document</title>
+    <style>
+        .user-item { 
+            display: flex;
+            margin-bottom: 1.5rem;
+
+            /* rem 단위를 쓰면, 항상 root 단위를 기준으로 움직이기 때문에 -> margin 이 일정! */
+            /* em 단위를 쓰면, font-size 가 10px 인 경우 -> margin이 150px 이 된다는 것!  */
+            /* margin-bottom : 15em  */
+        }
+
+        .user-photo {
+            width: 50px;
+            height: 50px;
+            border: 2px solid #333;
+            border-radius: 50%;
+            background-color: cornflowerblue;
+            background-repeat: none;
+
+            /* center 로 하니까, 잘렸었는데, top 으로 하니까! 잘 맞춰지네! ⭐⭐⭐ */
+            background-position: top;
+            background-size: cover;
+
+            /* 사진이 짜그라드는거 막기*/
+            flex-shrink: 0;
+
+            margin-right: 0.5em;
+
+        }
+    </style>
+</head>
+<body>
+
+    <ul class="user-list message-list">
+
+        <li class="user-item message-item">
+            <!-- ✅ 다양한 유저 사진이 들어와도, 통일성 있고, 확대되어서, 보일 수 있게 하기 
+                img 태그가 아니라, background 속성을 활용해서, 컨트롤 할 예정
+                ⭐ background-image 가 나오게 하려면, figure 태그 자체가 width, height 를 갖고 있어야 함 
+            -->
+            <figure class="user-photo" style="background-image: url(../images/BJJTOM.jpg);">
+            </figure>
+            <p class="message-content">
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Commodi amet deleniti totam, expedita quas
+                reiciendis? Quam hic ex voluptatum saepe.
+            </p>
+        </li>
+        
+        <li class="user-item message-item">
+            <!-- ✅ 다양한 유저 사진이 들어와도, 통일성 있고, 확대되어서, 보일 수 있게 하기 
+                img 태그가 아니라, background 속성을 활용해서, 컨트롤 할 예정
+                ⭐ background-image 가 나오게 하려면, figure 태그 자체가 width, height 를 갖고 있어야 함 
+            -->
+            <figure class="user-photo" style="background-image: url(../images/BJJTOM.jpg);">
+            </figure>
+            <p class="message-content">
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Commodi amet deleniti totam, expedita quas
+                reiciendis? Quam hic ex voluptatum saepe.
+            </p>
+        </li>
+        
+        <li class="user-item message-item">
+            <!-- ✅ 다양한 유저 사진이 들어와도, 통일성 있고, 확대되어서, 보일 수 있게 하기 
+                img 태그가 아니라, background 속성을 활용해서, 컨트롤 할 예정
+                ⭐ background-image 가 나오게 하려면, figure 태그 자체가 width, height 를 갖고 있어야 함 
+            -->
+            <figure class="user-photo" style="background-image: url(../images/BJJTOM.jpg);">
+            </figure>
+            <p class="message-content">
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Commodi amet deleniti totam, expedita quas
+                reiciendis? Quam hic ex voluptatum saepe.
+            </p>
+        </li>
+
+    </ul>
+</body>
+
+</html>

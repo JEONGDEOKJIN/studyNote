@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./default.css">
+    
+    <style>
+    
+        .modal {
+            /* 
+                sticky 기능 : 스크롤을 내렸을 때 특정위치에 도달하면, 특정 태그가 뷰포트에 고정됨! 
+                fixed 기능 : 스크롤이 움직여도, 해당 뷰포트의 위치에 고정! 
+            */
+            position: fixed;
+
+            /* ⭐ 화면이 고정될 영역을 핀으로 찝어주기 
+                전체 viewport 로 펼쳐질 수 있게!!! 
+                'left : 0의 의미' : 'modal div 의 왼쪽 면' 과 'view port 면' 사이의 '거리' 가 0 이라는 의미  
+                'right : 0의 의미' : 'modal div 의 오른쪽 면' 과 'view port 면' 사이의 '거리' 가 0 이라는 의미  
+
+                그 결과, 전체적으로 화면이 펴짐 ⭐ 
+
+                👉 주로 사용 되는 곳 : 모달창, 오버레이, 로딩 스크린⭐⭐
+            */
+
+            left: 0;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            
+            background-color: rgba(0, 0, 0, 0.2);
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            
+        }
+
+        .dialog{
+            background-color: aliceblue;
+            width: 80%;
+            padding: 1em;
+            border-radius: 0.5rem;
+        }
+
+
+    </style>
+</head>
+<body>
+
+    <div class="modal">
+        <div class="dialog">
+            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Nostrum magnam, suscipit itaque eaque tenetur nisi velit ullam aliquam neque! Facere!
+        </div>
+    </div>
+
+
+    
+</body>
+</html>

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>CSS Flex</title>
+    <link rel="stylesheet" href="../default.css">
+    <style>
+        html {
+            background-color: lightgray;
+        }
+
+        .flex-container {
+            display: flex;
+            flex-direction: column;
+
+            min-height: 100vh;
+            border: 10px solid mediumseagreen;
+        }
+
+        .flex-item {
+            flex: 1 1 auto;
+            min-height: 5em;
+            /* max-height: 6em; */
+        }
+
+        @media (min-width : 600px) {
+            .flex-container{
+                flex-direction: row;
+                flex-wrap: wrap;
+            }   
+            .flex-item{
+                width: 50%;
+                flex: 1 auto;
+
+            }
+        }
+
+        @media (min-width : 900x) { 
+            .flex-container { 
+
+            }
+
+            .flex-item { 
+                width: 33%;
+                flex: 1 1 auto;
+            }
+        }
+
+    </style>
+</head>
+
+<body>
+    <div class="flex-container">
+        <div class="flex-item">
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.
+        </div>
+
+        <div class="flex-item">BB</div>
+        <div class="flex-item">CCCCCC</div>
+        <div class="flex-item">애매하게 남아있는 공간1😥</div>
+        <div class="flex-item">애매하게 남아있는 공간2😥</div>
+        <div class="flex-item">
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.
+            </div>
+        <div class="flex-item">애매하게 남아있는 공간2😥</div>
+        <div class="flex-item">애매하게 남아있는 공간2😥</div>
+        <div class="flex-item">애매하게 남아있는 공간2😥</div>
+        <div class="flex-item">애매하게 남아있는 공간2😥</div>
+        <div class="flex-item">애매하게 남아있는 공간2😥</div>
+        <div class="flex-item">애매하게 남아있는 공간2😥</div>
+        <div class="flex-item">애매하게 남아있는 공간2😥</div>
+        <div class="flex-item">애매하게 남아있는 공간2😥</div>
+        <div class="flex-item">애매하게 남아있는 공간2😥</div>
+
+    </div>
+</body>
+
+</html>
