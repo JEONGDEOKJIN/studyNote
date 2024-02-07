@@ -1,0 +1,256 @@
+
+
+
+
+
+.search-button {
+	border: none;
+	background-color: gold;
+	margin-left: 1em;
+	border-radius: 0.5em
+}
+
+.search-input { 
+	border: none;
+  background-color : whitesmoke; 
+	flex-grow: 1;
+}
+
+
+/* 메뉴 */
+.menu-container {
+  display: flex;
+}
+
+.menu-item {
+  background-color: gold;
+  width: 25%;
+  transition: 0.5s;
+}
+
+.menu-item:hover {
+  background-color: crimson;
+  width: 30%;
+}
+
+.text-link:hover {
+  color: whitesmoke;
+}
+
+.text-link {
+  display: block;
+  text-decoration: none;
+  color: #555;
+  font-weight: bold;
+
+  padding: 1em;
+  font-size: 1.2rem;
+  text-align: center;
+}
+
+
+/* 카드 리스트 */
+html {
+  box-sizing: border-box;
+  
+}
+
+.card-list {
+  display: flex;
+  flex-direction: column;
+
+  min-height: 100vh;
+}
+
+.card-item {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 2rem;
+}
+
+.card-image {
+  /* 와... 이렇게 생각하고 하면 진짜 좋겠다⭐⭐⭐ */
+  height: 0;
+  padding-bottom: 60%;
+
+  background-position: top;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.card-desc {
+  background-color: mediumseagreen;
+  padding: 1em;
+  font-weight: 500;
+  color: white;
+
+  /* ✅ 각자가 자긴 콘텐츠 만큼 알아서, 늘어나게 하기 */
+  flex: 1 1 auto;
+
+      /* ⭐⭐⭐ 여기에서 flex-grow 를 쓰면, 콘텐츠 크기 만큼 늘어나는 이유는? 
+          1) 기본적으로, div 태그는, 'contents 양' 이 많으면' container 가 양에 맞춰서 커진다.'
+          2) 그래서, lorem 이 많이 적혀 있으면 -> 같은 row 를 감싸고 있는 div(첫번째 줄의 container) 의 height 는 길어지게 된다. 
+          3) 그러면, '⭐⭐상대적으로 짧은 item' 은, 'container 의 높이와 비교했을 때, 여백' 이 생긴다.⭐⭐ 
+              - 즉, '⭐⭐⭐ 부모 conatainer 와 비교 했을 때, 여백⭐⭐⭐ ' 이 생길 경우 -> 해당 여백 을 flex-grow 의 비율대로 확장할 수 있다. ⭐⭐⭐⭐⭐
+          4) 따라서, item 에, flex-grow 를 걸면, 해당 여백을 전부 소비하게 된다. 
+      */
+}
+
+@media (min-width : 600px) {
+
+  body {
+      /* ✅ overflow-x 를 card-list 가 아니라, body 에 걸어줘야 함 ⭐⭐⭐ 
+          왜냐면, 현재 card-item 은 부모인 card-list 를 넘어서고 있음. 
+          그런데, 부모인 card-list 는 'width'가 없음. 
+          따라서, 부모인 card-list 에 overflow 를 걸어도, 작동하지 않는 것 임. 
+          왜냐면, 넘어서는게 없다고 판단하니까. 
+
+          자, 근본적으로 이런 문제가 없으려면, margin, padding 같은 전통적인 방식 말고, 좀 더 깔끔한 방식을 써야 할 필요가 있음. ⭐⭐⭐ 
+      */
+      overflow-x: hidden;
+  }
+
+  .card-list {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+
+      /* ✅ 이렇게 부모 컨테이너에서 눌러준다. 
+          이때, 스크롤이 생기게 되는데 -> 이 스크롤은, 바로 위의 부모가 아니라, body 에 걸어줘야 한다. ⭐⭐⭐ 
+      */
+      margin: 0 -1rem;
+
+
+      /* card-item 사이에 간격을 주기 
+              전제 : 이걸 하려면, 
+                  1) card-item 각각의 비율을 47% 
+                  2) flex-grow 를 1 로!
+                  그래서, 모자란 부분이 있으면, 늘어나게 하기! 
+                  3) 다만, 아직 제일 끝에 있는 아이템이 커지는 것을 해결하지 못 함
+          */
+      /* gap: 0px 20px */
+  }
+
+  .card-item {
+      width: 50%;
+      flex-grow: 0;
+
+      /* 아이템 사이에 간격 만들기 */
+          /* 1. 아이템들 사이의 간격을 좀 주고 싶음. 그런데, 이렇게 하면, 3단 일 때 문제가 발생 */
+          /* justify-content: space-between; */
+
+          /* 2. 각 아이템을 padding 으로 눌러서 -> 간격 만들기 😥😥😥 */
+          /* 2.1 양쪽 여백을 없애려면, 부모 태그에 margin 을 줘서 없애기 😥😥😥
+              2.2 이때, 잘 안 될 수도 있는데, a) overflow-x : hidden 을 줘야 하고, b) width 를 나눌 때, 33.3333% 로 정확히 해줘야 함 
+          */
+          padding: 0 1rem;
+
+          /* 3. 부모 태그에서 gap 사용 ⭐⭐⭐⭐⭐
+              a) 제일 깔끔 
+              b) 하지만, 문제는, 제일 끝에있는 아이템이 제멋대로 커진다는 것 -> 이 부분은 아직 해결 못 함 📛📛📛 
+              d) 참고 블로그 : https://inpa.tistory.com/entry/CSS-%F0%9F%93%9A-%EC%B5%9C%EC%8B%A0-CSS-%EA%B8%B0%EB%8A%A5-%F0%9F%8E%A8-flexbox-gap */
+      
+          /* 4. 혹시, grid? ⭐⭐⭐ */
+  }
+}
+
+@media(min-width : 1200px) {
+  .card-list {
+      /* gap: 0px 20px; */
+
+      margin: 0 -1rem;
+  }
+
+  .card-item {
+      width: 33.3333%;
+      flex-grow: 0;
+      padding: 0 1rem;
+  }
+}
+
+
+
+/* 불릿 리스트 */
+        /* ✅ 가상 element 넣기 */
+        /* www.copychar.cc 들어가서, 가져오기 */
+        .info-list-item::before {
+          content: '✺';
+          margin-right: 0.5em;
+      }
+
+      /* ✅ 가상요소 포함해서 display flex 주기 */
+      .info-list-item {
+          margin: 1.5em 0;
+
+          /* '가상 요소' 도 하나의 요소 임 
+                  '.info-list-item::before' 이렇게 기재되었기 때문에, .info-list-item 하위에 들어감
+                  따라서, display : flex 를 해도 작동함
+              */
+          display: flex;
+      }
+
+
+/* 메시지 리스트 */
+
+.user-item { 
+  display: flex;
+  margin-bottom: 1.5rem;
+
+  /* rem 단위를 쓰면, 항상 root 단위를 기준으로 움직이기 때문에 -> margin 이 일정! */
+  /* em 단위를 쓰면, font-size 가 10px 인 경우 -> margin이 150px 이 된다는 것!  */
+  /* margin-bottom : 15em  */
+}
+
+.user-photo {
+  width: 50px;
+  height: 50px;
+  border: 2px solid #333;
+  border-radius: 50%;
+  background-color: cornflowerblue;
+  background-repeat: none;
+
+  /* center 로 하니까, 잘렸었는데, top 으로 하니까! 잘 맞춰지네! ⭐⭐⭐ */
+  background-position: top;
+  background-size: cover;
+
+  /* 사진이 짜그라드는거 막기*/
+  flex-shrink: 0;
+
+  margin-right: 0.5em;
+
+}
+
+
+/* 유저 리스트 */
+.user-item { 
+  display: flex;
+  margin-bottom: 1.5rem;
+}
+
+.user-photo {
+  width: 50px;
+  height: 50px;
+  border: 2px solid #333;
+  border-radius: 50%;
+  background-color: cornflowerblue;
+  background-repeat: none;
+
+  /* center 로 하니까, 잘렸었는데, top 으로 하니까! 잘 맞춰지네! ⭐⭐⭐ */
+  background-position: top;
+  background-size: cover;
+
+  /* 사진이 짜그라드는거 막기*/
+  flex-shrink: 0;
+
+  margin-right: 0.5em;
+}
+
+.user-name {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.friend-item{
+  align-items: center;
+}

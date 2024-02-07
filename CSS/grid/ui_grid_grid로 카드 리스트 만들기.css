@@ -1,0 +1,201 @@
+
+
+
+
+
+.search-button {
+	border: none;
+	background-color: gold;
+	margin-left: 1em;
+	border-radius: 0.5em
+}
+
+.search-input { 
+	border: none;
+  background-color : whitesmoke; 
+	flex-grow: 1;
+}
+
+
+/* 메뉴 */
+.menu-container {
+  display: flex;
+}
+
+.menu-item {
+  background-color: gold;
+  width: 25%;
+  transition: 0.5s;
+}
+
+.menu-item:hover {
+  background-color: crimson;
+  width: 30%;
+}
+
+.text-link:hover {
+  color: whitesmoke;
+}
+
+.text-link {
+  display: block;
+  text-decoration: none;
+  color: #555;
+  font-weight: bold;
+
+  padding: 1em;
+  font-size: 1.2rem;
+  text-align: center;
+}
+
+
+/* 카드 리스트 */
+html {
+  box-sizing: border-box;
+  
+}
+
+.card-list {
+  display: flex;
+  flex-direction: column;
+
+  min-height: 100vh;
+}
+
+.card-item {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 2rem;
+}
+
+.card-image {
+  /* 와... 이렇게 생각하고 하면 진짜 좋겠다⭐⭐⭐ 
+    grid-section 잡을 때에도, 사진이 늘었다 줄었다 하는 건, padding-bottom 이 함⭐⭐⭐⭐⭐ 
+  */
+  height: 0;
+  padding-bottom: 60%;
+
+  background-position: top;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.card-desc {
+  background-color: mediumseagreen;
+  padding: 1em;
+  font-weight: 500;
+  color: white;
+
+  /* ✅ 각자가 자긴 콘텐츠 만큼 알아서, 늘어나게 하기 */
+  flex: 1 1 auto;
+
+      /* ⭐⭐⭐ 여기에서 flex-grow 를 쓰면, 콘텐츠 크기 만큼 늘어나는 이유는? 
+          1) 기본적으로, div 태그는, 'contents 양' 이 많으면' container 가 양에 맞춰서 커진다.'
+          2) 그래서, lorem 이 많이 적혀 있으면 -> 같은 row 를 감싸고 있는 div(첫번째 줄의 container) 의 height 는 길어지게 된다. 
+          3) 그러면, '⭐⭐상대적으로 짧은 item' 은, 'container 의 높이와 비교했을 때, 여백' 이 생긴다.⭐⭐ 
+              - 즉, '⭐⭐⭐ 부모 conatainer 와 비교 했을 때, 여백⭐⭐⭐ ' 이 생길 경우 -> 해당 여백 을 flex-grow 의 비율대로 확장할 수 있다. ⭐⭐⭐⭐⭐
+          4) 따라서, item 에, flex-grow 를 걸면, 해당 여백을 전부 소비하게 된다. 
+      */
+}
+
+@media (min-width : 600px) {
+
+  .card-list {
+    display : grid;
+    grid-template-columns : repeat(auto-fill, minmax(300px, auto));
+    gap : 2%;
+  }
+
+  .card-item {
+    margin-bottom : 2rem;
+    background: white
+  }
+}
+
+
+
+
+/* 불릿 리스트 */
+        /* ✅ 가상 element 넣기 */
+        /* www.copychar.cc 들어가서, 가져오기 */
+        .info-list-item::before {
+          content: '✺';
+          margin-right: 0.5em;
+      }
+
+      /* ✅ 가상요소 포함해서 display flex 주기 */
+      .info-list-item {
+          margin: 1.5em 0;
+
+          /* '가상 요소' 도 하나의 요소 임 
+                  '.info-list-item::before' 이렇게 기재되었기 때문에, .info-list-item 하위에 들어감
+                  따라서, display : flex 를 해도 작동함
+              */
+          display: flex;
+      }
+
+
+/* 메시지 리스트 */
+
+.user-item { 
+  display: flex;
+  margin-bottom: 1.5rem;
+
+  /* rem 단위를 쓰면, 항상 root 단위를 기준으로 움직이기 때문에 -> margin 이 일정! */
+  /* em 단위를 쓰면, font-size 가 10px 인 경우 -> margin이 150px 이 된다는 것!  */
+  /* margin-bottom : 15em  */
+}
+
+.user-photo {
+  width: 50px;
+  height: 50px;
+  border: 2px solid #333;
+  border-radius: 50%;
+  background-color: cornflowerblue;
+  background-repeat: none;
+
+  /* center 로 하니까, 잘렸었는데, top 으로 하니까! 잘 맞춰지네! ⭐⭐⭐ */
+  background-position: top;
+  background-size: cover;
+
+  /* 사진이 짜그라드는거 막기*/
+  flex-shrink: 0;
+
+  margin-right: 0.5em;
+
+}
+
+
+/* 유저 리스트 */
+.user-item { 
+  display: flex;
+  margin-bottom: 1.5rem;
+}
+
+.user-photo {
+  width: 50px;
+  height: 50px;
+  border: 2px solid #333;
+  border-radius: 50%;
+  background-color: cornflowerblue;
+  background-repeat: none;
+
+  /* center 로 하니까, 잘렸었는데, top 으로 하니까! 잘 맞춰지네! ⭐⭐⭐ */
+  background-position: top;
+  background-size: cover;
+
+  /* 사진이 짜그라드는거 막기*/
+  flex-shrink: 0;
+
+  margin-right: 0.5em;
+}
+
+.user-name {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.friend-item{
+  align-items: center;
+}

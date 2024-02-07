@@ -21,8 +21,8 @@
   margin-left: auto;
 
   /* 너비 조절은 container 에서⭐⭐ */
-  width: 240px;
-  max-width: 60%;
+  /* width: 340px; */
+  width: 60%;
 }
 
 .main {
@@ -48,22 +48,56 @@
 }
 
 @media (min-width: 1024px) {
-
-  .page{ 
-    display : flex;
-    flex-wrap : wrap;
+  .page {
+    display: flex;
+    flex-wrap: wrap;
   }
 
   .header {
-    width : 100%
+    width: 100%;
   }
 
   .menu-container {
-    width : 100%
+    width: 100%;
   }
 
-  .sidebar { 
-    width : 20% 
+  .sidebar {
+    width: 20%;
+    /* max-width : 21% */
   }
 
+  .sidebar-left {
+    order: 1;
+  }
+
+  .main {
+    width: 60%;
+    order: 2;
+  }
+
+  .sidebar-right {
+    order: 3;
+  }
+
+  /* 모두 flex container 의 자식임 
+    따라서, footer 에도 order 를 줘야 함 
+  */
+  .footer {
+    width: 100%;
+    order: 4;
+  }
+}
+
+@media (min-width: 1440px) {
+  /* cala 사용할 때, 꼭! 100% 와 600px 사이를 띄워줘야 함 ⭐⭐⭐ */
+  .main {
+    /* width: calc(100% - 600px); */
+    
+    /* 이렇게 짜도 1440px 에서는 작동. 하지만, 폭을 줄이면 제멋대로 움직임 */
+    flex-grow : 1
+  }
+
+  .sidebar {
+    width: 300px;
+  }
 }
